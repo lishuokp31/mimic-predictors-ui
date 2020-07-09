@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { List } from 'immutable';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,15 +15,17 @@ export class ModelResultsComponent {
   public label: string = 'Prediction Results';
 
   @Input()
-  public showResults: boolean = false;
+  public showResults: boolean | null = false;
 
   public data: any[] = [];
-  @Input() set probabilities(value: number[]) {
-    this.data = [
-      {
-        name: this.label,
-        series: value.map((x, i) => ({ name: (i + 1).toString(), value: x })),
-      },
-    ];
+  @Input() set probabilities(value: List<number> | null) {
+    if (value) {
+      this.data = [
+        {
+          name: this.label,
+          series: value.map((x, i) => ({ name: (i + 1).toString(), value: x })),
+        },
+      ];
+    }
   }
 }
