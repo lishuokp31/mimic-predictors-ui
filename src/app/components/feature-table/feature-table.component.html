@@ -10,7 +10,7 @@
       <span class="lbl-label">{{ feature.label }}</span>
       <span *ngFor="let day of days" class="lbl-value">
         <!-- x is guaranteed to be non-null here -->
-        {{ x!.get(day)!.get(feature.id) }}
+        {{ formatValue(x!.get(day)!.get(feature.id)) }}
       </span>
     </div>
   </cdk-virtual-scroll-viewport>

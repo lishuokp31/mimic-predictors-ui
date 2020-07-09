@@ -8,7 +8,11 @@
       ></app-feature-table>
     </div>
     <div class="results">
-      <app-data-operations></app-data-operations>
+      <app-data-operations
+        (loadSample)="onLoadSample()"
+        (reset)="onReset()"
+        (predict)="onPredict()"
+      ></app-data-operations>
       <app-model-results
         [showResults]="showPredictions$ | async"
         [probabilities]="predictions$ | async"

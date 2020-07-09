@@ -19,4 +19,16 @@ export class FeatureTableComponent {
 
   @Input()
   public x: List<List<number>> | null = null;
+
+  public formatValue(value: number | undefined) {
+    if (typeof value !== 'number') {
+      return value;
+    }
+
+    if (Number.isInteger(value)) {
+      return value;
+    }
+
+    return Number(value).toFixed(2);
+  }
 }

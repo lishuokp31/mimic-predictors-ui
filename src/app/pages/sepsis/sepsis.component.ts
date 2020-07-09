@@ -29,11 +29,13 @@ export class SepsisPage {
     this.weights$ = this.store.select(AppState.sepsisWeights);
   }
 
-  public loadSample() {
+  public onLoadSample() {
     this.store.dispatch(new Sepsis.LoadSample());
   }
 
-  public predict() {
+  public onReset() {}
+
+  public onPredict() {
     this.store.dispatch(new Sepsis.Predict());
   }
 }

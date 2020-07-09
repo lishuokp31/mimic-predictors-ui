@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -6,4 +11,20 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./data-operations.component.scss'],
   templateUrl: './data-operations.component.html',
 })
-export class DataOperationsComponent {}
+export class DataOperationsComponent {
+  @Output() loadSample = new EventEmitter<void>();
+  @Output() reset = new EventEmitter<void>();
+  @Output() predict = new EventEmitter<void>();
+
+  public onLoadSample() {
+    this.loadSample.emit();
+  }
+
+  public onReset() {
+    this.reset.emit();
+  }
+
+  public onPredict() {
+    this.predict.emit();
+  }
+}

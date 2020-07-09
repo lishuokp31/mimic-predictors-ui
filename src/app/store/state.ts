@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
-import { State, Selector } from '@ngxs/store';
+import { State, Selector, Action, StateContext } from '@ngxs/store';
+import { List } from 'immutable';
 
 import { AppStateModel } from './types';
-import { zeros1d, zeros2d } from './utils';
+import { zeros1d, zeros2d, toList2d } from './utils';
+import { ApiService } from '../services';
+import * as actions from './actions';
 
 export const initialState: AppStateModel = {
   sepsisX: zeros2d(14, 225),
   sepsisY: zeros1d(14),
   sepsisPredictions: zeros1d(14),
   sepsisWeights: zeros2d(14, 225),
+  sepsisLoading: false,
   miX: zeros2d(14, 221),
   miY: zeros1d(14),
   miPredictions: zeros1d(14),
   miWeights: zeros2d(14, 221),
+  miLoading: false,
   vancomycinX: zeros2d(14, 224),
   vancomycinY: zeros1d(14),
   vancomycinPredictions: zeros1d(14),
   vancomycinWeights: zeros2d(14, 224),
+  vancomycinLoading: false,
 };
 
 @State<AppStateModel>({
@@ -117,5 +123,19 @@ export class AppState {
     return state.vancomycinWeights.every((day) =>
       day.every((weight) => weight != 0)
     );
+  }
+
+  constructor(public api: ApiService) {}
+
+  @Action(actions.Sepsis.LoadSample)
+  public async sepsisLoadSample({ patchState }: StateContext<AppStateModel>) {
+    patchState({ sepsisLoading: true });
+
+    const response = await this.api.loadSample('sepsis').toPromise();
+    patchState({
+      sepsisX: toList2d(response.x),
+      sepsisY: List(response.y),
+      sepsisLoading: false,
+    });
   }
 }
