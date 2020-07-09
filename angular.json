@@ -148,6 +148,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "mimic-lstm-angular"
+    }
+  },
+  "defaultProject": "mimic-lstm-angular",
+  "cli": {
+    "analytics": "4b169c2c-6798-4244-bce1-26ad1033dbdd"
+  }
 }
