@@ -19,7 +19,7 @@ $table-width: $header-width + $label-width + ($value-width * 14) +
 
 .lbl-day {
   display: inline-block;
-  padding: $cell-padding;
+  padding: 0.1rem $cell-padding;
   width: $value-width;
   font-weight: bold;
 
@@ -37,7 +37,7 @@ $table-width: $header-width + $label-width + ($value-width * 14) +
 .lbl-header {
   display: inline-block;
   width: $header-width;
-  padding: $cell-padding;
+  padding: 0.1rem $cell-padding;
   border-top: 1px solid #ccc;
   font-weight: bold;
 }
@@ -45,7 +45,7 @@ $table-width: $header-width + $label-width + ($value-width * 14) +
 .lbl-label {
   display: inline-block;
   width: $label-width;
-  padding: $cell-padding;
+  padding: 0.1rem $cell-padding;
   border-top: 1px solid #ccc;
   margin-left: 0;
 
@@ -57,6 +57,6 @@ $table-width: $header-width + $label-width + ($value-width * 14) +
 .lbl-value {
   display: inline-block;
   width: $value-width;
-  padding: $cell-padding;
+  padding: 0.1rem $cell-padding;
   border-top: 1px solid #ccc;
 }

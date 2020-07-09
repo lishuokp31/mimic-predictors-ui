@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -6,4 +6,20 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./model-results.component.scss'],
   templateUrl: './model-results.component.html',
 })
-export class ModelResultsComponent {}
+export class ModelResultsComponent {
+  public readonly yAxisTicks = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0];
+  public readonly colorScheme = { domain: ['#FF6485'] };
+
+  @Input()
+  public label: string = 'Prediction Results';
+
+  public data: any[] = [];
+  @Input() set probabilities(value: number[]) {
+    this.data = [
+      {
+        name: this.label,
+        series: value.map((x, i) => ({ name: (i + 1).toString(), value: x })),
+      },
+    ];
+  }
+}

@@ -10,4 +10,7 @@ import { sepsisFeatures, sepsisFeatureCount } from '../../data';
 export class SepsisPage {
   public readonly features = sepsisFeatures;
   public readonly featureCount = sepsisFeatureCount;
+  public probabilities = Array(14)
+    .fill(0)
+    .map((_) => Math.random());
 }

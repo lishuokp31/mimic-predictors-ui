@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule } from './app-material.module';
@@ -16,6 +17,7 @@ import { components } from './components';
     BrowserAnimationsModule,
     AppRoutingModule,
     AppMaterialModule,
+    NgxChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

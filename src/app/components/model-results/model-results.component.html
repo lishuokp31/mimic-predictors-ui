@@ -1,1 +1,12 @@
-<p>model-results works!</p>
+<div class="container">
+  <ngx-charts-line-chart
+    [results]="data"
+    [scheme]="colorScheme"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showXAxisLabel]="true"
+    xAxisLabel="Days"
+    [timeline]="true"
+    [yAxisTicks]="yAxisTicks"
+  ></ngx-charts-line-chart>
+</div>
