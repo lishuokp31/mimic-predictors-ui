@@ -1,0 +1,52 @@
+.container {
+  font-size: 11px;
+  // display: flex;
+  // flex-direction: column;
+}
+
+.lbl-days {
+  .lbl-day {
+    margin-top: 12px;
+    display: inline-block;
+    padding: 0.3rem;
+    width: 50px;
+    border-top: 1px solid #ccc;
+
+    &:first-of-type {
+      margin-left: 11.2rem;
+    }
+  }
+}
+
+.cdk-viewport {
+  height: 600px;
+  width: 1100px;
+  // flex: 1;
+}
+
+.feature-container {
+  border-top: 1px solid #ccc;
+}
+
+.lbl-header {
+  display: inline-block;
+  width: 5rem;
+  padding: 0.3rem;
+}
+
+.lbl-label {
+  display: inline-block;
+  width: 5rem;
+  padding: 0.3rem;
+  margin-left: 0;
+
+  &:first-of-type {
+    margin-left: 5.6rem;
+  }
+}
+
+.lbl-value {
+  display: inline-block;
+  width: 50px;
+  padding: 0.3rem;
+}

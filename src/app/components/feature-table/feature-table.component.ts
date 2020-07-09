@@ -1,9 +1,20 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ModelFeature } from '../../data';
 
 @Component({
-    selector: 'app-feature-table',
-    templateUrl: './feature-table.component.html',
-    styleUrls: ['./feature-table.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-feature-table',
+  styleUrls: ['./feature-table.component.scss'],
+  templateUrl: './feature-table.component.html',
 })
-export class FeatureTableComponent {}
+export class FeatureTableComponent {
+  public readonly days: number[] = Array(14)
+    .fill(0)
+    .map((_, i) => i + 1);
+
+  @Input()
+  public features: ModelFeature[] = [];
+
+  @Input()
+  public featureCount: number = 0;
+}

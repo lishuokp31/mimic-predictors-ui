@@ -1,2 +1,12 @@
-<app-navbar></app-navbar>
-<p>sepsis works!</p>
+<div class="container">
+  <app-navbar></app-navbar>
+  <div class="content">
+    <div class="feature-table">
+      <app-feature-table
+        [features]="features"
+        [featureCount]="featureCount"
+      ></app-feature-table>
+    </div>
+    <div class="results"></div>
+  </div>
+</div>
