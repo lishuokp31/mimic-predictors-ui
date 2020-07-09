@@ -18,11 +18,11 @@ function processMapping(
   const combination = [demo, vitals, cbc, labs, meds];
   const features: ModelFeature[] = combination
     .flatMap((group) => group.features)
-    .map(([id, identifier], i) => ({
+    .map(([id, identifier]) => ({
       id,
       identifier,
-      label: i18n[i].label,
-      unit: i18n[i].unit,
+      label: i18n[id].label,
+      unit: i18n[id].unit,
     }));
 
   // set feature headers
@@ -37,5 +37,11 @@ function processMapping(
   headerIndex += labs.features.length;
   features[headerIndex].header = meds.label;
 
-  return features;
+  // filter out min/max/std
+  return features.filter(
+    (x) =>
+      !x.identifier.endsWith('std') &&
+      !x.identifier.endsWith('max') &&
+      !x.identifier.endsWith('min')
+  );
 }

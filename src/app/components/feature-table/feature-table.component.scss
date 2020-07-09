@@ -21,6 +21,7 @@ $table-width: $header-width + $label-width + ($value-width * 14) +
   display: inline-block;
   padding: $cell-padding;
   width: $value-width;
+  font-weight: bold;
 
   &:first-of-type {
     margin-left: $header-width + $label-width + $cell-padding * 4;
