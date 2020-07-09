@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
 
 @Component({
@@ -12,6 +13,7 @@ import {
   templateUrl: './data-operations.component.html',
 })
 export class DataOperationsComponent {
+  @Input() isLoading: boolean | null = false;
   @Output() loadSample = new EventEmitter<void>();
   @Output() reset = new EventEmitter<void>();
   @Output() predict = new EventEmitter<void>();

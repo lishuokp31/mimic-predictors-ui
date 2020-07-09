@@ -16,24 +16,28 @@ export class SepsisPage {
   public readonly features = sepsisFeatures;
 
   public x$: Observable<List<List<number>>>;
-  public showPredictions$: Observable<boolean>;
   public predictions$: Observable<List<number>>;
-  public showWeights$: Observable<boolean>;
   public weights$: Observable<List<List<number>>>;
+  public showPredictions$: Observable<boolean>;
+  public showWeights$: Observable<boolean>;
+  public isLoading$: Observable<boolean>;
 
   constructor(private store: Store) {
     this.x$ = this.store.select(AppState.sepsisX);
-    this.showPredictions$ = this.store.select(AppState.showSepsisPredictions);
     this.predictions$ = this.store.select(AppState.sepsisPredictions);
-    this.showWeights$ = this.store.select(AppState.showSepsisWeights);
     this.weights$ = this.store.select(AppState.sepsisWeights);
+    this.showPredictions$ = this.store.select(AppState.showSepsisPredictions);
+    this.showWeights$ = this.store.select(AppState.showSepsisWeights);
+    this.isLoading$ = this.store.select(AppState.isSepsisLoading);
   }
 
   public onLoadSample() {
     this.store.dispatch(new Sepsis.LoadSample());
   }
 
-  public onReset() {}
+  public onReset() {
+    this.store.dispatch(new Sepsis.Reset());
+  }
 
   public onPredict() {
     this.store.dispatch(new Sepsis.Predict());

@@ -9,6 +9,7 @@
     </div>
     <div class="results">
       <app-data-operations
+        [isLoading]="isLoading$ | async"
         (loadSample)="onLoadSample()"
         (reset)="onReset()"
         (predict)="onPredict()"
