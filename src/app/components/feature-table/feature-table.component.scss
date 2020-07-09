@@ -1,52 +1,61 @@
+$header-width: 6rem;
+$label-width: 6rem;
+$value-width: 2.5rem;
+$cell-padding: 0.3rem;
+$table-width: $header-width + $label-width + ($value-width * 14) +
+  ($cell-padding * 32);
+
 .container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   font-size: 11px;
-  // display: flex;
-  // flex-direction: column;
 }
 
 .lbl-days {
-  .lbl-day {
-    margin-top: 12px;
-    display: inline-block;
-    padding: 0.3rem;
-    width: 50px;
-    border-top: 1px solid #ccc;
+  width: $table-width;
+  margin: 10px 10px 0;
+}
 
-    &:first-of-type {
-      margin-left: 11.2rem;
-    }
+.lbl-day {
+  display: inline-block;
+  padding: $cell-padding;
+  width: $value-width;
+
+  &:first-of-type {
+    margin-left: $header-width + $label-width + $cell-padding * 4;
   }
 }
 
 .cdk-viewport {
-  height: 600px;
-  width: 1100px;
-  // flex: 1;
-}
-
-.feature-container {
-  border-top: 1px solid #ccc;
+  width: $table-width;
+  flex: 1;
+  margin: 0 10px;
 }
 
 .lbl-header {
   display: inline-block;
-  width: 5rem;
-  padding: 0.3rem;
+  width: $header-width;
+  padding: $cell-padding;
+  border-top: 1px solid #ccc;
+  font-weight: bold;
 }
 
 .lbl-label {
   display: inline-block;
-  width: 5rem;
-  padding: 0.3rem;
+  width: $label-width;
+  padding: $cell-padding;
+  border-top: 1px solid #ccc;
   margin-left: 0;
 
   &:first-of-type {
-    margin-left: 5.6rem;
+    margin-left: $header-width + $cell-padding * 2;
   }
 }
 
 .lbl-value {
   display: inline-block;
-  width: 50px;
-  padding: 0.3rem;
+  width: $value-width;
+  padding: $cell-padding;
+  border-top: 1px solid #ccc;
 }
