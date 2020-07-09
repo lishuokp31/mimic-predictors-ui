@@ -13,6 +13,9 @@ export class ModelResultsComponent {
   @Input()
   public label: string = 'Prediction Results';
 
+  @Input()
+  public showResults: boolean = false;
+
   public data: any[] = [];
   @Input() set probabilities(value: number[]) {
     this.data = [

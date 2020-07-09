@@ -4,12 +4,16 @@
     <div class="feature-table">
       <app-feature-table
         [features]="features"
-        [featureCount]="featureCount"
+        [x]="x$ | async"
       ></app-feature-table>
     </div>
     <div class="results">
       <app-data-operations></app-data-operations>
-      <app-model-results [probabilities]="probabilities"></app-model-results>
+      <app-model-results
+        [showResults]="showPredictions$ | async"
+        [probabilities]="predictions$ | async"
+        label="患者当日出现脓毒症的概率"
+      ></app-model-results>
     </div>
   </div>
 </div>

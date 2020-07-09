@@ -1,4 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { List } from 'immutable';
+
 import { ModelFeature } from '../../data';
 
 @Component({
@@ -10,11 +12,11 @@ import { ModelFeature } from '../../data';
 export class FeatureTableComponent {
   public readonly days: number[] = Array(14)
     .fill(0)
-    .map((_, i) => i + 1);
+    .map((_, i) => i);
 
   @Input()
   public features: ModelFeature[] = [];
 
   @Input()
-  public featureCount: number = 0;
+  public x: List<List<number>> | null = null;
 }

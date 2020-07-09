@@ -1,5 +1,10 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { sepsisFeatures, sepsisFeatureCount } from '../../data';
+import { Store } from '@ngxs/store';
+import { List } from 'immutable';
+import { Observable } from 'rxjs';
+
+import { sepsisFeatures } from '../../data';
+import { AppState, Sepsis } from '../../store';
 
 @Component({
   selector: 'app-sepsis',
@@ -9,8 +14,26 @@ import { sepsisFeatures, sepsisFeatureCount } from '../../data';
 })
 export class SepsisPage {
   public readonly features = sepsisFeatures;
-  public readonly featureCount = sepsisFeatureCount;
-  public probabilities = Array(14)
-    .fill(0)
-    .map((_) => Math.random());
+
+  public x$: Observable<List<List<number>>>;
+  public showPredictions$: Observable<boolean>;
+  public predictions$: Observable<List<number>>;
+  public showWeights$: Observable<boolean>;
+  public weights$: Observable<List<List<number>>>;
+
+  constructor(private store: Store) {
+    this.x$ = this.store.select(AppState.sepsisX);
+    this.showPredictions$ = this.store.select(AppState.showSepsisPredictions);
+    this.predictions$ = this.store.select(AppState.sepsisPredictions);
+    this.showWeights$ = this.store.select(AppState.showSepsisWeights);
+    this.weights$ = this.store.select(AppState.sepsisWeights);
+  }
+
+  public loadSample() {
+    this.store.dispatch(new Sepsis.LoadSample());
+  }
+
+  public predict() {
+    this.store.dispatch(new Sepsis.Predict());
+  }
 }
