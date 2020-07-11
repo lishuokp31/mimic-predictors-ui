@@ -1,19 +1,22 @@
-import { List } from 'immutable';
+import { Feature } from '../typings';
 
 export interface AppStateModel {
-  sepsisX: List<List<number>>;
-  sepsisY: List<number>;
-  sepsisPredictions: List<number>;
-  sepsisWeights: List<List<number>>;
+  sepsisFeatures: Feature[];
+  sepsisX: number[][];
+  sepsisY: number[];
+  sepsisPredictions: number[];
+  sepsisWeights: number[][];
   sepsisLoading: boolean;
-  miX: List<List<number>>;
-  miY: List<number>;
-  miPredictions: List<number>;
-  miWeights: List<List<number>>;
+  miFeatures: Feature[];
+  miX: number[][];
+  miY: number[];
+  miPredictions: number[];
+  miWeights: number[][];
   miLoading: boolean;
-  vancomycinX: List<List<number>>;
-  vancomycinY: List<number>;
-  vancomycinPredictions: List<number>;
-  vancomycinWeights: List<List<number>>;
+  vancomycinFeatures: Feature[];
+  vancomycinX: number[][];
+  vancomycinY: number[];
+  vancomycinPredictions: number[];
+  vancomycinWeights: number[][];
   vancomycinLoading: boolean;
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { List } from 'immutable';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -29,7 +28,7 @@ export class ApiService {
 
   public predict(
     target: TargetModel,
-    x: List<List<number>>
+    x: number[][]
   ): Observable<PredictResponse> {
     const url = `${BASE_URL}predict`;
     const params = new HttpParams().set('target', target);

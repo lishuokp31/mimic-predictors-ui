@@ -1,10 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { List } from 'immutable';
 import { Observable } from 'rxjs';
 
-import { sepsisFeatures } from '../../mapping.json';
 import { AppState, Sepsis } from '../../store';
+import { Feature } from '../../typings';
 
 @Component({
   selector: 'app-sepsis',
@@ -13,21 +12,19 @@ import { AppState, Sepsis } from '../../store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SepsisPage {
-  public readonly features = sepsisFeatures;
-
-  public x$: Observable<List<List<number>>>;
-  public predictions$: Observable<List<number>>;
-  public weights$: Observable<List<List<number>>>;
+  public features$: Observable<Feature[]>;
+  public x$: Observable<number[][]>;
+  public predictions$: Observable<number[]>;
+  public weights$: Observable<object[][]>;
   public showPredictions$: Observable<boolean>;
-  public showWeights$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
 
   constructor(private store: Store) {
+    this.features$ = this.store.select(AppState.sepsisFeatures);
     this.x$ = this.store.select(AppState.sepsisX);
     this.predictions$ = this.store.select(AppState.sepsisPredictions);
-    this.weights$ = this.store.select(AppState.sepsisWeights);
+    this.weights$ = this.store.select(AppState.sepsisComputedWeights);
     this.showPredictions$ = this.store.select(AppState.showSepsisPredictions);
-    this.showWeights$ = this.store.select(AppState.showSepsisWeights);
     this.isLoading$ = this.store.select(AppState.isSepsisLoading);
   }
 

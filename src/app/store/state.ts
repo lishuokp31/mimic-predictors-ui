@@ -1,27 +1,45 @@
 import { Injectable } from '@angular/core';
 import { State, Selector, Action, StateContext } from '@ngxs/store';
-import { List } from 'immutable';
 
+import {
+  sepsisFeatures,
+  miFeatures,
+  vancomycinFeatures,
+} from '../mapping.json';
 import { AppStateModel } from './types';
-import { zeros1d, zeros2d, toList2d } from './utils';
 import { ApiService } from '../services';
 import * as actions from './actions';
+import { Feature } from '../typings';
+
+const nDays = 14;
+const nFeaturesSepsis = 225;
+const nFeaturesMi = 221;
+const nFeaturesVancomycin = 224;
+const weightBaseColor = '#2196F3';
+const [wr, wg, wb] = [
+  parseInt(weightBaseColor.slice(1, 3), 16),
+  parseInt(weightBaseColor.slice(3, 5), 16),
+  parseInt(weightBaseColor.slice(5, 7), 16),
+];
 
 export const initialState: AppStateModel = {
-  sepsisX: zeros2d(14, 225),
-  sepsisY: zeros1d(14),
-  sepsisPredictions: zeros1d(14),
-  sepsisWeights: zeros2d(14, 225),
+  sepsisFeatures,
+  sepsisX: zeros2d(nDays, nFeaturesSepsis),
+  sepsisY: zeros1d(nDays),
+  sepsisPredictions: zeros1d(nDays),
+  sepsisWeights: zeros2d(nDays, nFeaturesSepsis),
   sepsisLoading: false,
-  miX: zeros2d(14, 221),
-  miY: zeros1d(14),
-  miPredictions: zeros1d(14),
-  miWeights: zeros2d(14, 221),
+  miX: zeros2d(nDays, nFeaturesMi),
+  miY: zeros1d(nDays),
+  miFeatures,
+  miPredictions: zeros1d(nDays),
+  miWeights: zeros2d(nDays, nFeaturesMi),
   miLoading: false,
-  vancomycinX: zeros2d(14, 224),
-  vancomycinY: zeros1d(14),
-  vancomycinPredictions: zeros1d(14),
-  vancomycinWeights: zeros2d(14, 224),
+  vancomycinFeatures,
+  vancomycinX: zeros2d(nDays, nFeaturesVancomycin),
+  vancomycinY: zeros1d(nDays),
+  vancomycinPredictions: zeros1d(nDays),
+  vancomycinWeights: zeros2d(nDays, nFeaturesVancomycin),
   vancomycinLoading: false,
 };
 
@@ -31,6 +49,11 @@ export const initialState: AppStateModel = {
 })
 @Injectable()
 export class AppState {
+  @Selector()
+  static sepsisFeatures(state: AppStateModel) {
+    return state.sepsisFeatures;
+  }
+
   @Selector()
   static sepsisX(state: AppStateModel) {
     return state.sepsisX;
@@ -63,9 +86,40 @@ export class AppState {
     );
   }
 
+  @Selector([
+    AppState.showSepsisWeights,
+    AppState.sepsisFeatures,
+    AppState.sepsisWeights,
+  ])
+  static sepsisComputedWeights(
+    _: AppStateModel,
+    showWeights: boolean,
+    features: Feature[],
+    weights: number[][]
+  ): object[][] {
+    if (!showWeights) {
+      return Array(nDays).fill(Array(features.length).fill(null));
+    }
+
+    return Array(nDays)
+      .fill(0)
+      .map((_, day) =>
+        features
+          .map((feature) => getFeatureWeight(feature, day, weights))
+          .map((weight) => ({
+            'background-color': `rgba(${wr}, ${wg}, ${wb}, ${weight})`,
+          }))
+      );
+  }
+
   @Selector()
   static isSepsisLoading(state: AppStateModel) {
     return state.sepsisLoading;
+  }
+
+  @Selector()
+  static miFeatures(state: AppStateModel) {
+    return state.miFeatures;
   }
 
   @Selector()
@@ -98,9 +152,36 @@ export class AppState {
     return state.miWeights.every((day) => day.every((weight) => weight != 0));
   }
 
+  @Selector([AppState.showMiWeights, AppState.miFeatures, AppState.miWeights])
+  static miComputedWeights(
+    _: AppStateModel,
+    showWeights: boolean,
+    features: Feature[],
+    weights: number[][]
+  ): object[][] {
+    if (!showWeights) {
+      return Array(nDays).fill(Array(features.length).fill(null));
+    }
+
+    return Array(nDays)
+      .fill(0)
+      .map((_, day) =>
+        features
+          .map((feature) => getFeatureWeight(feature, day, weights))
+          .map((weight) => ({
+            'background-color': `rgba(${wr}, ${wg}, ${wb}, ${weight})`,
+          }))
+      );
+  }
+
   @Selector()
   static isMiLoading(state: AppStateModel) {
     return state.miLoading;
+  }
+
+  @Selector()
+  static vancomycinFeatures(state: AppStateModel) {
+    return state.vancomycinFeatures;
   }
 
   @Selector()
@@ -135,6 +216,32 @@ export class AppState {
     );
   }
 
+  @Selector([
+    AppState.showVancomycinWeights,
+    AppState.vancomycinFeatures,
+    AppState.vancomycinWeights,
+  ])
+  static vancomycinComputedWeights(
+    _: AppStateModel,
+    showWeights: boolean,
+    features: Feature[],
+    weights: number[][]
+  ): object[][] {
+    if (!showWeights) {
+      return Array(nDays).fill(Array(features.length).fill(null));
+    }
+
+    return Array(nDays)
+      .fill(0)
+      .map((_, day) =>
+        features
+          .map((feature) => getFeatureWeight(feature, day, weights))
+          .map((weight) => ({
+            'background-color': `rgba(${wr}, ${wg}, ${wb}, ${weight})`,
+          }))
+      );
+  }
+
   @Selector()
   static isVancomycinLoading(state: AppStateModel) {
     return state.vancomycinLoading;
@@ -148,10 +255,10 @@ export class AppState {
 
     const response = await this.api.loadSample('sepsis').toPromise();
     patchState({
-      sepsisX: toList2d(response.x),
-      sepsisY: List(response.y),
-      sepsisPredictions: zeros1d(14),
-      sepsisWeights: zeros2d(14, 225),
+      sepsisX: response.x,
+      sepsisY: response.y,
+      sepsisPredictions: zeros1d(nDays),
+      sepsisWeights: zeros2d(nDays, nFeaturesSepsis),
       sepsisLoading: false,
     });
   }
@@ -159,10 +266,10 @@ export class AppState {
   @Action(actions.Sepsis.Reset)
   public sepsisReset({ patchState }: StateContext<AppStateModel>) {
     patchState({
-      sepsisX: zeros2d(14, 225),
-      sepsisY: zeros1d(14),
-      sepsisPredictions: zeros1d(14),
-      sepsisWeights: zeros2d(14, 225),
+      sepsisX: zeros2d(nDays, nFeaturesSepsis),
+      sepsisY: zeros1d(nDays),
+      sepsisPredictions: zeros1d(nDays),
+      sepsisWeights: zeros2d(nDays, nFeaturesSepsis),
     });
   }
 
@@ -176,8 +283,8 @@ export class AppState {
     const { sepsisX } = getState();
     const response = await this.api.predict('sepsis', sepsisX).toPromise();
     patchState({
-      sepsisPredictions: List(response.predictions),
-      sepsisWeights: toList2d(response.weights),
+      sepsisPredictions: response.predictions,
+      sepsisWeights: response.weights,
       sepsisLoading: false,
     });
   }
@@ -188,10 +295,10 @@ export class AppState {
 
     const response = await this.api.loadSample('mi').toPromise();
     patchState({
-      miX: toList2d(response.x),
-      miY: List(response.y),
-      miPredictions: zeros1d(14),
-      miWeights: zeros2d(14, 221),
+      miX: response.x,
+      miY: response.y,
+      miPredictions: zeros1d(nDays),
+      miWeights: zeros2d(nDays, nFeaturesMi),
       miLoading: false,
     });
   }
@@ -199,10 +306,10 @@ export class AppState {
   @Action(actions.Mi.Reset)
   public miReset({ patchState }: StateContext<AppStateModel>) {
     patchState({
-      miX: zeros2d(14, 221),
-      miY: zeros1d(14),
-      miPredictions: zeros1d(14),
-      miWeights: zeros2d(14, 221),
+      miX: zeros2d(nDays, nFeaturesMi),
+      miY: zeros1d(nDays),
+      miPredictions: zeros1d(nDays),
+      miWeights: zeros2d(nDays, nFeaturesMi),
     });
   }
 
@@ -216,8 +323,8 @@ export class AppState {
     const { miX } = getState();
     const response = await this.api.predict('mi', miX).toPromise();
     patchState({
-      miPredictions: List(response.predictions),
-      miWeights: toList2d(response.weights),
+      miPredictions: response.predictions,
+      miWeights: response.weights,
       miLoading: false,
     });
   }
@@ -230,10 +337,10 @@ export class AppState {
 
     const response = await this.api.loadSample('vancomycin').toPromise();
     patchState({
-      vancomycinX: toList2d(response.x),
-      vancomycinY: List(response.y),
-      vancomycinPredictions: zeros1d(14),
-      vancomycinWeights: zeros2d(14, 221),
+      vancomycinX: response.x,
+      vancomycinY: response.y,
+      vancomycinPredictions: zeros1d(nDays),
+      vancomycinWeights: zeros2d(nDays, nFeaturesVancomycin),
       vancomycinLoading: false,
     });
   }
@@ -241,10 +348,10 @@ export class AppState {
   @Action(actions.Vancomycin.Reset)
   public vancomycinReset({ patchState }: StateContext<AppStateModel>) {
     patchState({
-      vancomycinX: zeros2d(14, 224),
-      vancomycinY: zeros1d(14),
-      vancomycinPredictions: zeros1d(14),
-      vancomycinWeights: zeros2d(14, 224),
+      vancomycinX: zeros2d(nDays, nFeaturesVancomycin),
+      vancomycinY: zeros1d(nDays),
+      vancomycinPredictions: zeros1d(nDays),
+      vancomycinWeights: zeros2d(nDays, nFeaturesVancomycin),
     });
   }
 
@@ -260,9 +367,23 @@ export class AppState {
       .predict('vancomycin', vancomycinX)
       .toPromise();
     patchState({
-      vancomycinPredictions: List(response.predictions),
-      vancomycinWeights: toList2d(response.weights),
+      vancomycinPredictions: response.predictions,
+      vancomycinWeights: response.weights,
       vancomycinLoading: false,
     });
   }
+}
+
+function zeros1d(length: number): number[] {
+  return Array(length).fill(0);
+}
+
+function zeros2d(a1: number, a2: number): number[][] {
+  return Array(a1).fill(Array(a2).fill(0));
+}
+
+function getFeatureWeight(feature: Feature, day: number, weights: number[][]) {
+  return [feature.id, ...feature.relatedIDs]
+    .map((id) => weights[day][id])
+    .reduce((a, v) => a + v, 0);
 }

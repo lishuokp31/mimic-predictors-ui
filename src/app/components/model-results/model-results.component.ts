@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { List } from 'immutable';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,7 +17,7 @@ export class ModelResultsComponent {
   public showResults: boolean | null = false;
 
   public data: any[] = [];
-  @Input() set probabilities(value: List<number> | null) {
+  @Input() set probabilities(value: number[] | null) {
     if (value) {
       this.data = [
         {

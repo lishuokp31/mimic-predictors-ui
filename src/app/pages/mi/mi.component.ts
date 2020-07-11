@@ -1,10 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { List } from 'immutable';
 import { Observable } from 'rxjs';
 
-import { miFeatures } from '../../mapping.json';
 import { AppState, Mi } from '../../store';
+import { Feature } from '../../typings';
 
 @Component({
   selector: 'app-mi',
@@ -13,21 +12,19 @@ import { AppState, Mi } from '../../store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MiPage {
-  public readonly features = miFeatures;
-
-  public x$: Observable<List<List<number>>>;
-  public predictions$: Observable<List<number>>;
-  public weights$: Observable<List<List<number>>>;
+  public features$: Observable<Feature[]>;
+  public x$: Observable<number[][]>;
+  public predictions$: Observable<number[]>;
+  public weights$: Observable<object[][]>;
   public showPredictions$: Observable<boolean>;
-  public showWeights$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
 
   constructor(private store: Store) {
+    this.features$ = this.store.select(AppState.miFeatures);
     this.x$ = this.store.select(AppState.miX);
     this.predictions$ = this.store.select(AppState.miPredictions);
-    this.weights$ = this.store.select(AppState.miWeights);
+    this.weights$ = this.store.select(AppState.miComputedWeights);
     this.showPredictions$ = this.store.select(AppState.showMiPredictions);
-    this.showWeights$ = this.store.select(AppState.showMiWeights);
     this.isLoading$ = this.store.select(AppState.isMiLoading);
   }
 

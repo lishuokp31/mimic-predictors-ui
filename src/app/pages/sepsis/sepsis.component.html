@@ -3,10 +3,9 @@
   <div class="content">
     <div class="feature-table">
       <app-feature-table
-        [features]="features"
+        [features]="features$ | async"
         [x]="x$ | async"
         [weights]="weights$ | async"
-        [showWeights]="showWeights$ | async"
         weightsBaseColor="#4CAF50"
       ></app-feature-table>
     </div>

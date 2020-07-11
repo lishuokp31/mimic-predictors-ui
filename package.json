@@ -24,7 +24,6 @@
     "@angular/router": "~10.0.2",
     "@ngxs/store": "^3.6.2",
     "@swimlane/ngx-charts": "^14.0.0",
-    "immutable": "^4.0.0-rc.12",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
