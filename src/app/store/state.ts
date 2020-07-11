@@ -10,6 +10,7 @@ import { AppStateModel } from './types';
 import { ApiService } from '../services';
 import * as actions from './actions';
 import { Feature } from '../typings';
+import { format } from './formatter';
 
 const nDays = 14;
 const nFeaturesSepsis = 225;
@@ -59,6 +60,21 @@ export class AppState {
     return state.sepsisX;
   }
 
+  @Selector([AppState.sepsisFeatures, AppState.sepsisX])
+  static sepsisFormattedX(
+    _: AppStateModel,
+    features: Feature[],
+    x: number[][]
+  ): string[][] {
+    return Array(nDays)
+      .fill(0)
+      .map((_, day) =>
+        features.map((feature) =>
+          format(feature.identifier, feature.group, x[day][feature.id])
+        )
+      );
+  }
+
   @Selector()
   static sepsisY(state: AppStateModel) {
     return state.sepsisY;
@@ -72,18 +88,6 @@ export class AppState {
   @Selector()
   static sepsisWeights(state: AppStateModel) {
     return state.sepsisWeights;
-  }
-
-  @Selector()
-  static showSepsisPredictions(state: AppStateModel) {
-    return state.sepsisPredictions.every((probability) => probability != 0);
-  }
-
-  @Selector()
-  static showSepsisWeights(state: AppStateModel) {
-    return state.sepsisWeights.every((day) =>
-      day.every((weight) => weight != 0)
-    );
   }
 
   @Selector([
@@ -113,6 +117,18 @@ export class AppState {
   }
 
   @Selector()
+  static showSepsisPredictions(state: AppStateModel) {
+    return state.sepsisPredictions.every((probability) => probability != 0);
+  }
+
+  @Selector()
+  static showSepsisWeights(state: AppStateModel) {
+    return state.sepsisWeights.every((day) =>
+      day.every((weight) => weight != 0)
+    );
+  }
+
+  @Selector()
   static isSepsisLoading(state: AppStateModel) {
     return state.sepsisLoading;
   }
@@ -125,6 +141,21 @@ export class AppState {
   @Selector()
   static miX(state: AppStateModel) {
     return state.miX;
+  }
+
+  @Selector([AppState.miFeatures, AppState.miX])
+  static miFormattedX(
+    _: AppStateModel,
+    features: Feature[],
+    x: number[][]
+  ): string[][] {
+    return Array(nDays)
+      .fill(0)
+      .map((_, day) =>
+        features.map((feature) =>
+          format(feature.identifier, feature.group, x[day][feature.id])
+        )
+      );
   }
 
   @Selector()
@@ -140,16 +171,6 @@ export class AppState {
   @Selector()
   static miWeights(state: AppStateModel) {
     return state.miWeights;
-  }
-
-  @Selector()
-  static showMiPredictions(state: AppStateModel) {
-    return state.miPredictions.every((probability) => probability != 0);
-  }
-
-  @Selector()
-  static showMiWeights(state: AppStateModel) {
-    return state.miWeights.every((day) => day.every((weight) => weight != 0));
   }
 
   @Selector([AppState.showMiWeights, AppState.miFeatures, AppState.miWeights])
@@ -175,6 +196,16 @@ export class AppState {
   }
 
   @Selector()
+  static showMiPredictions(state: AppStateModel) {
+    return state.miPredictions.every((probability) => probability != 0);
+  }
+
+  @Selector()
+  static showMiWeights(state: AppStateModel) {
+    return state.miWeights.every((day) => day.every((weight) => weight != 0));
+  }
+
+  @Selector()
   static isMiLoading(state: AppStateModel) {
     return state.miLoading;
   }
@@ -187,6 +218,21 @@ export class AppState {
   @Selector()
   static vancomycinX(state: AppStateModel) {
     return state.vancomycinX;
+  }
+
+  @Selector([AppState.vancomycinFeatures, AppState.vancomycinX])
+  static vancomycinFormattedX(
+    _: AppStateModel,
+    features: Feature[],
+    x: number[][]
+  ): string[][] {
+    return Array(nDays)
+      .fill(0)
+      .map((_, day) =>
+        features.map((feature) =>
+          format(feature.identifier, feature.group, x[day][feature.id])
+        )
+      );
   }
 
   @Selector()
@@ -202,18 +248,6 @@ export class AppState {
   @Selector()
   static vancomycinWeights(state: AppStateModel) {
     return state.vancomycinWeights;
-  }
-
-  @Selector()
-  static showVancomycinPredictions(state: AppStateModel) {
-    return state.vancomycinPredictions.every((probability) => probability != 0);
-  }
-
-  @Selector()
-  static showVancomycinWeights(state: AppStateModel) {
-    return state.vancomycinWeights.every((day) =>
-      day.every((weight) => weight != 0)
-    );
   }
 
   @Selector([
@@ -243,11 +277,23 @@ export class AppState {
   }
 
   @Selector()
+  static showVancomycinPredictions(state: AppStateModel) {
+    return state.vancomycinPredictions.every((probability) => probability != 0);
+  }
+
+  @Selector()
+  static showVancomycinWeights(state: AppStateModel) {
+    return state.vancomycinWeights.every((day) =>
+      day.every((weight) => weight != 0)
+    );
+  }
+
+  @Selector()
   static isVancomycinLoading(state: AppStateModel) {
     return state.vancomycinLoading;
   }
 
-  constructor(public api: ApiService) {}
+  constructor(private api: ApiService) {}
 
   @Action(actions.Sepsis.LoadSample)
   public async sepsisLoadSample({ patchState }: StateContext<AppStateModel>) {

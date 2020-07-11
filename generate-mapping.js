@@ -13,8 +13,14 @@ function findRelatedIDs(flattened, identifier) {
     ['_min', '_max', '_std'].map((x) => identifier + x)
   );
   const results = flattened
-    .filter(([_id, _identifier]) => relatedIdentifiers.has(_identifier))
+    .filter(([, _identifier]) => relatedIdentifiers.has(_identifier))
     .map(([_id]) => _id);
+
+  // sanity-check
+  // related IDs length can only be 3 or 0
+  if (results.length != 0 && results.length != 3) {
+    throw `[ERROR] Related IDs for identifier="${identifier}" has: ${results.length}`;
+  }
 
   return results;
 }
@@ -28,7 +34,9 @@ function findFirst(features, featureGroup) {
 function getMapping(mapping, i18n) {
   const { demo, vitals, cbc, labs, meds } = mapping;
   const combination = [demo, vitals, cbc, labs, meds];
-  const flattened = combination.flatMap((group) => group.features);
+  const flattened = combination.flatMap((group) =>
+    group.features.map(([id, identifier]) => [id, identifier, group.label])
+  );
   const features = flattened
     .filter(
       ([, identifier]) =>
@@ -36,9 +44,10 @@ function getMapping(mapping, i18n) {
         !identifier.endsWith('_max') &&
         !identifier.endsWith('_std')
     )
-    .map(([id, identifier]) => ({
+    .map(([id, identifier, groupLabel]) => ({
       id,
       identifier,
+      group: groupLabel.toLowerCase(),
       label: i18n[id][1],
       unit: i18n[id][3],
       relatedIDs: findRelatedIDs(flattened, identifier),

@@ -14,6 +14,7 @@ import { Feature } from '../../typings';
 export class MiPage {
   public features$: Observable<Feature[]>;
   public x$: Observable<number[][]>;
+  public formattedX$: Observable<string[][]>;
   public predictions$: Observable<number[]>;
   public weights$: Observable<object[][]>;
   public showPredictions$: Observable<boolean>;
@@ -22,6 +23,7 @@ export class MiPage {
   constructor(private store: Store) {
     this.features$ = this.store.select(AppState.miFeatures);
     this.x$ = this.store.select(AppState.miX);
+    this.formattedX$ = this.store.select(AppState.miFormattedX);
     this.predictions$ = this.store.select(AppState.miPredictions);
     this.weights$ = this.store.select(AppState.miComputedWeights);
     this.showPredictions$ = this.store.select(AppState.showMiPredictions);

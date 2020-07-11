@@ -20,6 +20,9 @@ export class FeatureTableComponent {
   public x: number[][] | null = null;
 
   @Input()
+  public formattedX: string[][] | null = null;
+
+  @Input()
   public weights: object[][] | null = null;
 
   public format(value: number | undefined) {

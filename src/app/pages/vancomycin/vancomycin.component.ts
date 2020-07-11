@@ -14,6 +14,7 @@ import { Feature } from '../../typings';
 export class VancomycinPage {
   public features$: Observable<Feature[]>;
   public x$: Observable<number[][]>;
+  public formattedX$: Observable<string[][]>;
   public predictions$: Observable<number[]>;
   public weights$: Observable<object[][]>;
   public showPredictions$: Observable<boolean>;
@@ -22,6 +23,7 @@ export class VancomycinPage {
   constructor(private store: Store) {
     this.features$ = this.store.select(AppState.vancomycinFeatures);
     this.x$ = this.store.select(AppState.vancomycinX);
+    this.formattedX$ = this.store.select(AppState.vancomycinFormattedX);
     this.predictions$ = this.store.select(AppState.vancomycinPredictions);
     this.weights$ = this.store.select(AppState.vancomycinComputedWeights);
     this.showPredictions$ = this.store.select(

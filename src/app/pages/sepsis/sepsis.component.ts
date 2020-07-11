@@ -14,6 +14,7 @@ import { Feature } from '../../typings';
 export class SepsisPage {
   public features$: Observable<Feature[]>;
   public x$: Observable<number[][]>;
+  public formattedX$: Observable<string[][]>;
   public predictions$: Observable<number[]>;
   public weights$: Observable<object[][]>;
   public showPredictions$: Observable<boolean>;
@@ -22,6 +23,7 @@ export class SepsisPage {
   constructor(private store: Store) {
     this.features$ = this.store.select(AppState.sepsisFeatures);
     this.x$ = this.store.select(AppState.sepsisX);
+    this.formattedX$ = this.store.select(AppState.sepsisFormattedX);
     this.predictions$ = this.store.select(AppState.sepsisPredictions);
     this.weights$ = this.store.select(AppState.sepsisComputedWeights);
     this.showPredictions$ = this.store.select(AppState.showSepsisPredictions);
