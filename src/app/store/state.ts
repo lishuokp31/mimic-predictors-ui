@@ -60,19 +60,38 @@ export class AppState {
     return state.sepsisX;
   }
 
-  @Selector([AppState.sepsisFeatures, AppState.sepsisX])
+  @Selector([
+    AppState.sepsisFeatures,
+    AppState.sepsisX,
+    AppState.sepsisEmptyDayStart,
+  ])
   static sepsisFormattedX(
     _: AppStateModel,
     features: Feature[],
-    x: number[][]
+    x: number[][],
+    emptyDayStart: number
   ): string[][] {
     return Array(nDays)
       .fill(0)
       .map((_, day) =>
         features.map((feature) =>
-          format(feature.identifier, feature.group, x[day][feature.id])
+          day >= emptyDayStart
+            ? '-'
+            : format(feature.identifier, feature.group, x[day][feature.id])
         )
       );
+  }
+
+  @Selector([AppState.sepsisX])
+  static sepsisEmptyDayStart(_: AppStateModel, x: number[][]): number {
+    for (let i = 0; i < x.length; i++) {
+      if (x[i].every((value) => value === 0)) {
+        // treat empty data as full
+        return i === 0 ? Number.POSITIVE_INFINITY : i;
+      }
+    }
+
+    return Number.POSITIVE_INFINITY;
   }
 
   @Selector()
@@ -143,19 +162,34 @@ export class AppState {
     return state.miX;
   }
 
-  @Selector([AppState.miFeatures, AppState.miX])
+  @Selector([AppState.miFeatures, AppState.miX, AppState.miEmptyDayStart])
   static miFormattedX(
     _: AppStateModel,
     features: Feature[],
-    x: number[][]
+    x: number[][],
+    emptyDayStart: number
   ): string[][] {
     return Array(nDays)
       .fill(0)
       .map((_, day) =>
         features.map((feature) =>
-          format(feature.identifier, feature.group, x[day][feature.id])
+          day >= emptyDayStart
+            ? '-'
+            : format(feature.identifier, feature.group, x[day][feature.id])
         )
       );
+  }
+
+  @Selector([AppState.miX])
+  static miEmptyDayStart(_: AppStateModel, x: number[][]): number {
+    for (let i = 0; i < x.length; i++) {
+      if (x[i].every((value) => value === 0)) {
+        // treat empty data as full
+        return i === 0 ? Number.POSITIVE_INFINITY : i;
+      }
+    }
+
+    return Number.POSITIVE_INFINITY;
   }
 
   @Selector()
@@ -220,19 +254,38 @@ export class AppState {
     return state.vancomycinX;
   }
 
-  @Selector([AppState.vancomycinFeatures, AppState.vancomycinX])
+  @Selector([
+    AppState.vancomycinFeatures,
+    AppState.vancomycinX,
+    AppState.vancomycinEmptyDayStart,
+  ])
   static vancomycinFormattedX(
     _: AppStateModel,
     features: Feature[],
-    x: number[][]
+    x: number[][],
+    emptyDayStart: number
   ): string[][] {
     return Array(nDays)
       .fill(0)
       .map((_, day) =>
         features.map((feature) =>
-          format(feature.identifier, feature.group, x[day][feature.id])
+          day >= emptyDayStart
+            ? '-'
+            : format(feature.identifier, feature.group, x[day][feature.id])
         )
       );
+  }
+
+  @Selector([AppState.vancomycinX])
+  static vancomycinEmptyDayStart(_: AppStateModel, x: number[][]): number {
+    for (let i = 0; i < x.length; i++) {
+      if (x[i].every((value) => value === 0)) {
+        // treat empty data as full
+        return i === 0 ? Number.POSITIVE_INFINITY : i;
+      }
+    }
+
+    return Number.POSITIVE_INFINITY;
   }
 
   @Selector()
