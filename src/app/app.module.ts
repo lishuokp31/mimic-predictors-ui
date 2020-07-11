@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +28,7 @@ import { environment } from '../environments/environment';
     NgxsModule.forRoot([AppState], {
       developmentMode: !environment.production,
     }),
+    ...[!environment.production ? NgxsReduxDevtoolsPluginModule.forRoot() : []],
   ],
   providers: [...services],
   bootstrap: [AppComponent],
