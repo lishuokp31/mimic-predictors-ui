@@ -47,13 +47,16 @@ export class FeatureTableComponent {
     return Number(value).toFixed(2);
   }
 
-  public getBgColor(day: number, id: number) {
+  public getBgColor(day: number, feature: Feature) {
     if (!this.showWeights || !this.weights) {
       return null;
     }
 
     const { r, g, b } = this;
-    const weight = this.weights.get(day)!.get(id);
+    const weight = [feature.id, ...feature.relatedIDs]
+      .map((id) => this.weights!.get(day)!.get(id))
+      .reduce((a, v) => a! + v!, 0);
+
     return {
       'background-color': `rgba(${r}, ${g}, ${b}, ${weight})`,
     };

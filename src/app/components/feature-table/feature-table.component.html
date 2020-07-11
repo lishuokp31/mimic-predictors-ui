@@ -10,7 +10,7 @@
       <span class="lbl-label">{{ feature.label }}</span>
       <span
         *ngFor="let day of days"
-        [ngStyle]="getBgColor(day, feature.id)"
+        [ngStyle]="getBgColor(day, feature)"
         class="lbl-value"
       >
         <!-- x is guaranteed to be non-null here -->
