@@ -5,6 +5,8 @@
       <app-feature-table
         [features]="features"
         [x]="x$ | async"
+        [weights]="weights$ | async"
+        [showWeights]="showWeights$ | async"
       ></app-feature-table>
     </div>
     <div class="results">

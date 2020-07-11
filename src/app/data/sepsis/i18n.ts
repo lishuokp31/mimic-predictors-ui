@@ -195,7 +195,7 @@ const i18n: I18nTuple[] = [
   ['levofloxacin', '左氧氟沙星', null, null],
   ['levothyroxine', '左旋甲状腺素', null, null],
   ['lisinopril', '赖诺普利', null, null],
-  ['magensium sulfate', '硫酸镁;', null, null],
+  ['magensium sulfate', '硫酸镁', null, null],
   ['meropenem', '美罗培南', null, null],
   ['metoclopramide', '甲氧氯普胺', null, null],
   ['metoprolol', '美托洛尔', null, null],
