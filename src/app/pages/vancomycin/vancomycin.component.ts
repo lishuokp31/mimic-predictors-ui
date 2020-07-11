@@ -3,7 +3,7 @@ import { Store } from '@ngxs/store';
 import { List } from 'immutable';
 import { Observable } from 'rxjs';
 
-import { vancomycinFeatures } from '../../data';
+import { vancomycinFeatures } from '../../mapping.json';
 import { AppState, Vancomycin } from '../../store';
 
 @Component({

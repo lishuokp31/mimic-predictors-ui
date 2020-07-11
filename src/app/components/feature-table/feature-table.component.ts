@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { List } from 'immutable';
 
-import { ModelFeature } from '../../data';
+import { Feature } from '../../typings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,7 +15,7 @@ export class FeatureTableComponent {
     .map((_, i) => i);
 
   @Input()
-  public features: ModelFeature[] = [];
+  public features: Feature[] = [];
 
   @Input()
   public x: List<List<number>> | null = null;

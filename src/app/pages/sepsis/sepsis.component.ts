@@ -3,7 +3,7 @@ import { Store } from '@ngxs/store';
 import { List } from 'immutable';
 import { Observable } from 'rxjs';
 
-import { sepsisFeatures } from '../../data';
+import { sepsisFeatures } from '../../mapping.json';
 import { AppState, Sepsis } from '../../store';
 
 @Component({

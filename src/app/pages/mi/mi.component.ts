@@ -3,7 +3,7 @@ import { Store } from '@ngxs/store';
 import { List } from 'immutable';
 import { Observable } from 'rxjs';
 
-import { miFeatures } from '../../data';
+import { miFeatures } from '../../mapping.json';
 import { AppState, Mi } from '../../store';
 
 @Component({
