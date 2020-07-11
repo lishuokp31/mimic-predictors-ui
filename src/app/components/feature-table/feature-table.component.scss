@@ -1,5 +1,5 @@
 $header-width: 6rem;
-$label-width: 6rem;
+$label-width: 7rem;
 $value-width: 2.5rem;
 $cell-padding: 0.3rem;
 $table-width: $header-width + $label-width + ($value-width * 14) +
@@ -51,6 +51,10 @@ $table-width: $header-width + $label-width + ($value-width * 14) +
 
   &:first-of-type {
     margin-left: $header-width + $cell-padding * 2;
+  }
+
+  .lbl-unit {
+    color: #ff4081;
   }
 }
 

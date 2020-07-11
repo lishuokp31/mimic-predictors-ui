@@ -7,13 +7,18 @@
       <span *ngIf="feature.header" class="lbl-header">{{
         feature.header
       }}</span>
-      <span class="lbl-label">{{ feature.label }}</span>
+      <span class="lbl-label" [matTooltip]="feature.identifier">
+        {{ feature.label }}
+        <span *ngIf="feature.unit" class="lbl-unit">{{ feature.unit }}</span>
+      </span>
+      <!-- x is guaranteed to be non-null here -->
       <span
         *ngFor="let day of days"
         [ngStyle]="getBgColor(day, feature)"
+        [matTooltip]="x!.get(day)!.get(feature.id)"
+        [matTooltipShowDelay]="500"
         class="lbl-value"
       >
-        <!-- x is guaranteed to be non-null here -->
         {{ formatValue(x!.get(day)!.get(feature.id)) }}
       </span>
     </div>
