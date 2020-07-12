@@ -8,6 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "build:stats": "ng build --stats-json",
+    "analyze": "webpack-bundle-analyzer dist/mimic-lstm-angular/stats.json",
     "build-mapping": "node generate-mapping.js"
   },
   "private": true,

@@ -24,16 +24,4 @@ export class FeatureTableComponent {
 
   @Input()
   public weights: object[][] | null = null;
-
-  public format(value: number | undefined) {
-    if (typeof value !== 'number') {
-      return value;
-    }
-
-    if (Number.isInteger(value)) {
-      return value;
-    }
-
-    return Number(value).toFixed(2);
-  }
 }
