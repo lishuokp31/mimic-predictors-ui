@@ -142,9 +142,7 @@ export class AppState {
 
   @Selector()
   static showSepsisWeights(state: AppStateModel) {
-    return state.sepsisWeights.every((day) =>
-      day.some((weight) => weight != 0)
-    );
+    return state.sepsisWeights.some((day) => day.some((weight) => weight != 0));
   }
 
   @Selector()
@@ -236,7 +234,7 @@ export class AppState {
 
   @Selector()
   static showMiWeights(state: AppStateModel) {
-    return state.miWeights.every((day) => day.some((weight) => weight != 0));
+    return state.miWeights.some((day) => day.some((weight) => weight != 0));
   }
 
   @Selector()
@@ -336,7 +334,7 @@ export class AppState {
 
   @Selector()
   static showVancomycinWeights(state: AppStateModel) {
-    return state.vancomycinWeights.every((day) =>
+    return state.vancomycinWeights.some((day) =>
       day.some((weight) => weight != 0)
     );
   }
