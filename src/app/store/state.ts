@@ -480,7 +480,10 @@ function zeros2d(a1: number, a2: number): number[][] {
 }
 
 function getFeatureWeight(feature: Feature, day: number, weights: number[][]) {
-  return [feature.id, ...feature.relatedIDs]
+  const ids = [feature.id, ...feature.relatedIDs];
+  const totalWeight = ids
     .map((id) => weights[day][id])
     .reduce((a, v) => a + v, 0);
+
+  return totalWeight / ids.length;
 }
