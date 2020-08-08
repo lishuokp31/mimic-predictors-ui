@@ -1,6 +1,6 @@
 {
   "cbc": {
-    "label": "CBC w/ Differential",
+    "label": "血常规",
     "features": [
       [7, "rbcs"],
       [81, "rbcs_min"],
@@ -57,7 +57,7 @@
     ]
   },
   "vitals": {
-    "label": "Vitals",
+    "label": "主要生命体征",
     "features": [
       [35, "temperature (f)"],
       [106, "temperature (f)_min"],
@@ -86,7 +86,7 @@
     ]
   },
   "labs": {
-    "label": "Labs",
+    "label": "实验数据",
     "features": [
       [1, "hdl"],
       [75, "hdl_min"],
@@ -156,7 +156,7 @@
     ]
   },
   "demo": {
-    "label": "Demographic",
+    "label": "个人信息",
     "features": [
       [145, "age"],
       [146, "m"],
@@ -167,7 +167,7 @@
     ]
   },
   "meds": {
-    "label": "Medications",
+    "label": "药物",
     "features": [
       [171, "epoetin"],
       [219, "warfarin"],
