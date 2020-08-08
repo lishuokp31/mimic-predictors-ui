@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { curveMonotoneX } from 'd3-shape';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -9,6 +10,8 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 export class ModelResultsComponent {
   public readonly yAxisTicks = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0];
   public readonly colorScheme = { domain: ['#FF6485'] };
+  public readonly referenceLines = [{ name: '阳性', value: 0.5 }];
+  public readonly curve = curveMonotoneX;
 
   @Input()
   public label: string = 'Prediction Results';
