@@ -19,4 +19,10 @@ export interface AppStateModel {
   vancomycinPredictions: number[];
   vancomycinWeights: number[][];
   vancomycinLoading: boolean;
+  akiFeatures: Feature[];
+  akiX: number[][];
+  akiY: number[];
+  akiPredictions: number[];
+  akiWeights: number[][];
+  akiLoading: boolean;
 }

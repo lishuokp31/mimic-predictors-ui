@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+}
+
+.results {
+  flex: 1;
+  padding: 15px 20px;
+}

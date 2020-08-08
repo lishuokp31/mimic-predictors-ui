@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 
 const BASE_URL = 'http://localhost:5050/';
 
-export type TargetModel = 'sepsis' | 'mi' | 'vancomycin';
+export type TargetModel = 'aki' | 'sepsis' | 'mi' | 'vancomycin';
 
 @Injectable()
 export class ApiService {

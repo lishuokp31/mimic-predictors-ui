@@ -1,0 +1,18 @@
+[
+  ["gender", "性别", null, null],
+  ["age", "年龄", null, null],
+  ["weight", "体重", null, "kg"],
+  ["height", "身高", null, "cm"],
+  ["BMI", "BMI指数", null, null],
+  ["bicarbonate", "碳酸氢盐", null, null],
+  ["chloride", "氯化物", null, "mEq/L"],
+  ["creatinine", "肌酸酐", null, "mg/dL"],
+  ["gluconate", "葡萄糖", null, null],
+  ["magnesium", "镁", null, "mEq/L"],
+  ["postassium", "钾", null, "mEq/L"],
+  ["sodium", "钠", null, "mEq/L"],
+  ["BUN", "血尿素氮", null, "mg/dL"],
+  ["hemoglobin", "血红蛋白", null, null],
+  ["platelets", "血小板", null, "K/uL"],
+  ["WBCs", "白细胞", null, "K/uL"]
+]
