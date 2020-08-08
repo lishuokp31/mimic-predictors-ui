@@ -1,27 +1,24 @@
 <div class="container">
-  <app-navbar></app-navbar>
-  <div class="content">
-    <div class="feature-table">
-      <app-feature-table
-        [features]="features$ | async"
-        [x]="x$ | async"
-        [formattedX]="formattedX$ | async"
-        [weights]="weights$ | async"
-        weightsBaseColor="#4CAF50"
-      ></app-feature-table>
-    </div>
-    <div class="results">
-      <app-data-operations
-        [isLoading]="isLoading$ | async"
-        (loadSample)="onLoadSample()"
-        (reset)="onReset()"
-        (predict)="onPredict()"
-      ></app-data-operations>
-      <app-model-results
-        [showResults]="showPredictions$ | async"
-        [probabilities]="predictions$ | async"
-        label="患者当日出现脓毒症的概率"
-      ></app-model-results>
-    </div>
+  <div class="feature-table">
+    <app-feature-table
+      [features]="features$ | async"
+      [x]="x$ | async"
+      [formattedX]="formattedX$ | async"
+      [weights]="weights$ | async"
+      weightsBaseColor="#4CAF50"
+    ></app-feature-table>
+  </div>
+  <div class="results">
+    <app-data-operations
+      [isLoading]="isLoading$ | async"
+      (loadSample)="onLoadSample()"
+      (reset)="onReset()"
+      (predict)="onPredict()"
+    ></app-data-operations>
+    <app-model-results
+      [showResults]="showPredictions$ | async"
+      [probabilities]="predictions$ | async"
+      label="患者当日出现脓毒症的概率"
+    ></app-model-results>
   </div>
 </div>
