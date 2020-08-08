@@ -485,5 +485,5 @@ function getFeatureWeight(feature: Feature, day: number, weights: number[][]) {
     .map((id) => weights[day][id])
     .reduce((a, v) => a + v, 0);
 
-  return totalWeight / ids.length;
+  return totalWeight;
 }
