@@ -1,5 +1,4 @@
 const fs = require('fs');
-const outputPath = './src/app/mapping.json';
 
 const mappingAki = require('./data/aki/mapping.json');
 const mappingSepsis = require('./data/sepsis/mapping.json');
@@ -126,12 +125,13 @@ const akiFeatures = getMapping(mappingAki, i18nAki);
 const sepsisFeatures = getMapping(mappingSepsis, i18nSepsis);
 const miFeatures = getMapping(mappingMi, i18nMi);
 const vancomycinFeatures = getMapping(mappingVancomycin, i18nVancomycin);
-const result = JSON.stringify({
-  akiFeatures,
-  sepsisFeatures,
-  miFeatures,
-  vancomycinFeatures,
-});
 
-// generate file
-fs.writeFileSync(outputPath, result);
+// generate output mappings
+[
+  ['./src/app/sepsis/mapping.json', sepsisFeatures],
+  ['./src/app/mi/mapping.json', miFeatures],
+  ['./src/app/vancomycin/mapping.json', vancomycinFeatures],
+  ['./src/app/aki/mapping.json', akiFeatures],
+].forEach(([path, features]) => {
+  fs.writeFileSync(path, JSON.stringify(features));
+});
