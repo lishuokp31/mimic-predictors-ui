@@ -1,4 +1,4 @@
-const booleanGenderIdentifiers = new Set(['m']);
+const booleanGenderIdentifiers = new Set(['m', 'gender']);
 const booleanIsIdentifiers = new Set(['black']);
 const booleanHaveIdentifiers = new Set(['tobacco', 'diabetes']);
 
