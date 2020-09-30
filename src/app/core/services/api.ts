@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-const BASE_URL = 'http://localhost:5050/';
+const BASE_URL = 'http://localhost:5050/api/';
 
 export type TargetModel = 'aki' | 'sepsis' | 'mi' | 'vancomycin';
 
