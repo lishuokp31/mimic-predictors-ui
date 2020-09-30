@@ -2,27 +2,27 @@
   "labs": {
     "label": "实验结果",
     "features": [
-      [5, "bicarbonate"],
-      [6, "chloride"],
-      [7, "creatinine"],
-      [8, "gluconate"],
-      [9, "magnesium"],
-      [10, "postassium"],
-      [11, "sodium"],
-      [12, "BUN"],
-      [13, "hemoglobin"],
-      [14, "platelets"],
-      [15, "WBCs"]
+      [0, "bicarbonate"],
+      [2, "chloride"],
+      [3, "creatinine"],
+      [4, "glucose"],
+      [7, "magnesium"],
+      [9, "potassium"],
+      [10, "sodium"],
+      [1, "BUN"],
+      [6, "hemoglobin"],
+      [8, "platelets"],
+      [11, "WBCs"]
     ]
   },
   "demo": {
     "label": "个人信息",
     "features": [
-      [0, "gender"],
-      [1, "age"],
-      [2, "weight"],
-      [3, "height"],
-      [4, "bmi"]
+      [14, "gender"],
+      [13, "age"],
+      [12, "weight"],
+      [5, "height"],
+      [15, "black"]
     ]
   }
 }
