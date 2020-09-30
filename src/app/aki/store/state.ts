@@ -10,6 +10,7 @@ import akiFeatures from '@aki/mapping.json';
 import * as actions from '@aki/store/actions';
 
 const nFeatures = 16;
+const nAkiDays = 8;
 const initialState: StateModel = {
   features: akiFeatures,
   x: zeros2d(nDays, nFeatures),
@@ -97,14 +98,14 @@ export class AkiState {
         features
           .map((feature) => getFeatureWeight(feature, day, weights))
           .map((weight) => ({
-            'background-color': `rgba(${wr}, ${wg}, ${wb}, ${weight})`,
+            'background-color': `rgba(${wr}, ${wg}, ${wb}, ${weight / 0.5})`,
           }))
       );
   }
 
   @Selector()
   static showPredictions(state: StateModel) {
-    return state.predictions.every((probability) => probability != 0);
+    return state.predictions.some((probability) => probability != 0);
   }
 
   @Selector()
@@ -124,6 +125,14 @@ export class AkiState {
     patchState({ isLoading: true });
 
     const response = await this.api.loadSample('aki').toPromise();
+
+    // AKI load sample returns only data for 8 days
+    // so we fill other days with zeros
+    const nExtraDays = nDays - nAkiDays;
+    for (let i = 0; i < nExtraDays; i++) {
+      response.x.push(Array(nFeatures).fill(0));
+    }
+
     patchState({
       x: response.x,
       y: response.y,
@@ -148,7 +157,17 @@ export class AkiState {
     patchState({ isLoading: true });
 
     const { x } = getState();
-    const response = await this.api.predict('aki', x).toPromise();
+    const slicedX = x.slice(0, nAkiDays);
+    const response = await this.api.predict('aki', slicedX).toPromise();
+
+    // AKI model will only return inference results for 8 days
+    // so we fill other days with zeros
+    const nExtraDays = nDays - nAkiDays;
+    for (let i = 0; i < nExtraDays; i++) {
+      response.predictions.push(0);
+      response.weights.push(Array(nFeatures).fill(0));
+    }
+
     patchState({
       predictions: response.predictions,
       weights: response.weights,
