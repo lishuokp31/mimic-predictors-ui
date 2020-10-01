@@ -3,16 +3,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-const BASE_URL = 'http://localhost:5050/api/';
-
 export type TargetModel = 'aki' | 'sepsis' | 'mi' | 'vancomycin';
 
 @Injectable()
 export class ApiService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public loadSample(target: TargetModel): Observable<LoadSampleResponse> {
-    const url = `${BASE_URL}load-random-sample`;
+    const url = 'https://1158269314454927.cn-beijing.fc.aliyuncs.com/2016-08-15/proxy/mimic-predictor/load-samples/';
     const params = new HttpParams().set('target', target);
 
     return this.http
@@ -30,7 +28,7 @@ export class ApiService {
     target: TargetModel,
     x: number[][]
   ): Observable<PredictResponse> {
-    const url = `${BASE_URL}predict`;
+    const url = 'https://1158269314454927.cn-beijing.fc.aliyuncs.com/2016-08-15/proxy/mimic-predictor/predict/';
     const params = new HttpParams().set('target', target);
     const body = JSON.stringify({ x });
 
