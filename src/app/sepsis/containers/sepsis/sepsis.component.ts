@@ -16,8 +16,8 @@ export class SepsisComponent {
   public features$: Observable<Feature[]>;
   public x$: Observable<number[][]>;
   public formattedX$: Observable<string[][]>;
-  public predictions$: Observable<number[]>;
   public weights$: Observable<object[][]>;
+  public slicedPredictions$: Observable<number[]>;
   public showPredictions$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
 
@@ -25,8 +25,8 @@ export class SepsisComponent {
     this.features$ = this.store.select(SepsisState.features);
     this.x$ = this.store.select(SepsisState.x);
     this.formattedX$ = this.store.select(SepsisState.formattedX);
-    this.predictions$ = this.store.select(SepsisState.predictions);
     this.weights$ = this.store.select(SepsisState.computedWeights);
+    this.slicedPredictions$ = this.store.select(SepsisState.slicedPredictions);
     this.showPredictions$ = this.store.select(SepsisState.showPredictions);
     this.isLoading$ = this.store.select(SepsisState.isLoading);
   }

@@ -16,8 +16,8 @@ export class MiComponent {
   public features$: Observable<Feature[]>;
   public x$: Observable<number[][]>;
   public formattedX$: Observable<string[][]>;
-  public predictions$: Observable<number[]>;
   public weights$: Observable<object[][]>;
+  public slicedPredictions$: Observable<number[]>;
   public showPredictions$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
 
@@ -25,8 +25,8 @@ export class MiComponent {
     this.features$ = this.store.select(MiState.features);
     this.x$ = this.store.select(MiState.x);
     this.formattedX$ = this.store.select(MiState.formattedX);
-    this.predictions$ = this.store.select(MiState.predictions);
     this.weights$ = this.store.select(MiState.computedWeights);
+    this.slicedPredictions$ = this.store.select(MiState.slicedPredictions);
     this.showPredictions$ = this.store.select(MiState.showPredictions);
     this.isLoading$ = this.store.select(MiState.isLoading);
   }

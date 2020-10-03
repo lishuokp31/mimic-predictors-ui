@@ -17,7 +17,7 @@
     ></app-data-operations>
     <app-model-results
       [showResults]="showPredictions$ | async"
-      [probabilities]="predictions$ | async"
+      [probabilities]="slicedPredictions$ | async"
       label="患者当日出现脓毒症的概率"
     ></app-model-results>
   </div>

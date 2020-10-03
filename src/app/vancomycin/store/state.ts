@@ -79,6 +79,15 @@ export class VancomycinState {
     return state.predictions;
   }
 
+  @Selector([VancomycinState.predictions, VancomycinState.emptyDayStart])
+  static slicedPredictions(
+    _: StateModel,
+    predictions: number[],
+    emptyDayStart: number
+  ): number[] {
+    return predictions.slice(0, emptyDayStart);
+  }
+
   @Selector()
   static weights(state: StateModel) {
     return state.weights;

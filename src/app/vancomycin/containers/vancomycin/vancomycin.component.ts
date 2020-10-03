@@ -16,8 +16,8 @@ export class VancomycinComponent {
   public features$: Observable<Feature[]>;
   public x$: Observable<number[][]>;
   public formattedX$: Observable<string[][]>;
-  public predictions$: Observable<number[]>;
   public weights$: Observable<object[][]>;
+  public slicedPredictions$: Observable<number[]>;
   public showPredictions$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
 
@@ -25,8 +25,10 @@ export class VancomycinComponent {
     this.features$ = this.store.select(VancomycinState.features);
     this.x$ = this.store.select(VancomycinState.x);
     this.formattedX$ = this.store.select(VancomycinState.formattedX);
-    this.predictions$ = this.store.select(VancomycinState.predictions);
     this.weights$ = this.store.select(VancomycinState.computedWeights);
+    this.slicedPredictions$ = this.store.select(
+      VancomycinState.slicedPredictions
+    );
     this.showPredictions$ = this.store.select(VancomycinState.showPredictions);
     this.isLoading$ = this.store.select(VancomycinState.isLoading);
   }

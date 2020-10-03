@@ -17,7 +17,7 @@
     ></app-data-operations>
     <app-model-results
       [showResults]="showPredictions$ | async"
-      [probabilities]="predictions$ | async"
+      [probabilities]="slicedPredictions$ | async"
       label="患者当日出现急性肾损伤的概率如下"
     ></app-model-results>
   </div>

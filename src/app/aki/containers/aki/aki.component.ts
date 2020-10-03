@@ -16,8 +16,8 @@ export class AkiComponent {
   public features$: Observable<Feature[]>;
   public x$: Observable<number[][]>;
   public formattedX$: Observable<string[][]>;
-  public predictions$: Observable<number[]>;
   public weights$: Observable<object[][]>;
+  public slicedPredictions$: Observable<number[]>;
   public showPredictions$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
 
@@ -25,8 +25,8 @@ export class AkiComponent {
     this.features$ = this.store.select(AkiState.features);
     this.x$ = this.store.select(AkiState.x);
     this.formattedX$ = this.store.select(AkiState.formattedX);
-    this.predictions$ = this.store.select(AkiState.predictions);
     this.weights$ = this.store.select(AkiState.computedWeights);
+    this.slicedPredictions$ = this.store.select(AkiState.slicedPredictions);
     this.showPredictions$ = this.store.select(AkiState.showPredictions);
     this.isLoading$ = this.store.select(AkiState.isLoading);
   }

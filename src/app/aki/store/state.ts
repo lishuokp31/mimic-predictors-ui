@@ -76,6 +76,15 @@ export class AkiState {
     return state.predictions;
   }
 
+  @Selector([AkiState.predictions, AkiState.emptyDayStart])
+  static slicedPredictions(
+    _: StateModel,
+    predictions: number[],
+    emptyDayStart: number
+  ): number[] {
+    return predictions.slice(0, emptyDayStart);
+  }
+
   @Selector()
   static weights(state: StateModel) {
     return state.weights;
