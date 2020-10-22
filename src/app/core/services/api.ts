@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 export type TargetModel = 'aki' | 'sepsis' | 'mi' | 'vancomycin';
 
@@ -10,7 +11,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   public loadSample(target: TargetModel): Observable<LoadSampleResponse> {
-    const url = 'https://1158269314454927.cn-beijing.fc.aliyuncs.com/2016-08-15/proxy/mimic-predictor/load-samples/';
+    const url = `${environment.apiUrl}/load-samples/`;
     const params = new HttpParams().set('target', target);
 
     return this.http
@@ -28,7 +29,7 @@ export class ApiService {
     target: TargetModel,
     x: number[][]
   ): Observable<PredictResponse> {
-    const url = 'https://1158269314454927.cn-beijing.fc.aliyuncs.com/2016-08-15/proxy/mimic-predictor/predict/';
+    const url = `${environment.apiUrl}/predict/`;
     const params = new HttpParams().set('target', target);
     const body = JSON.stringify({ x });
 
