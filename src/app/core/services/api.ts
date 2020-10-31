@@ -11,7 +11,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   public loadSample(target: TargetModel): Observable<LoadSampleResponse> {
-    const url = `${environment.apiUrl}/load-samples/`;
+    const url = `${environment.apiUrl}/load-sample`;
     const params = new HttpParams().set('target', target);
 
     return this.http
@@ -29,11 +29,10 @@ export class ApiService {
     target: TargetModel,
     x: number[][]
   ): Observable<PredictResponse> {
-    const url = `${environment.apiUrl}/predict/`;
-    const params = new HttpParams().set('target', target);
-    const body = JSON.stringify({ x });
+    const url = `${environment.apiUrl}/predict`;
+    const body = JSON.stringify({ target, x });
 
-    return this.http.post<PredictResponse>(url, body, { params });
+    return this.http.post<PredictResponse>(url, body);
   }
 }
 
