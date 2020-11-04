@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Feature } from '@core/types';
 import { AkiState } from '@aki/store';
 import * as actions from '@aki/store/actions';
+import { FeatureValueChangeEvent } from '@shared/components';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,5 +42,11 @@ export class AkiComponent {
 
   public onPredict() {
     this.store.dispatch(new actions.Predict());
+  }
+
+  public onChange(event: FeatureValueChangeEvent) {
+    this.store.dispatch(
+      new actions.Change(event.feature, event.day, event.newValue)
+    );
   }
 }

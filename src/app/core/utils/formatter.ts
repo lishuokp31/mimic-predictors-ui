@@ -35,19 +35,23 @@ function formatReal(value: number): string {
     return value.toString();
   }
 
+  if (Number.isInteger(value * 10)) {
+    return Number(value).toFixed(1);
+  }
+
   return Number(value).toFixed(2);
 }
 
 function formatGender(value: number): string {
-  return value === 1 ? '男' : '女';
+  return value === 1 ? '男' : value === 0 ? '女' : formatReal(value);
 }
 
 function formatBooleanHave(value: number): string {
-  return value === 1 ? '有' : '无';
+  return value === 1 ? '有' : value === 0 ? '无' : formatReal(value);
 }
 
 function formatBooleanIs(value: number): string {
-  return value === 1 ? '是' : '否';
+  return value === 1 ? '是' : value === 0 ? '否' : formatReal(value);
 }
 
 function toCelsius(value: number): number {

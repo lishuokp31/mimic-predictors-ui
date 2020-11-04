@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { State, Selector, Action, StateContext } from '@ngxs/store';
+import produce from 'immer';
 
 import { nDays, wr, wg, wb } from '@core/constants';
 import { ApiService } from '@core/services';
@@ -181,6 +182,21 @@ export class AkiState {
       predictions: response.predictions,
       weights: response.weights,
       isLoading: false,
+    });
+  }
+
+  @Action(actions.Change)
+  public change(
+    { getState, patchState }: StateContext<StateModel>,
+    action: actions.Change
+  ) {
+    const { x } = getState();
+    const { feature, day, value } = action;
+
+    patchState({
+      x: produce(x, (draft) => {
+        draft[day][feature.id] = value;
+      }),
     });
   }
 }

@@ -6,6 +6,7 @@
       [formattedX]="formattedX$ | async"
       [weights]="weights$ | async"
       weightsBaseColor="#F44336"
+      (change)="onChange($event)"
     ></app-feature-table>
   </div>
   <div class="results">

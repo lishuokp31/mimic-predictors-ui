@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Feature } from '@core/types';
 import { VancomycinState } from '@vancomycin/store';
 import * as actions from '@vancomycin/store/actions';
+import { FeatureValueChangeEvent } from '@shared/components';
 
 @Component({
   selector: 'app-vancomycin',
@@ -43,5 +44,11 @@ export class VancomycinComponent {
 
   public onPredict() {
     this.store.dispatch(new actions.Predict());
+  }
+
+  public onChange(event: FeatureValueChangeEvent) {
+    this.store.dispatch(
+      new actions.Change(event.feature, event.day, event.newValue)
+    );
   }
 }

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Feature } from '@core/types';
 import { SepsisState } from '@sepsis/store';
 import * as actions from '@sepsis/store';
+import { FeatureValueChangeEvent } from '@shared/components';
 
 @Component({
   selector: 'app-sepsis',
@@ -41,5 +42,11 @@ export class SepsisComponent {
 
   public onPredict() {
     this.store.dispatch(new actions.Predict());
+  }
+
+  public onChange(event: FeatureValueChangeEvent) {
+    this.store.dispatch(
+      new actions.Change(event.feature, event.day, event.newValue)
+    );
   }
 }

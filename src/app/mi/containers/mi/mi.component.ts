@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { MiState } from '@mi/store';
 import * as actions from '@mi/store/actions';
 import { Feature } from '@core/types';
+import { FeatureValueChangeEvent } from '@shared/components';
 
 @Component({
   selector: 'app-mi',
@@ -41,5 +42,11 @@ export class MiComponent {
 
   public onPredict() {
     this.store.dispatch(new actions.Predict());
+  }
+
+  public onChange(event: FeatureValueChangeEvent) {
+    this.store.dispatch(
+      new actions.Change(event.feature, event.day, event.newValue)
+    );
   }
 }

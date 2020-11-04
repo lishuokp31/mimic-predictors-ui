@@ -53,8 +53,9 @@ export class FeatureTableComponent {
     const dialogRef = this.dialog.open(FeatureValueEditorDialog, config);
     dialogRef.afterClosed().subscribe((result) => {
       // closing the dialog by clicking outside its area will yield an undefined result
-      // we only process results with a valid value
-      if (result !== undefined) {
+      // clicking the cancel button yields an empty string as a result
+      // we only process a result with a valid value
+      if (result !== undefined && result != '') {
         this.change.emit({ feature, day, newValue: result });
       }
     });
