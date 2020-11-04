@@ -1,4 +1,7 @@
-export { FeatureTableComponent } from './feature-table/feature-table.component';
+export {
+  FeatureValueChangeEvent,
+  FeatureTableComponent,
+} from './feature-table/feature-table.component';
 export { DataOperationsComponent } from './data-operations/data-operations.component';
 export { ModelResultsComponent } from './model-results/model-results.component';
 

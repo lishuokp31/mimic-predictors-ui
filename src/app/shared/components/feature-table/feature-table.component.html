@@ -2,11 +2,8 @@
   <div class="lbl-days">
     <span *ngFor="let day of days" class="lbl-day">第{{ day + 1 }}天</span>
   </div>
-  <cdk-virtual-scroll-viewport [itemSize]="20" class="cdk-viewport">
-    <div
-      *cdkVirtualFor="let feature of features; let i = index"
-      class="feature-container"
-    >
+  <cdk-virtual-scroll-viewport itemSize="20" class="cdk-viewport">
+    <div *cdkVirtualFor="let feature of features; let i = index">
       <span *ngIf="feature.header" class="lbl-header">{{
         feature.header
       }}</span>
@@ -19,6 +16,7 @@
         [ngStyle]="weights![day][i]"
         [matTooltip]="x![day][feature.id].toString()"
         [matTooltipShowDelay]="500"
+        (click)="showFeatureValueEditor(feature, day)"
         class="lbl-value"
       >
         <!-- x is guaranteed to be non-null here -->

@@ -22,7 +22,7 @@ const routes: Routes = [
     path: 'aki',
     loadChildren: () => import('../aki/aki.module').then((m) => m.AkiModule),
   },
-  { path: '', redirectTo: '/sepsis', pathMatch: 'full' },
+  { path: '', redirectTo: '/aki', pathMatch: 'full' },
   { path: '**', component: PageNotFoundPage },
 ];
 
