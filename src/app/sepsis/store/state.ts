@@ -5,7 +5,13 @@ import produce from 'immer';
 import { nDays, wr, wg, wb } from '@core/constants';
 import { ApiService } from '@core/services';
 import { StateModel, Feature } from '@core/types';
-import { zeros1d, zeros2d, format, getFeatureWeight } from '@core/utils';
+import {
+  zeros1d,
+  zeros2d,
+  format,
+  getFeatureWeight,
+  getEmptyDayStart,
+} from '@core/utils';
 
 import sepsisFeatures from '@sepsis/mapping.json';
 import * as actions from '@sepsis/store/actions';
@@ -14,7 +20,6 @@ const nFeatures = 225;
 const initialState: StateModel = {
   features: sepsisFeatures,
   x: zeros2d(nDays, nFeatures),
-  y: zeros1d(nDays),
   predictions: zeros1d(nDays),
   weights: zeros2d(nDays, nFeatures),
   isLoading: false,
@@ -56,19 +61,7 @@ export class SepsisState {
 
   @Selector([SepsisState.x])
   static emptyDayStart(_: StateModel, x: number[][]): number {
-    for (let i = 0; i < x.length; i++) {
-      if (x[i].every((value) => value === 0)) {
-        // treat empty data as full
-        return i === 0 ? Number.POSITIVE_INFINITY : i;
-      }
-    }
-
-    return Number.POSITIVE_INFINITY;
-  }
-
-  @Selector()
-  static y(state: StateModel) {
-    return state.y;
+    return getEmptyDayStart(x);
   }
 
   @Selector()
@@ -137,10 +130,9 @@ export class SepsisState {
   public async loadSample({ patchState }: StateContext<StateModel>) {
     patchState({ isLoading: true });
 
-    const response = await this.api.loadSample('sepsis').toPromise();
+    const response = await this.api.loadSample('sepsis');
     patchState({
       x: response.x,
-      y: response.y,
       predictions: zeros1d(nDays),
       weights: zeros2d(nDays, nFeatures),
       isLoading: false,
@@ -151,7 +143,6 @@ export class SepsisState {
   public reset({ patchState }: StateContext<StateModel>) {
     patchState({
       x: zeros2d(nDays, nFeatures),
-      y: zeros1d(nDays),
       predictions: zeros1d(nDays),
       weights: zeros2d(nDays, nFeatures),
     });
@@ -162,7 +153,8 @@ export class SepsisState {
     patchState({ isLoading: true });
 
     const { x } = getState();
-    const response = await this.api.predict('sepsis', x).toPromise();
+    const response = await this.api.predict('sepsis', x);
+
     patchState({
       predictions: response.predictions,
       weights: response.weights,

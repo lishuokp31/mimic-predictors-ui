@@ -5,7 +5,13 @@ import produce from 'immer';
 import { nDays, wr, wg, wb } from '@core/constants';
 import { ApiService } from '@core/services';
 import { StateModel, Feature } from '@core/types';
-import { zeros1d, zeros2d, format, getFeatureWeight } from '@core/utils';
+import {
+  zeros1d,
+  zeros2d,
+  format,
+  getFeatureWeight,
+  getEmptyDayStart,
+} from '@core/utils';
 
 import vancomycinFeatures from '@vancomycin/mapping.json';
 import * as actions from '@vancomycin/store/actions';
@@ -14,7 +20,6 @@ const nFeatures = 224;
 const initialState: StateModel = {
   features: vancomycinFeatures,
   x: zeros2d(nDays, nFeatures),
-  y: zeros1d(nDays),
   predictions: zeros1d(nDays),
   weights: zeros2d(nDays, nFeatures),
   isLoading: false,
@@ -60,19 +65,7 @@ export class VancomycinState {
 
   @Selector([VancomycinState.x])
   static emptyDayStart(_: StateModel, x: number[][]): number {
-    for (let i = 0; i < x.length; i++) {
-      if (x[i].every((value) => value === 0)) {
-        // treat empty data as full
-        return i === 0 ? Number.POSITIVE_INFINITY : i;
-      }
-    }
-
-    return Number.POSITIVE_INFINITY;
-  }
-
-  @Selector()
-  static y(state: StateModel) {
-    return state.y;
+    return getEmptyDayStart(x);
   }
 
   @Selector()
@@ -141,10 +134,10 @@ export class VancomycinState {
   public async loadSample({ patchState }: StateContext<StateModel>) {
     patchState({ isLoading: true });
 
-    const response = await this.api.loadSample('vancomycin').toPromise();
+    const response = await this.api.loadSample('vancomycin');
+
     patchState({
       x: response.x,
-      y: response.y,
       predictions: zeros1d(nDays),
       weights: zeros2d(nDays, nFeatures),
       isLoading: false,
@@ -155,7 +148,6 @@ export class VancomycinState {
   public reset({ patchState }: StateContext<StateModel>) {
     patchState({
       x: zeros2d(nDays, nFeatures),
-      y: zeros1d(nDays),
       predictions: zeros1d(nDays),
       weights: zeros2d(nDays, nFeatures),
     });
@@ -166,7 +158,8 @@ export class VancomycinState {
     patchState({ isLoading: true });
 
     const { x } = getState();
-    const response = await this.api.predict('vancomycin', x).toPromise();
+    const response = await this.api.predict('vancomycin', x);
+
     patchState({
       predictions: response.predictions,
       weights: response.weights,

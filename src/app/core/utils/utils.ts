@@ -12,11 +12,43 @@ export function getFeatureWeight(
   feature: Feature,
   day: number,
   weights: number[][]
-) {
+): number {
   const ids = [feature.id, ...feature.relatedIDs];
   const totalWeight = ids
     .map((id) => weights[day][id])
     .reduce((a, v) => a + v, 0);
 
   return totalWeight;
+}
+
+export function getEmptyDayStart(x: number[][]): number {
+  const daysNonEmpty = x.map((values) => values.some((value) => value !== 0));
+  const lastNonEmptyDay = daysNonEmpty.lastIndexOf(true);
+
+  return lastNonEmptyDay + 1;
+}
+
+export function truncatePaddingDays(x: number[][]): number[][] {
+  const emptyDayStart = getEmptyDayStart(x);
+  const endIndex = Math.max(1, emptyDayStart);
+  const truncatedX = x.slice(0, endIndex);
+
+  return truncatedX;
+}
+
+export function addPaddingDays1d(x: number[], nDays: number): number[] {
+  const nToAddDays = nDays - x.length;
+  const paddingDays = zeros1d(nToAddDays);
+  const paddedX = x.concat(paddingDays);
+
+  return paddedX;
+}
+
+export function addPaddingDays2d(x: number[][], nDays: number): number[][] {
+  const nFeatures = x[0].length;
+  const nToAddDays = nDays - x.length;
+  const paddingDays = zeros2d(nToAddDays, nFeatures);
+  const paddedX = x.concat(paddingDays);
+
+  return paddedX;
 }

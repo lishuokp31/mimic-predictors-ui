@@ -1,45 +1,58 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import produce from 'immer';
+
 import { environment } from 'src/environments/environment';
+import {
+  addPaddingDays1d,
+  addPaddingDays2d,
+  truncatePaddingDays,
+} from '@core/utils';
+import { nDays } from '@core/constants';
 
 export type TargetModel = 'aki' | 'sepsis' | 'mi' | 'vancomycin';
 
 @Injectable()
 export class ApiService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  public loadSample(target: TargetModel): Observable<LoadSampleResponse> {
+  public loadSample(target: TargetModel): Promise<LoadSampleResponse> {
     const url = `${environment.apiUrl}/load-sample`;
     const params = new HttpParams().set('target', target);
 
     return this.http
       .get<LoadSampleResponse>(url, { params })
-      .pipe(
-        tap((x) =>
-          console.log(
-            `[loadSample] target=${target} index=${x.index} actual=${x.y}`
-          )
-        )
+      .toPromise()
+      .then((response) =>
+        // the API server only returns the days with actual data
+        // but the UI displays up to `nDays` days, so we pad them
+        produce(response, (draft) => {
+          draft.x = addPaddingDays2d(draft.x, nDays);
+        })
       );
   }
 
-  public predict(
-    target: TargetModel,
-    x: number[][]
-  ): Observable<PredictResponse> {
+  public predict(target: TargetModel, x: number[][]): Promise<PredictResponse> {
     const url = `${environment.apiUrl}/predict`;
-    const body = JSON.stringify({ target, x });
+    const truncatedX = truncatePaddingDays(x);
+    const body = JSON.stringify({ target, x: truncatedX });
 
-    return this.http.post<PredictResponse>(url, body);
+    return this.http
+      .post<PredictResponse>(url, body)
+      .toPromise()
+      .then((response) =>
+        // same reason as the loadSample function, we pad extra days
+        produce(response, (draft) => {
+          draft.predictions = addPaddingDays1d(draft.predictions, nDays);
+          draft.weights = addPaddingDays2d(draft.weights, nDays);
+        })
+      );
   }
 }
 
 export interface LoadSampleResponse {
-  index: number;
+  id: number;
   x: number[][];
-  y: number[];
 }
 
 export interface PredictResponse {
