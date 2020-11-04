@@ -16,7 +16,16 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
-    "lib": ["es2018", "dom"]
+    "lib": ["es2018", "dom"],
+    "paths": {
+      "@core/*": ["src/app/core/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@aki/*": ["src/app/aki/*"],
+      "@sepsis/*": ["src/app/sepsis/*"],
+      "@mi/*": ["src/app/mi/*"],
+      "@vancomycin/*": ["src/app/vancomycin/*"],
+      "@app/*": ["src/app/*"]
+    }
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,

@@ -5,16 +5,7 @@
     "outDir": "./out-tsc/app",
     "types": [],
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "paths": {
-      "@core/*": ["src/app/core/*"],
-      "@shared/*": ["src/app/shared/*"],
-      "@aki/*": ["src/app/aki/*"],
-      "@sepsis/*": ["src/app/sepsis/*"],
-      "@mi/*": ["src/app/mi/*"],
-      "@vancomycin/*": ["src/app/vancomycin/*"],
-      "@app/*": ["src/app/*"]
-    }
+    "esModuleInterop": true
   },
   "files": ["src/main.ts", "src/polyfills.ts"],
   "include": ["src/**/*.d.ts"]
