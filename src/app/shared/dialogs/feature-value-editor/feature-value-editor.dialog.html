@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>编辑特征：{{ data.label }}</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>{{ data.label }}</mat-label>
+      <input matInput formControlName="featureValue" required />
+      <span *ngIf="data.unit" class="form-unit" matSuffix>{{ data.unit }}</span>
+      <mat-error *ngIf="featureValueIsInvalid">
+        <span *ngIf="featureValueIsEmpty">特征值不能为空！</span>
+        <span *ngIf="featureValueIsNotNumeric">特征值必须是数字！</span>
+      </mat-error>
+      <mat-hint>温馨提示：请注意特征的单位！</mat-hint>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>取消</button>
+  <button
+    cdkFocusInitial
+    mat-button
+    color="primary"
+    (click)="saveValue()"
+    [disabled]="form.invalid"
+  >
+    保存
+  </button>
+</mat-dialog-actions>
