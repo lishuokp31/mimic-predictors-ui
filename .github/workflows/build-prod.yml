@@ -20,7 +20,7 @@ jobs:
           node-version: '14.x'
 
       # Cache node_modules
-      - name: Run a multi-line script
+      - name: Setup node_modules cache
         uses: actions/cache@v1
         with:
           path: ~/.npm
