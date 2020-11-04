@@ -55,7 +55,7 @@ export class FeatureTableComponent {
       // closing the dialog by clicking outside its area will yield an undefined result
       // clicking the cancel button yields an empty string as a result
       // we only process a result with a valid value
-      if (result !== undefined && result != '') {
+      if (result !== undefined && result !== '') {
         this.change.emit({ feature, day, newValue: result });
       }
     });

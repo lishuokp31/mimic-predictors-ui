@@ -3,7 +3,12 @@
   <form [formGroup]="form">
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>{{ data.label }}</mat-label>
-      <input matInput formControlName="featureValue" required />
+      <input
+        matInput
+        formControlName="featureValue"
+        autocomplete="off"
+        required
+      />
       <span *ngIf="data.unit" class="form-unit" matSuffix>{{ data.unit }}</span>
       <mat-error *ngIf="featureValueIsInvalid">
         <span *ngIf="featureValueIsEmpty">特征值不能为空！</span>
