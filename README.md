@@ -1,27 +1,36 @@
-# MimicLstmAngular
+# MIMIC predictors UI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
+This repository contains the codebase of the single-page web application that is used to demonstrate the predictors on sepsis, MI, vancomycin, and AKI.
 
-## Development server
+## Prerequisites
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+NPM packages are needed to be installed locally if you wish to run/build the app.
 
-## Code scaffolding
+```bash
+npm install
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## How to run locally
 
-## Build
+```bash
+ng serve
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## How to build production bundle
 
-## Running unit tests
+```bash
+ng build --prod --baseHref=/app/
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## How to build staging bundle
 
-## Running end-to-end tests
+```bash
+ng build --configuration staging --baseHref=/app/
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## How to build Docker image
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```bash
+npm run build-image
+docker tag hitmimicpredictors/frontend:latest hitmimicpredictors/frontend:<version>
+```

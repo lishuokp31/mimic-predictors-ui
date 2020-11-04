@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mimic-lstm-angular": {
+    "mimic-predictors-ui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -42,7 +42,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/mimic-lstm-angular",
+            "outputPath": "dist/mimic-predictors-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -114,18 +114,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mimic-lstm-angular:build"
+            "browserTarget": "mimic-predictors-ui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mimic-lstm-angular:build:production"
+              "browserTarget": "mimic-predictors-ui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mimic-lstm-angular:build"
+            "browserTarget": "mimic-predictors-ui:build"
           }
         },
         "test": {
@@ -158,18 +158,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mimic-lstm-angular:serve"
+            "devServerTarget": "mimic-predictors-ui:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "mimic-lstm-angular:serve:production"
+              "devServerTarget": "mimic-predictors-ui:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "mimic-lstm-angular",
+  "defaultProject": "mimic-predictors-ui",
   "cli": {
     "analytics": "4b169c2c-6798-4244-bce1-26ad1033dbdd"
   }

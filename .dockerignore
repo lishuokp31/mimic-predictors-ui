@@ -1,0 +1,11 @@
+data
+e2e
+node_modules
+src
+.browserslistrc
+.editorconfig
+.gitignore
+*.yaml
+*.json
+*.js
+*.md

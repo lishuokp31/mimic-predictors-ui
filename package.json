@@ -1,5 +1,5 @@
 {
-  "name": "mimic-lstm-angular",
+  "name": "mimic-predictors-ui",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -9,8 +9,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:stats": "ng build --stats-json",
-    "analyze": "webpack-bundle-analyzer dist/mimic-lstm-angular/stats.json",
-    "build-mapping": "node generate-mapping.js"
+    "analyze": "webpack-bundle-analyzer dist/mimic-predictors-ui/stats.json",
+    "build-mapping": "node generate-mapping.js",
+    "build-image": "ng build --prod --baseHref=/app/ && docker build -t hitmimicpredictors/frontend:latest ."
   },
   "private": true,
   "dependencies": {
