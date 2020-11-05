@@ -21,6 +21,7 @@ export class MiComponent {
   public slicedPredictions$: Observable<number[]>;
   public showPredictions$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
+  public disableInfer$: Observable<boolean>;
 
   constructor(private store: Store) {
     this.features$ = this.store.select(MiState.features);
@@ -30,6 +31,7 @@ export class MiComponent {
     this.slicedPredictions$ = this.store.select(MiState.slicedPredictions);
     this.showPredictions$ = this.store.select(MiState.showPredictions);
     this.isLoading$ = this.store.select(MiState.isLoading);
+    this.disableInfer$ = this.store.select(MiState.disableInfer);
   }
 
   public onLoadSample() {

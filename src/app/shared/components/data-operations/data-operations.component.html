@@ -19,7 +19,7 @@
     mat-flat-button
     color="primary"
     (click)="onPredict()"
-    [disabled]="isLoading"
+    [disabled]="isLoading || disableInfer"
   >
     预测
   </button>

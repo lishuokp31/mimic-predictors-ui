@@ -73,6 +73,11 @@ export class VancomycinState {
     return getEmptyDayStart(x);
   }
 
+  @Selector([VancomycinState.emptyDayStart])
+  static disableInfer(_: StateModel, emptyDayStart: number): boolean {
+    return emptyDayStart === 0;
+  }
+
   @Selector()
   static predictions(state: StateModel) {
     return state.predictions;

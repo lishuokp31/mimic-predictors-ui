@@ -21,6 +21,7 @@ export class AkiComponent {
   public slicedPredictions$: Observable<number[]>;
   public showPredictions$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
+  public disableInfer$: Observable<boolean>;
 
   constructor(private store: Store) {
     this.features$ = this.store.select(AkiState.features);
@@ -30,6 +31,7 @@ export class AkiComponent {
     this.slicedPredictions$ = this.store.select(AkiState.slicedPredictions);
     this.showPredictions$ = this.store.select(AkiState.showPredictions);
     this.isLoading$ = this.store.select(AkiState.isLoading);
+    this.disableInfer$ = this.store.select(AkiState.disableInfer);
   }
 
   public onLoadSample() {

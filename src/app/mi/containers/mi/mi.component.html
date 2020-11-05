@@ -12,6 +12,7 @@
   <div class="results">
     <app-data-operations
       [isLoading]="isLoading$ | async"
+      [disableInfer]="disableInfer$ | async"
       (loadSample)="onLoadSample()"
       (reset)="onReset()"
       (predict)="onPredict()"

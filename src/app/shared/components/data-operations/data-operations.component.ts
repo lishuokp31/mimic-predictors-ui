@@ -14,6 +14,7 @@ import {
 })
 export class DataOperationsComponent {
   @Input() isLoading: boolean | null = false;
+  @Input() disableInfer: boolean | null = false;
   @Output() loadSample = new EventEmitter<void>();
   @Output() reset = new EventEmitter<void>();
   @Output() predict = new EventEmitter<void>();

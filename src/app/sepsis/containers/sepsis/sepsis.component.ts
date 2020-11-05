@@ -21,6 +21,7 @@ export class SepsisComponent {
   public slicedPredictions$: Observable<number[]>;
   public showPredictions$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
+  public disableInfer$: Observable<boolean>;
 
   constructor(private store: Store) {
     this.features$ = this.store.select(SepsisState.features);
@@ -30,6 +31,7 @@ export class SepsisComponent {
     this.slicedPredictions$ = this.store.select(SepsisState.slicedPredictions);
     this.showPredictions$ = this.store.select(SepsisState.showPredictions);
     this.isLoading$ = this.store.select(SepsisState.isLoading);
+    this.disableInfer$ = this.store.select(SepsisState.disableInfer);
   }
 
   public onLoadSample() {

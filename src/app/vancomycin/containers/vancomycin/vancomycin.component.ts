@@ -21,6 +21,7 @@ export class VancomycinComponent {
   public slicedPredictions$: Observable<number[]>;
   public showPredictions$: Observable<boolean>;
   public isLoading$: Observable<boolean>;
+  public disableInfer$: Observable<boolean>;
 
   constructor(private store: Store) {
     this.features$ = this.store.select(VancomycinState.features);
@@ -32,6 +33,7 @@ export class VancomycinComponent {
     );
     this.showPredictions$ = this.store.select(VancomycinState.showPredictions);
     this.isLoading$ = this.store.select(VancomycinState.isLoading);
+    this.disableInfer$ = this.store.select(VancomycinState.disableInfer);
   }
 
   public onLoadSample() {

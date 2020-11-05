@@ -69,6 +69,11 @@ export class MiState {
     return getEmptyDayStart(x);
   }
 
+  @Selector([MiState.emptyDayStart])
+  static disableInfer(_: StateModel, emptyDayStart: number): boolean {
+    return emptyDayStart === 0;
+  }
+
   @Selector()
   static predictions(state: StateModel) {
     return state.predictions;
