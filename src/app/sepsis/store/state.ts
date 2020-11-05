@@ -17,6 +17,11 @@ import sepsisFeatures from '@sepsis/mapping.json';
 import * as actions from '@sepsis/store/actions';
 
 const nFeatures = 225;
+const staticFeatureIds = [
+  148, // ethnicity
+  149, // age
+  150, // gender
+];
 const initialState: StateModel = {
   features: sepsisFeatures,
   x: zeros2d(nDays, nFeatures),
@@ -172,7 +177,16 @@ export class SepsisState {
 
     patchState({
       x: produce(x, (draft) => {
-        draft[day][feature.id] = value;
+        // static feature values doesn't change every day
+        // so updating it means we should update other days too
+        if (staticFeatureIds.includes(feature.id)) {
+          const emptyDayStart = getEmptyDayStart(x);
+          for (let i = 0; i < emptyDayStart; i++) {
+            draft[i][feature.id] = value;
+          }
+        } else {
+          draft[day][feature.id] = value;
+        }
       }),
     });
   }

@@ -17,6 +17,11 @@ import miFeatures from '@mi/mapping.json';
 import * as actions from '@mi/store/actions';
 
 const nFeatures = 221;
+const staticFeatureIds = [
+  144, // ethnicity
+  145, // age
+  146, // gender
+];
 const initialState: StateModel = {
   features: miFeatures,
   x: zeros2d(nDays, nFeatures),
@@ -169,7 +174,16 @@ export class MiState {
 
     patchState({
       x: produce(x, (draft) => {
-        draft[day][feature.id] = value;
+        // static feature values doesn't change every day
+        // so updating it means we should update other days too
+        if (staticFeatureIds.includes(feature.id)) {
+          const emptyDayStart = getEmptyDayStart(x);
+          for (let i = 0; i < emptyDayStart; i++) {
+            draft[i][feature.id] = value;
+          }
+        } else {
+          draft[day][feature.id] = value;
+        }
       }),
     });
   }

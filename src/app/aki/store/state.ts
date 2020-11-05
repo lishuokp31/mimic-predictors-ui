@@ -17,6 +17,11 @@ import akiFeatures from '@aki/mapping.json';
 import * as actions from '@aki/store/actions';
 
 const nFeatures = 16;
+const staticFeatureIds = [
+  13, // age
+  14, // gender
+  15, // ethnicity
+];
 const initialState: StateModel = {
   features: akiFeatures,
   x: zeros2d(nDays, nFeatures),
@@ -169,7 +174,16 @@ export class AkiState {
 
     patchState({
       x: produce(x, (draft) => {
-        draft[day][feature.id] = value;
+        // static feature values doesn't change every day
+        // so updating it means we should update other days too
+        if (staticFeatureIds.includes(feature.id)) {
+          const emptyDayStart = getEmptyDayStart(x);
+          for (let i = 0; i < emptyDayStart; i++) {
+            draft[i][feature.id] = value;
+          }
+        } else {
+          draft[day][feature.id] = value;
+        }
       }),
     });
   }
