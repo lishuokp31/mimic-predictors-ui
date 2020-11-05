@@ -15,6 +15,7 @@
         *ngFor="let day of days"
         [ngStyle]="weights![day][i]"
         [matTooltip]="x![day][feature.id].toString()"
+        [matTooltipDisabled]="x![day][feature.id] === 0"
         [matTooltipShowDelay]="500"
         (click)="showFeatureValueEditor(feature, day)"
         class="lbl-value"
