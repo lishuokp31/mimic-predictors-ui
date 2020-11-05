@@ -1,20 +1,97 @@
-<h2 mat-dialog-title>编辑特征：{{ data.label }}</h2>
+<h2 mat-dialog-title>编辑特征：{{ data.feature.label }}</h2>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="form">
-    <mat-form-field appearance="outline" class="form-field">
-      <mat-label>{{ data.label }}</mat-label>
-      <input
-        matInput
-        formControlName="featureValue"
-        autocomplete="off"
-        required
-      />
-      <span *ngIf="data.unit" class="form-unit" matSuffix>{{ data.unit }}</span>
-      <mat-error *ngIf="featureValueIsInvalid">
-        <span *ngIf="featureValueIsEmpty">特征值不能为空！</span>
-        <span *ngIf="featureValueIsNotNumeric">特征值必须是数字！</span>
+  <form [formGroup]="form" [ngSwitch]="editorType">
+    <!-- Form control for feature values with aggregates -->
+    <ng-container *ngSwitchCase="'multi'">
+      <!-- Mean -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>平均值</mat-label>
+        <input matInput formControlName="mean" autocomplete="off" required />
+        <span *ngIf="data.feature.unit" class="form-unit" matSuffix
+          >{{ data.feature.unit }}</span
+        >
+        <mat-error *ngIf="meanIsInvalid">
+          <span *ngIf="meanIsEmpty">平均值不能为空！</span>
+          <span *ngIf="meanIsNotNumeric">平均值必须是数字！</span>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Minimum -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>最小值</mat-label>
+        <input matInput formControlName="min" autocomplete="off" required />
+        <span *ngIf="data.feature.unit" class="form-unit" matSuffix
+          >{{ data.feature.unit }}</span
+        >
+        <mat-error *ngIf="minIsInvalid">
+          <span *ngIf="minIsEmpty">最小值不能为空！</span>
+          <span *ngIf="minIsNotNumeric">最小值必须是数字！</span>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Maximum -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>最大值</mat-label>
+        <input matInput formControlName="max" autocomplete="off" required />
+        <span *ngIf="data.feature.unit" class="form-unit" matSuffix
+          >{{ data.feature.unit }}</span
+        >
+        <mat-error *ngIf="maxIsInvalid">
+          <span *ngIf="maxIsEmpty">最大值不能为空！</span>
+          <span *ngIf="maxIsNotNumeric">最大值必须是数字！</span>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Standard Deviation -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>标准偏差</mat-label>
+        <input matInput formControlName="std" autocomplete="off" required />
+        <mat-error *ngIf="stdIsInvalid">
+          <span *ngIf="stdIsEmpty">标准偏差不能为空！</span>
+          <span *ngIf="stdIsNotNumeric">标准偏差必须是数字！</span>
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- Form control for being editor type -->
+    <div class="form-group" *ngSwitchCase="'being'">
+      <label id="value-label">请选择“是”或者“否”。</label>
+      <mat-radio-group aria-labelledby="value-label" formControlName="value">
+        <mat-radio-button value="0">否</mat-radio-button>
+        <mat-radio-button value="1">是</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <!-- Form control for existential editor type -->
+    <div class="form-group" *ngSwitchCase="'existential'">
+      <label id="value-label">请选择“有”或者“无”。</label>
+      <mat-radio-group aria-labelledby="value-label" formControlName="value">
+        <mat-radio-button value="0">无</mat-radio-button>
+        <mat-radio-button value="1">有</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <!-- Form control for gender editor type -->
+    <div class="form-group" *ngSwitchCase="'gender'">
+      <label id="value-label">请选择“男”或者“女”。</label>
+      <mat-radio-group aria-labelledby="value-label" formControlName="value">
+        <mat-radio-button value="0">女</mat-radio-button>
+        <mat-radio-button value="1">男</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <!-- Form control for real number inputs -->
+    <mat-form-field appearance="outline" class="form-field" *ngSwitchDefault>
+      <mat-label>{{ data.feature.label }}</mat-label>
+      <input matInput formControlName="value" autocomplete="off" required />
+      <span *ngIf="data.feature.unit" class="form-unit" matSuffix>
+        {{ data.feature.unit }}
+      </span>
+      <mat-error *ngIf="valueIsInvalid">
+        <span *ngIf="valueIsEmpty">特征值不能为空！</span>
+        <span *ngIf="valueIsNotNumeric">特征值必须是数字！</span>
       </mat-error>
-      <mat-hint>温馨提示：请注意特征的单位！</mat-hint>
+      <mat-hint>请注意特征的单位！</mat-hint>
     </mat-form-field>
   </form>
 </mat-dialog-content>

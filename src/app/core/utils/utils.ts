@@ -13,8 +13,10 @@ export function getFeatureWeight(
   day: number,
   weights: number[][]
 ): number {
-  const ids = [feature.id, ...feature.relatedIDs];
-  const totalWeight = ids
+  const relatedIDs = feature.aggregates
+    ? [feature.aggregates.min, feature.aggregates.max, feature.aggregates.std]
+    : [];
+  const totalWeight = [feature.id, ...relatedIDs]
     .map((id) => weights[day][id])
     .reduce((a, v) => a + v, 0);
 

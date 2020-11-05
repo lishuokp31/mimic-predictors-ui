@@ -12,5 +12,25 @@ export interface Feature {
   group: string;
   label: string;
   unit: string | null;
-  relatedIDs: number[];
+  aggregates: FeatureAggregateIDs | null;
+}
+
+export interface FeatureAggregateIDs {
+  min: number;
+  max: number;
+  std: number;
+}
+
+export type FeatureUnaryValue = number;
+export interface FeatureMultipleValues {
+  mean: number;
+  min: number;
+  max: number;
+  std: number;
+}
+
+export function isUnaryValue(
+  obj: FeatureUnaryValue | FeatureMultipleValues
+): obj is FeatureUnaryValue {
+  return typeof obj === 'number';
 }

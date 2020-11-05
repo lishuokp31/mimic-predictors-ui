@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
-import { Feature } from '@core/types';
+import { Feature, FeatureUnaryValue } from '@core/types';
 import { AkiState } from '@aki/store';
 import * as actions from '@aki/store/actions';
 import { FeatureValueChangeEvent } from '@shared/components';
@@ -46,7 +46,11 @@ export class AkiComponent {
 
   public onChange(event: FeatureValueChangeEvent) {
     this.store.dispatch(
-      new actions.Change(event.feature, event.day, event.newValue)
+      new actions.Change(
+        event.feature,
+        event.day,
+        event.newValue as FeatureUnaryValue
+      )
     );
   }
 }

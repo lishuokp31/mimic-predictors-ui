@@ -10,13 +10,13 @@ const i18nSepsis = require('./data/sepsis/i18n.json');
 const i18nMi = require('./data/mi/i18n.json');
 const i18nVancomycin = require('./data/vancomycin/i18n.json');
 
-function findRelatedIDs(flattened, identifier) {
-  const relatedIdentifiers = new Set(
+function findAggregates(flattened, identifier) {
+  const aggregatesIdentifiers = new Set(
     ['_min', '_max', '_std'].map((x) => identifier + x)
   );
   const results = flattened
-    .filter(([, _identifier]) => relatedIdentifiers.has(_identifier))
-    .map(([_id]) => _id);
+    .filter(([, _identifier]) => aggregatesIdentifiers.has(_identifier))
+    .map(([_id, _identifier]) => [_identifier.slice(-3), _id]);
 
   // sanity-check
   // related IDs length can only be 3 or 0
@@ -24,7 +24,8 @@ function findRelatedIDs(flattened, identifier) {
     throw `[ERROR] Related IDs for identifier="${identifier}" has: ${results.length}`;
   }
 
-  return results;
+  // convert aggregates to object (if non-null)
+  return results.length > 0 ? Object.fromEntries(results) : null;
 }
 
 function findFirst(features, featureGroup) {
@@ -65,7 +66,7 @@ function getMapping(mapping, i18n) {
       group: groupLabel.toLowerCase(),
       label: i18n[id][1],
       unit: i18n[id][3],
-      relatedIDs: findRelatedIDs(flattened, identifier),
+      aggregates: findAggregates(flattened, identifier),
     }));
 
   // attach feature group labels

@@ -6,3 +6,9 @@ export const [wr, wg, wb] = [
 ];
 
 export const nDays = 14;
+
+// identifiers used by the editor dialog to display
+// the appropriate input widgets
+export const genderIdentifiers = ['m', 'gender'];
+export const beingIdentifiers = ['black'];
+export const existentialIdentifiers = ['diabetes', 'tobacco'];

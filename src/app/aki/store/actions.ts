@@ -1,4 +1,4 @@
-import { Feature } from '@core/types';
+import { Feature, FeatureUnaryValue } from '@core/types';
 
 export class LoadSample {
   static readonly type = '[AKI] load';
@@ -17,6 +17,6 @@ export class Change {
   constructor(
     public feature: Feature,
     public day: number,
-    public value: number
+    public value: FeatureUnaryValue
   ) {}
 }

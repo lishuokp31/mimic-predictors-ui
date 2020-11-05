@@ -5,3 +5,16 @@
 .form-unit {
   color: #ff4081;
 }
+
+.form-group {
+  padding: 10px 0;
+
+  & > label {
+    display: block;
+    padding-bottom: 12px;
+  }
+
+  & > mat-radio-group > mat-radio-button {
+    margin-right: 24px;
+  }
+}

@@ -4,7 +4,7 @@ import produce from 'immer';
 
 import { nDays, wr, wg, wb } from '@core/constants';
 import { ApiService } from '@core/services';
-import { StateModel, Feature } from '@core/types';
+import { StateModel, Feature, isUnaryValue } from '@core/types';
 import {
   zeros1d,
   zeros2d,
@@ -182,15 +182,35 @@ export class VancomycinState {
 
     patchState({
       x: produce(x, (draft) => {
-        // static feature values doesn't change every day
-        // so updating it means we should update other days too
+        // static feature
         if (staticFeatureIds.includes(feature.id)) {
+          // only features that doesn't have aggregate values
+          // are allowed to be static features
+          if (!isUnaryValue(value)) {
+            const valueAsJson = JSON.stringify(value);
+            const featureAsJson = JSON.stringify(feature);
+            throw `Invalid value=${valueAsJson} for feature=${featureAsJson}`;
+          }
+
+          // static feature values doesn't change every day
+          // so updating it means we should update other days too
           const emptyDayStart = getEmptyDayStart(x);
           for (let i = 0; i < emptyDayStart; i++) {
             draft[i][feature.id] = value;
           }
-        } else {
-          draft[day][feature.id] = value;
+        }
+        // dynamic feature
+        else {
+          if (isUnaryValue(value)) {
+            draft[day][feature.id] = value;
+          }
+          // update feature aggregate values
+          else {
+            draft[day][feature.id] = value.mean;
+            draft[day][feature.aggregates!.min] = value.min;
+            draft[day][feature.aggregates!.max] = value.max;
+            draft[day][feature.aggregates!.std] = value.std;
+          }
         }
       }),
     });

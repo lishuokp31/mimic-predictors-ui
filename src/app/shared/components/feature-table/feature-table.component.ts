@@ -7,13 +7,13 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
-import { Feature } from '@core/types';
+import { Feature, FeatureMultipleValues, FeatureUnaryValue } from '@core/types';
 import { FeatureValueEditorDialog, DialogData } from '@shared/dialogs';
 
 export interface FeatureValueChangeEvent {
   feature: Feature;
   day: number;
-  newValue: number;
+  newValue: FeatureUnaryValue | FeatureMultipleValues;
 }
 
 @Component({
@@ -41,9 +41,8 @@ export class FeatureTableComponent {
 
   public showFeatureValueEditor(feature: Feature, day: number) {
     const data: DialogData = {
-      label: feature.label,
-      value: this.x![day][feature.id],
-      unit: feature.unit,
+      feature: feature,
+      value: this.collateFeatureValue(feature, day),
     };
 
     const config = new MatDialogConfig();
@@ -59,5 +58,21 @@ export class FeatureTableComponent {
         this.change.emit({ feature, day, newValue: result });
       }
     });
+  }
+
+  private collateFeatureValue(
+    feature: Feature,
+    day: number
+  ): FeatureUnaryValue | FeatureMultipleValues {
+    if (feature.aggregates !== null) {
+      return {
+        mean: this.x![day][feature.id],
+        min: this.x![day][feature.aggregates.min],
+        max: this.x![day][feature.aggregates.max],
+        std: this.x![day][feature.aggregates.std],
+      };
+    }
+
+    return this.x![day][feature.id];
   }
 }

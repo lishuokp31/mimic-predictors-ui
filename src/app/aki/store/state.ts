@@ -174,9 +174,9 @@ export class AkiState {
 
     patchState({
       x: produce(x, (draft) => {
-        // static feature values doesn't change every day
-        // so updating it means we should update other days too
         if (staticFeatureIds.includes(feature.id)) {
+          // static feature values doesn't change every day
+          // so updating it means we should update other days too
           const emptyDayStart = getEmptyDayStart(x);
           for (let i = 0; i < emptyDayStart; i++) {
             draft[i][feature.id] = value;
