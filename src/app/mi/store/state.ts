@@ -210,6 +210,8 @@ export class MiState {
           }
         }
       }),
+      predictions: zeros1d(nDays),
+      weights: zeros2d(nDays, nFeatures),
     });
   }
 }

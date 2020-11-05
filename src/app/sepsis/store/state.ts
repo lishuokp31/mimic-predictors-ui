@@ -213,6 +213,8 @@ export class SepsisState {
           }
         }
       }),
+      predictions: zeros1d(nDays),
+      weights: zeros2d(nDays, nFeatures),
     });
   }
 }
