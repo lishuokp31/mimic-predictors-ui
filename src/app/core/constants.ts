@@ -7,8 +7,9 @@ export const [wr, wg, wb] = [
 
 export const nDays = 14;
 
-// identifiers used by the editor dialog to display
+// used by the feature table to format values correctly
+// also used by the editor dialog to display
 // the appropriate input widgets
-export const genderIdentifiers = ['m', 'gender'];
-export const beingIdentifiers = ['black'];
-export const existentialIdentifiers = ['diabetes', 'tobacco'];
+export const genderIdentifiers = new Set(['m', 'gender']);
+export const beingIdentifiers = new Set(['black', 'tobacco']);
+export const existentialIdentifiers = new Set(['diabetes']);

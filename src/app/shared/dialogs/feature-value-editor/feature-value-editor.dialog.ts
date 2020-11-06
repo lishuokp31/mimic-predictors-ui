@@ -166,17 +166,17 @@ function determineEditorType(data: DialogData): EditorType {
   }
 
   // data that requires to be shown as either "to be" or "to not be"
-  if (beingIdentifiers.includes(data.feature.identifier)) {
+  if (beingIdentifiers.has(data.feature.identifier)) {
     return 'being';
   }
 
   // data that requires to be shown as either "to have" or "to not have"
-  if (existentialIdentifiers.includes(data.feature.identifier)) {
+  if (existentialIdentifiers.has(data.feature.identifier)) {
     return 'existential';
   }
 
   // data that requires to be shown as biological gender
-  if (genderIdentifiers.includes(data.feature.identifier)) {
+  if (genderIdentifiers.has(data.feature.identifier)) {
     return 'gender';
   }
 

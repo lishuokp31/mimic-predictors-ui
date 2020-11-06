@@ -1,21 +1,23 @@
-const booleanGenderIdentifiers = new Set(['m', 'gender']);
-const booleanIsIdentifiers = new Set(['black']);
-const booleanHaveIdentifiers = new Set(['tobacco', 'diabetes']);
+import {
+  beingIdentifiers,
+  existentialIdentifiers,
+  genderIdentifiers,
+} from '../constants';
 
 export function format(
   identifier: string,
   group: string,
   value: number
 ): string {
-  if (booleanGenderIdentifiers.has(identifier)) {
+  if (genderIdentifiers.has(identifier)) {
     return formatGender(value);
   }
 
-  if (booleanIsIdentifiers.has(identifier)) {
+  if (beingIdentifiers.has(identifier)) {
     return formatBooleanIs(value);
   }
 
-  if (booleanHaveIdentifiers.has(identifier)) {
+  if (existentialIdentifiers.has(identifier)) {
     return formatBooleanHave(value);
   }
 
