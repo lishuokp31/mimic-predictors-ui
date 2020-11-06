@@ -7,7 +7,12 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
-import { Feature, FeatureMultipleValues, FeatureUnaryValue } from '@core/types';
+import {
+  Feature,
+  FeatureMultipleValues,
+  FeatureUnaryValue,
+  isFeatureValueEqual,
+} from '@core/types';
 import { FeatureValueEditorDialog, DialogData } from '@shared/dialogs';
 
 export interface FeatureValueChangeEvent {
@@ -40,11 +45,11 @@ export class FeatureTableComponent {
   public constructor(public dialog: MatDialog) {}
 
   public showFeatureValueEditor(feature: Feature, day: number) {
-    const data: DialogData = {
-      feature: feature,
-      value: this.collateFeatureValue(feature, day),
-    };
+    // initialize data for the dialog
+    const value = this.collateFeatureValue(feature, day);
+    const data: DialogData = { feature, value };
 
+    // initialize config for the dialog
     const config = new MatDialogConfig();
     config.data = data;
     config.width = '400px';
@@ -55,7 +60,11 @@ export class FeatureTableComponent {
       // clicking the cancel button yields an empty string as a result
       // we only process a result with a valid value
       if (result !== undefined && result !== '') {
-        this.change.emit({ feature, day, newValue: result });
+        // dispatch a change event if and only if the new value
+        // actually changed (that is, different from the previous value)
+        if (!isFeatureValueEqual(value, result)) {
+          this.change.emit({ feature, day, newValue: result });
+        }
       }
     });
   }
