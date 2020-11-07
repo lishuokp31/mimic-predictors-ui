@@ -37,7 +37,7 @@ const initialState: StateModel = {
 @Injectable()
 export class AkiState {
   @Selector()
-  static features(state: StateModel) {
+  static features(state: StateModel): Feature[] {
     return state.features;
   }
 

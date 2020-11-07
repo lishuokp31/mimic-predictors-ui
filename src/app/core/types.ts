@@ -13,6 +13,7 @@ export interface Feature {
   label: string;
   unit: string | null;
   aggregates: FeatureAggregateIDs | null;
+  header?: string;
 }
 
 export interface FeatureAggregateIDs {
