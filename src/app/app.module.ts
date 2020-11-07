@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { PreloadAllModules, RouterModule } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
@@ -17,7 +17,7 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     HttpClientModule,
     CoreModule,
-    RouterModule.forRoot([]),
+    RouterModule.forRoot([], { preloadingStrategy: PreloadAllModules }),
     NgxsModule.forRoot([], {
       developmentMode: !environment.production,
     }),
