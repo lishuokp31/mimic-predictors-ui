@@ -6,7 +6,7 @@ import { PatientsRoutingModule } from '@patients/patients-routing.module';
 import { components } from '@patients/components';
 import { containers } from '@patients/containers';
 import { services } from '@patients/services';
-import { PatientsState } from '@patients/store';
+import { PatientsEntitiesState, PatientsState } from '@patients/store';
 
 import { SharedModule } from '@shared/shared.module';
 import { AgGridModule } from 'ag-grid-angular';
@@ -18,7 +18,7 @@ import { AgGridModule } from 'ag-grid-angular';
     SharedModule,
     PatientsRoutingModule,
     AgGridModule.withComponents([]),
-    NgxsModule.forFeature([PatientsState]),
+    NgxsModule.forFeature([PatientsEntitiesState, PatientsState]),
   ],
   providers: [...services],
 })
