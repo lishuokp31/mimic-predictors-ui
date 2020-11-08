@@ -36,13 +36,13 @@ const initialState: StateModel = {
 })
 @Injectable()
 export class VancomycinState {
-  @Selector()
-  static features(state: StateModel) {
+  @Selector([VancomycinState])
+  static features(state: StateModel): Feature[] {
     return state.features;
   }
 
-  @Selector()
-  static x(state: StateModel) {
+  @Selector([VancomycinState])
+  static x(state: StateModel): number[][] {
     return state.x;
   }
 
@@ -52,7 +52,6 @@ export class VancomycinState {
     VancomycinState.emptyDayStart,
   ])
   static formattedX(
-    _: StateModel,
     features: Feature[],
     x: number[][],
     emptyDayStart: number
@@ -69,31 +68,30 @@ export class VancomycinState {
   }
 
   @Selector([VancomycinState.x])
-  static emptyDayStart(_: StateModel, x: number[][]): number {
+  static emptyDayStart(x: number[][]): number {
     return getEmptyDayStart(x);
   }
 
   @Selector([VancomycinState.emptyDayStart])
-  static disableInfer(_: StateModel, emptyDayStart: number): boolean {
+  static disableInfer(emptyDayStart: number): boolean {
     return emptyDayStart === 0;
   }
 
-  @Selector()
-  static predictions(state: StateModel) {
+  @Selector([VancomycinState])
+  static predictions(state: StateModel): number[] {
     return state.predictions;
   }
 
   @Selector([VancomycinState.predictions, VancomycinState.emptyDayStart])
   static slicedPredictions(
-    _: StateModel,
     predictions: number[],
     emptyDayStart: number
   ): number[] {
     return predictions.slice(0, emptyDayStart);
   }
 
-  @Selector()
-  static weights(state: StateModel) {
+  @Selector([VancomycinState])
+  static weights(state: StateModel): number[][] {
     return state.weights;
   }
 
@@ -103,7 +101,6 @@ export class VancomycinState {
     VancomycinState.weights,
   ])
   static computedWeights(
-    _: StateModel,
     showWeights: boolean,
     features: Feature[],
     weights: number[][]
@@ -123,18 +120,18 @@ export class VancomycinState {
       );
   }
 
-  @Selector()
-  static showPredictions(state: StateModel) {
-    return state.predictions.every((probability) => probability != 0);
+  @Selector([VancomycinState.predictions])
+  static showPredictions(predictions: number[]): boolean {
+    return predictions.every((probability) => probability != 0);
   }
 
-  @Selector()
-  static showWeights(state: StateModel) {
-    return state.weights.some((day) => day.some((weight) => weight != 0));
+  @Selector([VancomycinState.weights])
+  static showWeights(weights: number[][]): boolean {
+    return weights.some((day) => day.some((weight) => weight != 0));
   }
 
-  @Selector()
-  static isLoading(state: StateModel) {
+  @Selector([VancomycinState])
+  static isLoading(state: StateModel): boolean {
     return state.isLoading;
   }
 

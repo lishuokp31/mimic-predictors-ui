@@ -20,6 +20,10 @@ import { environment } from '../environments/environment';
     RouterModule.forRoot([], { preloadingStrategy: PreloadAllModules }),
     NgxsModule.forRoot([], {
       developmentMode: !environment.production,
+      selectorOptions: {
+        suppressErrors: false,
+        injectContainerState: false,
+      },
     }),
     ...[!environment.production ? NgxsReduxDevtoolsPluginModule.forRoot() : []],
   ],

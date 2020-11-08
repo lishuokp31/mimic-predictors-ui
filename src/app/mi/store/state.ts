@@ -36,19 +36,18 @@ const initialState: StateModel = {
 })
 @Injectable()
 export class MiState {
-  @Selector()
-  static features(state: StateModel) {
+  @Selector([MiState])
+  static features(state: StateModel): Feature[] {
     return state.features;
   }
 
-  @Selector()
-  static x(state: StateModel) {
+  @Selector([MiState])
+  static x(state: StateModel): number[][] {
     return state.x;
   }
 
   @Selector([MiState.features, MiState.x, MiState.emptyDayStart])
   static formattedX(
-    _: StateModel,
     features: Feature[],
     x: number[][],
     emptyDayStart: number
@@ -65,37 +64,35 @@ export class MiState {
   }
 
   @Selector([MiState.x])
-  static emptyDayStart(_: StateModel, x: number[][]): number {
+  static emptyDayStart(x: number[][]): number {
     return getEmptyDayStart(x);
   }
 
   @Selector([MiState.emptyDayStart])
-  static disableInfer(_: StateModel, emptyDayStart: number): boolean {
+  static disableInfer(emptyDayStart: number): boolean {
     return emptyDayStart === 0;
   }
 
-  @Selector()
-  static predictions(state: StateModel) {
+  @Selector([MiState])
+  static predictions(state: StateModel): number[] {
     return state.predictions;
   }
 
   @Selector([MiState.predictions, MiState.emptyDayStart])
   static slicedPredictions(
-    _: StateModel,
     predictions: number[],
     emptyDayStart: number
   ): number[] {
     return predictions.slice(0, emptyDayStart);
   }
 
-  @Selector()
-  static weights(state: StateModel) {
+  @Selector([MiState])
+  static weights(state: StateModel): number[][] {
     return state.weights;
   }
 
   @Selector([MiState.showWeights, MiState.features, MiState.weights])
   static computedWeights(
-    _: StateModel,
     showWeights: boolean,
     features: Feature[],
     weights: number[][]
@@ -115,18 +112,18 @@ export class MiState {
       );
   }
 
-  @Selector()
-  static showPredictions(state: StateModel) {
-    return state.predictions.every((probability) => probability != 0);
+  @Selector([MiState.predictions])
+  static showPredictions(predictions: number[]): boolean {
+    return predictions.every((probability) => probability != 0);
   }
 
-  @Selector()
-  static showWeights(state: StateModel) {
-    return state.weights.some((day) => day.some((weight) => weight != 0));
+  @Selector([MiState.weights])
+  static showWeights(weights: number[][]): boolean {
+    return weights.some((day) => day.some((weight) => weight != 0));
   }
 
-  @Selector()
-  static isLoading(state: StateModel) {
+  @Selector([MiState])
+  static isLoading(state: StateModel): boolean {
     return state.isLoading;
   }
 
