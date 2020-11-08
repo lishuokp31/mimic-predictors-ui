@@ -1,3 +1,11 @@
-<button (click)="loadAll()">Load All</button>
-
-<app-patients-table [patients]="patients$ | async"></app-patients-table>
+<div class="container">
+  <div class="actions-container">
+    <button mat-stroked-button color="primary" (click)="loadAll()">
+      <mat-icon>refresh</mat-icon>
+      Load All
+    </button>
+  </div>
+  <div class="table-container">
+    <app-patients-table [patients]="patients$ | async"></app-patients-table>
+  </div>
+</div>

@@ -9,11 +9,33 @@ import { Patient } from '@patients/models';
 })
 export class PatientsTableComponent {
   public readonly columnDefs = [
-    { field: 'id' },
-    { field: 'name' },
-    { field: 'ethnicity' },
+    {
+      headerName: 'ID',
+      field: 'id',
+      sortable: true,
+      filter: true,
+      suppressSizeToFit: true,
+      lockPosition: true,
+    },
+    { headerName: '姓名', field: 'name', sortable: true, filter: true },
+    { headerName: '性别', field: 'gender', sortable: true, filter: true },
+    { headerName: '年龄', field: 'age', sortable: true, filter: true },
+    { headerName: '民族', field: 'ethnicity', sortable: true, filter: true },
   ];
 
   @Input()
   public patients: Patient[] | null = [];
+
+  public onGridReady(params: any) {
+    params.api.sizeColumnsToFit();
+    window.addEventListener('resize', function () {
+      setTimeout(function () {
+        params.api.sizeColumnsToFit();
+      });
+    });
+  }
+
+  onFirstDataRendered(params: any) {
+    params.api.sizeColumnsToFit();
+  }
 }
