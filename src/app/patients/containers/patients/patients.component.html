@@ -6,6 +6,9 @@
     </button>
   </div>
   <div class="table-container">
-    <app-patients-table [patients]="patients$ | async"></app-patients-table>
+    <app-patients-table
+      [patients]="patients$ | async"
+      [isLoading]="isLoading$ | async"
+    ></app-patients-table>
   </div>
 </div>

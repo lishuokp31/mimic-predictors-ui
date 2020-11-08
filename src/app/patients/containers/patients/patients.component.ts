@@ -14,9 +14,11 @@ import { PatientsState } from '@patients/store';
 })
 export class PatientsComponent {
   public patients$: Observable<Patient[]>;
+  public isLoading$: Observable<boolean>;
 
   constructor(private store: Store) {
     this.patients$ = this.store.select(PatientsState.patients);
+    this.isLoading$ = this.store.select(PatientsState.isLoading);
   }
 
   public loadAll() {

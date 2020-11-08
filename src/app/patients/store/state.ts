@@ -38,6 +38,11 @@ export class PatientsState {
     private patientsEntities: PatientsEntitiesState
   ) {}
 
+  @Selector([PatientsState])
+  public static isLoading(state: PatientsStateModel) {
+    return state.isLoading;
+  }
+
   @Selector([PatientsEntitiesState])
   public static patientsCollection(
     state: PatientsEntitiesState

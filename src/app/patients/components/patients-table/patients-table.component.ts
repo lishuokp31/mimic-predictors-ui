@@ -8,6 +8,7 @@ import { Patient } from '@patients/models';
   templateUrl: './patients-table.component.html',
 })
 export class PatientsTableComponent {
+  private gridApi: any;
   public readonly columnDefs = [
     {
       headerName: 'ID',
@@ -26,7 +27,22 @@ export class PatientsTableComponent {
   @Input()
   public patients: Patient[] | null = [];
 
+  @Input()
+  public set isLoading(value: boolean | null) {
+    if (this.gridApi) {
+      if (value) {
+        this.gridApi.showLoadingOverlay();
+      } else {
+        this.gridApi.hideLoadingOverlay();
+      }
+    }
+  }
+
   public onGridReady(params: any) {
+    // save API reference for showing the loading overlay
+    this.gridApi = params.api;
+
+    // makes sure that the table always fits its container
     params.api.sizeColumnsToFit();
     window.addEventListener('resize', function () {
       setTimeout(function () {
@@ -36,6 +52,7 @@ export class PatientsTableComponent {
   }
 
   onFirstDataRendered(params: any) {
+    // when the data is loaded/refreshed, resize the table again
     params.api.sizeColumnsToFit();
   }
 }
