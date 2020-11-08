@@ -22,6 +22,7 @@
     "paths": {
       "@core/*": ["src/app/core/*"],
       "@shared/*": ["src/app/shared/*"],
+      "@patients/*": ["src/app/patients/*"],
       "@aki/*": ["src/app/aki/*"],
       "@sepsis/*": ["src/app/sepsis/*"],
       "@mi/*": ["src/app/mi/*"],
