@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxsModule } from '@ngxs/store';
 import { AgGridModule } from 'ag-grid-angular';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { PatientsMaterialModule } from '@patients/patients-material.module';
 import { PatientsRoutingModule } from '@patients/patients-routing.module';
@@ -19,6 +20,7 @@ import { PatientsEntitiesState, PatientsState } from '@patients/store';
     PatientsMaterialModule,
     PatientsRoutingModule,
     AgGridModule.withComponents([]),
+    NgxChartsModule,
     NgxsModule.forFeature([PatientsEntitiesState, PatientsState]),
   ],
   providers: [...services, ...guards, ...resolvers],

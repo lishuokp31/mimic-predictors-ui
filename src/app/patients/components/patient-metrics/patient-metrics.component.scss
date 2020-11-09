@@ -1,0 +1,82 @@
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+
+  .main {
+    width: 110px;
+  }
+
+  .label {
+    color: rgba($color: black, $alpha: 0.54);
+  }
+
+  .mean {
+    font-size: 24pt;
+    font-weight: 700;
+    line-height: 24pt;
+
+    .unit {
+      font-size: 14pt;
+    }
+  }
+
+  .aggregates {
+    .min {
+      font-size: 10pt;
+
+      & > .unit {
+        font-size: 8pt;
+      }
+
+      &:before {
+        content: 'min: ';
+        font-size: 8pt;
+        color: rgba($color: black, $alpha: 0.54);
+      }
+    }
+
+    .max {
+      font-size: 10pt;
+
+      & > .unit {
+        font-size: 8pt;
+      }
+
+      &:before {
+        content: 'max: ';
+        font-size: 8pt;
+        color: rgba($color: black, $alpha: 0.54);
+      }
+    }
+
+    .std {
+      font-size: 10pt;
+
+      &:before {
+        content: 'std: ';
+        font-size: 8pt;
+        color: rgba($color: black, $alpha: 0.54);
+      }
+    }
+  }
+
+  &:first-of-type {
+    margin: 8px 0;
+  }
+
+  &:last-of-type {
+    border-top: 1px solid rgba(black, 0.2);
+    padding-top: 8px;
+  }
+}
