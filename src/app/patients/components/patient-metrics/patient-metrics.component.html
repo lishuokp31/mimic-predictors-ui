@@ -1,26 +1,15 @@
 <mat-card class="dashboard-card">
   <mat-card-content class="dashboard-card-content">
-    <div class="container">
+    <div *ngFor="let metric of _metrics" class="container">
       <div class="main">
-        <div class="label">体温（℃）</div>
-        <div class="mean">36.3</div>
+        <div class="label">{{ metric.label }} {{ metric.unit }}</div>
+        <div class="mean">{{ metric.mean }}</div>
       </div>
 
       <div class="aggregates">
-        <div class="min">36.1</div>
-        <div class="max">37.2</div>
-        <div class="std">0.25</div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="main">
-        <div class="label">心率（bpm）</div>
-        <div class="mean">150</div>
-      </div>
-      <div class="aggregates">
-        <div class="min">130</div>
-        <div class="max">180</div>
-        <div class="std">0.45</div>
+        <div class="min">{{ metric.min }}</div>
+        <div class="max">{{ metric.max }}</div>
+        <div class="std">{{ metric.std }}</div>
       </div>
     </div>
   </mat-card-content>

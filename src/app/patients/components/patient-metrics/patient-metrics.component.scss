@@ -6,19 +6,28 @@
   bottom: 15px;
 }
 
-.container {
+.dashboard-card-content {
   display: flex;
   flex-direction: row;
+  height: 100%;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100%;
   box-sizing: border-box;
 
   .main {
-    width: 110px;
-  }
+    margin-bottom: 16px;
+    text-align: center;
 
-  .label {
-    color: rgba($color: black, $alpha: 0.54);
+    .label {
+      color: rgba($color: black, $alpha: 0.54);
+    }
   }
 
   .mean {
@@ -71,12 +80,7 @@
     }
   }
 
-  &:first-of-type {
-    margin: 8px 0;
-  }
-
-  &:last-of-type {
-    border-top: 1px solid rgba(black, 0.2);
-    padding-top: 8px;
+  &:not(:last-of-type) {
+    border-right: 1px solid rgba(black, 0.2);
   }
 }
