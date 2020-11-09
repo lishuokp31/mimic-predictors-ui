@@ -2,10 +2,10 @@
   <div class="actions-container">
     <button mat-stroked-button color="primary" (click)="refresh()">
       <mat-icon>refresh</mat-icon>
-      Refresh
+      刷新
     </button>
   </div>
-  <div class="table-container">
+  <div class="table-container elevated">
     <app-patients-table
       [patients]="patients$ | async"
       [isLoading]="isLoading$ | async"
