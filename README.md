@@ -34,3 +34,10 @@ ng build --configuration staging --baseHref=/app/
 npm run build-image
 docker tag hitmimicpredictors/frontend:latest hitmimicpredictors/frontend:<version>
 ```
+
+## How to setup mock data
+
+```bash
+npm install -g json-server
+json-server db.json --routes routes.json --port 80
+```
