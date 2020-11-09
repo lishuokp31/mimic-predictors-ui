@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Patient } from '@patients/models';
+import {
+  FirstDataRenderedEvent,
+  GridApi,
+  GridReadyEvent,
+  RowClickedEvent,
+} from 'ag-grid-community';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -8,7 +14,7 @@ import { Patient } from '@patients/models';
   templateUrl: './patients-table.component.html',
 })
 export class PatientsTableComponent {
-  private gridApi: any;
+  private gridApi?: GridApi;
   public readonly columnDefs = [
     {
       headerName: 'ID',
@@ -33,12 +39,12 @@ export class PatientsTableComponent {
       if (value) {
         this.gridApi.showLoadingOverlay();
       } else {
-        this.gridApi.hideLoadingOverlay();
+        this.gridApi.hideOverlay();
       }
     }
   }
 
-  public onGridReady(params: any) {
+  public onGridReady(params: GridReadyEvent) {
     // save API reference for showing the loading overlay
     this.gridApi = params.api;
 
@@ -51,8 +57,12 @@ export class PatientsTableComponent {
     });
   }
 
-  onFirstDataRendered(params: any) {
+  public onFirstDataRendered(params: FirstDataRenderedEvent) {
     // when the data is loaded/refreshed, resize the table again
     params.api.sizeColumnsToFit();
+  }
+
+  public onRowClicked(event: RowClickedEvent) {
+    console.log(event);
   }
 }
