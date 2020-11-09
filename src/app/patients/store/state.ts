@@ -29,6 +29,7 @@ export class PatientsEntitiesState extends NgxsDataEntityCollectionsRepository<
   name: 'patients',
   defaults: {
     isLoading: false,
+    selectedPatientId: null,
   },
 })
 @Injectable()
@@ -57,13 +58,42 @@ export class PatientsState {
     return Object.values(patientsCollection);
   }
 
+  @Selector([PatientsState])
+  private static selectedPatientId(state: PatientsStateModel): string | null {
+    return state.selectedPatientId;
+  }
+
+  @Selector([PatientsState.selectedPatientId, PatientsState.patientsCollection])
+  public static selectedPatient(
+    selectedPatientId: string | null,
+    patients: EntityDictionary<string, Patient>
+  ): Patient | null {
+    return selectedPatientId ? patients[selectedPatientId] : null;
+  }
+
   @Action(actions.LoadAll)
   public async loadAll({ patchState }: StateContext<PatientsStateModel>) {
     patchState({ isLoading: true });
 
-    const patients = await this.api.loadAll();
+    const patients = await this.api.loadAll().toPromise();
     this.patientsEntities.setAll(patients);
 
     patchState({ isLoading: false });
+  }
+
+  @Action(actions.PatientLoadedAction)
+  public patientLoaded(
+    {}: StateContext<PatientsStateModel>,
+    { patient }: actions.PatientLoadedAction
+  ) {
+    this.patientsEntities.addOne(patient);
+  }
+
+  @Action(actions.SelectedPatientChangedAction)
+  public selectedPatientChanged(
+    { patchState }: StateContext<PatientsStateModel>,
+    { id }: actions.SelectedPatientChangedAction
+  ) {
+    patchState({ selectedPatientId: id });
   }
 }

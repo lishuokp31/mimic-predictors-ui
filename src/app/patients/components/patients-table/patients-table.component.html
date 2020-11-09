@@ -3,6 +3,7 @@
   class="ag-theme-material"
   [rowData]="patients"
   [columnDefs]="columnDefs"
+  [suppressCellSelection]="true"
   (firstDataRendered)="onFirstDataRendered($event)"
   (gridReady)="onGridReady($event)"
   (rowClicked)="onRowClicked($event)"

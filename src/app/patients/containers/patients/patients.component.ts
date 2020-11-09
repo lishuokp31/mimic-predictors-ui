@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
@@ -16,12 +17,17 @@ export class PatientsComponent {
   public patients$: Observable<Patient[]>;
   public isLoading$: Observable<boolean>;
 
-  constructor(private store: Store) {
+  constructor(private router: Router, private store: Store) {
     this.patients$ = this.store.select(PatientsState.patients);
     this.isLoading$ = this.store.select(PatientsState.isLoading);
   }
 
-  public loadAll() {
+  public refresh() {
     this.store.dispatch(new actions.LoadAll());
+  }
+
+  public onPatientClicked(event: Patient) {
+    const { id } = event;
+    this.router.navigate(['/patients', id]);
   }
 }

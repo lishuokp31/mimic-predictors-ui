@@ -1,10 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { PatientsComponent } from '@patients/containers';
+import {
+  PatientDetailComponent,
+  PatientsComponent,
+} from '@patients/containers';
 import { PatientsResolver } from '@patients/resolvers';
+import { PatientExistsGuard } from './guards';
 
 const routes: Routes = [
+  {
+    path: ':id',
+    component: PatientDetailComponent,
+    canActivate: [PatientExistsGuard],
+  },
   {
     path: '',
     component: PatientsComponent,

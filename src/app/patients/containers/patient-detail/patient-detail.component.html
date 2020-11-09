@@ -1,0 +1,7 @@
+<div class="container">
+  <div *ngIf="patient$ | async as patient; else patientNotFound">
+    {{ patient | json }}
+  </div>
+</div>
+
+<ng-template #patientNotFound>Patient not found</ng-template>

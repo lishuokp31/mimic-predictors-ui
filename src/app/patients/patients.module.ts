@@ -9,6 +9,7 @@ import { components } from '@patients/components';
 import { containers } from '@patients/containers';
 import { services } from '@patients/services';
 import { resolvers } from '@patients/resolvers';
+import { guards } from '@patients/guards';
 import { PatientsEntitiesState, PatientsState } from '@patients/store';
 
 @NgModule({
@@ -20,6 +21,6 @@ import { PatientsEntitiesState, PatientsState } from '@patients/store';
     AgGridModule.withComponents([]),
     NgxsModule.forFeature([PatientsEntitiesState, PatientsState]),
   ],
-  providers: [...services, ...resolvers],
+  providers: [...services, ...guards, ...resolvers],
 })
 export class PatientsModule {}

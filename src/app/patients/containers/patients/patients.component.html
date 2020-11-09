@@ -1,14 +1,15 @@
 <div class="container">
   <div class="actions-container">
-    <button mat-stroked-button color="primary" (click)="loadAll()">
+    <button mat-stroked-button color="primary" (click)="refresh()">
       <mat-icon>refresh</mat-icon>
-      Load All
+      Refresh
     </button>
   </div>
   <div class="table-container">
     <app-patients-table
       [patients]="patients$ | async"
       [isLoading]="isLoading$ | async"
+      (patientClick)="onPatientClicked($event)"
     ></app-patients-table>
   </div>
 </div>

@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Patient } from '@patients/models';
 import {
   FirstDataRenderedEvent,
@@ -44,6 +50,9 @@ export class PatientsTableComponent {
     }
   }
 
+  @Output()
+  public patientClick = new EventEmitter<Patient>();
+
   public onGridReady(params: GridReadyEvent) {
     // save API reference for showing the loading overlay
     this.gridApi = params.api;
@@ -63,6 +72,6 @@ export class PatientsTableComponent {
   }
 
   public onRowClicked(event: RowClickedEvent) {
-    console.log(event);
+    this.patientClick.emit(event.data as Patient);
   }
 }
