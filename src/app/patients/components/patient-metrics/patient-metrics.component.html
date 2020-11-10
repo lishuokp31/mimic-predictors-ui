@@ -2,7 +2,10 @@
   <mat-card-content class="dashboard-card-content">
     <div *ngFor="let metric of _metrics" class="container">
       <div class="main">
-        <div class="label">{{ metric.label }} {{ metric.unit }}</div>
+        <div class="label">
+          {{ metric.label }}
+          <span class="unit">{{ metric.unit }}</span>
+        </div>
         <div class="mean">{{ metric.mean }}</div>
       </div>
 

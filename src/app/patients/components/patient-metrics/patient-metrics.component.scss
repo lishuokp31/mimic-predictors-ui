@@ -27,6 +27,10 @@
 
     .label {
       color: rgba($color: black, $alpha: 0.54);
+
+      .unit {
+        font-size: 8pt;
+      }
     }
   }
 
@@ -34,49 +38,27 @@
     font-size: 24pt;
     font-weight: 700;
     line-height: 24pt;
-
-    .unit {
-      font-size: 14pt;
-    }
   }
 
   .aggregates {
-    .min {
-      font-size: 10pt;
+    font-size: 10pt;
 
-      & > .unit {
-        font-size: 8pt;
-      }
-
-      &:before {
-        content: 'min: ';
-        font-size: 8pt;
-        color: rgba($color: black, $alpha: 0.54);
-      }
+    .min:before {
+      content: 'min: ';
+      font-size: 8pt;
+      color: rgba($color: black, $alpha: 0.54);
     }
 
-    .max {
-      font-size: 10pt;
-
-      & > .unit {
-        font-size: 8pt;
-      }
-
-      &:before {
-        content: 'max: ';
-        font-size: 8pt;
-        color: rgba($color: black, $alpha: 0.54);
-      }
+    .max:before {
+      content: 'max: ';
+      font-size: 8pt;
+      color: rgba($color: black, $alpha: 0.54);
     }
 
-    .std {
-      font-size: 10pt;
-
-      &:before {
-        content: 'std: ';
-        font-size: 8pt;
-        color: rgba($color: black, $alpha: 0.54);
-      }
+    .std:before {
+      content: 'std: ';
+      font-size: 8pt;
+      color: rgba($color: black, $alpha: 0.54);
     }
   }
 

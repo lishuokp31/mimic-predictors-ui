@@ -11,6 +11,15 @@ $breakpoint-width: 1000px;
 
   .actions-container {
     margin-bottom: 10px;
+    display: flex;
+
+    .spacer {
+      flex: 1;
+    }
+
+    button mat-icon {
+      margin-left: -5px;
+    }
   }
 
   .table-container {

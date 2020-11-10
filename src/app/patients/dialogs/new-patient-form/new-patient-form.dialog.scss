@@ -1,0 +1,34 @@
+.form-group1 {
+  display: flex;
+
+  .form-field:first-of-type {
+    flex: 3;
+  }
+
+  .form-field:last-of-type {
+    flex: 2;
+    margin-left: 20px;
+  }
+}
+
+.form-group2 {
+  margin-top: -5px;
+  display: flex;
+
+  .form-field {
+    &:first-child {
+      flex: 1;
+    }
+
+    &:not(:first-child) {
+      width: 150px;
+      margin-left: 20px;
+    }
+  }
+}
+
+.form-group3 {
+  .label-file-name {
+    margin-left: 16px;
+  }
+}
