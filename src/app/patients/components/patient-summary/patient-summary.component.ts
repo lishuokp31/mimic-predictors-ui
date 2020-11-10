@@ -19,5 +19,5 @@ export class PatientSummaryComponent {
   public gender: Gender = '男';
 
   @Input()
-  public ethnicity: Ethnicity = '汉族';
+  public ethnicity: Ethnicity = Ethnicity.汉族;
 }

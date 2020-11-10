@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Ethnicity } from '@patients/models';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -8,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './new-patient-form.dialog.html',
 })
 export class NewPatientFormDialog {
+  public readonly ethnicities = Object.keys(Ethnicity);
   public form: FormGroup;
 
   constructor(fb: FormBuilder) {

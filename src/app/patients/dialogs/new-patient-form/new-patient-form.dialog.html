@@ -56,8 +56,9 @@
         <mat-label>民族</mat-label>
         <mat-select formControlName="ethnicity" required>
           <mat-option>--</mat-option>
-          <mat-option value="汉族">汉族</mat-option>
-          <mat-option value="回族">回族</mat-option>
+          <mat-option *ngFor="let option of ethnicities" [value]="option"
+            >{{ option }}</mat-option
+          >
         </mat-select>
         <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
       </mat-form-field>
