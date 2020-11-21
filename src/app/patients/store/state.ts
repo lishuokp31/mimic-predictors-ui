@@ -81,6 +81,15 @@ export class PatientsState {
     patchState({ isLoading: false });
   }
 
+  @Action(actions.LoadOne)
+  public async loadOne(
+    _: StateContext<PatientsStateModel>,
+    { id }: actions.LoadOne
+  ) {
+    const patient = await this.api.getById(id).toPromise();
+    this.patientsEntities.upsertOne(patient);
+  }
+
   @Action(actions.PatientLoadedAction)
   public patientLoaded(
     {}: StateContext<PatientsStateModel>,

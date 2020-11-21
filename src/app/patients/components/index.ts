@@ -1,8 +1,5 @@
 export { PatientGraphsComponent } from './patient-graphs/patient-graphs.component';
-export {
-  PatientMetric,
-  PatientMetricsComponent,
-} from './patient-metrics/patient-metrics.component';
+export { PatientMetricsComponent } from './patient-metrics/patient-metrics.component';
 export { PatientSummaryComponent } from './patient-summary/patient-summary.component';
 export { PatientsTableComponent } from './patients-table/patients-table.component';
 

@@ -52,9 +52,20 @@ export class PatientExistsGuard implements CanActivate {
   }
 
   private hasPatientInState(id: string): Observable<boolean> {
-    return this.store
-      .select(PatientsState.patientsCollection)
-      .pipe(switchMap((patients) => of(patients[id] != null)));
+    return this.store.select(PatientsState.patientsCollection).pipe(
+      switchMap((patients) => of(patients[id])),
+      tap((patient) => {
+        // most patients in the state doesn't have metrics and probabilities
+        // so we try to fetch it in advance (only if patient currently exists)
+        if (
+          patient &&
+          (!('metrics' in patient) || !('probabilities' in patient))
+        ) {
+          this.store.dispatch(new actions.LoadOne(id));
+        }
+      }),
+      map((patient) => patient != null)
+    );
   }
 
   private hasPatientInApi(id: string): Observable<boolean> {

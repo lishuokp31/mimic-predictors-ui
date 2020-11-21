@@ -4,6 +4,11 @@ export class LoadAll {
   static readonly type = '[patients] load all';
 }
 
+export class LoadOne {
+  static readonly type = '[patients] load one';
+  constructor(public id: string) {}
+}
+
 export class PatientLoadedAction {
   static readonly type = '[patients] patient loaded';
   constructor(public patient: Patient) {}

@@ -8,6 +8,24 @@ export interface Patient {
   ethnicity: Ethnicity;
   added_at: string;
   updated_at: string;
+  metrics?: PatientMetric[];
+  probabilities?: PatientProbabilities;
+}
+
+export interface PatientMetric {
+  label: string;
+  unit: string;
+  mean: number;
+  min: number;
+  max: number;
+  std: number;
+}
+
+export interface PatientProbabilities {
+  aki: number[];
+  sepsis: number[];
+  mi: number[];
+  vancomycin: number[];
 }
 
 export type Gender = '男' | '女';

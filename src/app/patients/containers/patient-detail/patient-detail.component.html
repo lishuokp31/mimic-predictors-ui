@@ -10,20 +10,21 @@
     </mat-grid-tile>
     <mat-grid-tile [colspan]="2" [rowspan]="2">
       <app-patient-graphs
-        [akiProbs]="akiProbs$ | async"
-        [sepsisProbs]="sepsisProbs$ | async"
-        [miProbs]="miProbs$ | async"
-        [vancomycinProbs]="vancomycinProbs$ | async"
+        [isLoading]="isLoading$ | async"
+        [probs]="probabilities$ | async"
       ></app-patient-graphs>
     </mat-grid-tile>
+
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <app-patient-metrics
-        [metrics]="tempRespRateMetrics$ | async"
+        [isLoading]="isLoading$ | async"
+        [metrics]="metrics1$ | async"
       ></app-patient-metrics>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <app-patient-metrics
-        [metrics]="bpHeartRateMetrics$ | async"
+        [isLoading]="isLoading$ | async"
+        [metrics]="metrics2$ | async"
       ></app-patient-metrics>
     </mat-grid-tile>
   </mat-grid-list>

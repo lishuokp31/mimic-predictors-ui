@@ -1,13 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-export interface PatientMetric {
-  label: string;
-  unit: string;
-  mean: number;
-  min: number;
-  max: number;
-  std: number;
-}
+import { PatientMetric } from '@patients/models';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,9 +12,18 @@ export class PatientMetricsComponent {
   public _metrics: PatientMetric[] = [];
 
   @Input()
+  public isLoading: boolean | null = true;
+
+  @Input()
   public set metrics(value: PatientMetric[] | null) {
-    if (value == null || value.length < 1 || value.length > 3) {
-      throw `Only 1-3 metrics are supported per card.`;
+    // ignore invalid values
+    if (value == null || value.length == 0) {
+      return;
+    }
+
+    // metrics card only supports displaying up to 2 metrics per card
+    if (value.length > 2) {
+      throw `Only 1-2 metrics are supported per card.`;
     }
 
     this._metrics = value;

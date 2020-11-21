@@ -12,6 +12,12 @@
   height: 100%;
 }
 
+.loading-wrapper {
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
 .container {
   flex: 1;
   display: flex;

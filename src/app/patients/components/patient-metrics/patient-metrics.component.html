@@ -1,19 +1,28 @@
 <mat-card class="dashboard-card">
-  <mat-card-content class="dashboard-card-content">
+  <mat-card-content
+    *ngIf="!isLoading; else loading"
+    class="dashboard-card-content"
+  >
     <div *ngFor="let metric of _metrics" class="container">
       <div class="main">
         <div class="label">
           {{ metric.label }}
           <span class="unit">{{ metric.unit }}</span>
         </div>
-        <div class="mean">{{ metric.mean }}</div>
+        <div class="mean">{{ metric.mean | number: '.1-1' }}</div>
       </div>
 
       <div class="aggregates">
-        <div class="min">{{ metric.min }}</div>
-        <div class="max">{{ metric.max }}</div>
-        <div class="std">{{ metric.std }}</div>
+        <div class="min">{{ metric.min | number: '.1-2' }}</div>
+        <div class="max">{{ metric.max | number: '.1-2' }}</div>
+        <div class="std">{{ metric.std | number: '.1-2' }}</div>
       </div>
     </div>
   </mat-card-content>
 </mat-card>
+
+<ng-template #loading>
+  <div class="loading-wrapper">
+    <mat-spinner [diameter]="45"></mat-spinner>
+  </div>
+</ng-template>

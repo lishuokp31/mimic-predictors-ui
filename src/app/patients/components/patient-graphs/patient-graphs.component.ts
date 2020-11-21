@@ -6,10 +6,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { curveMonotoneX } from 'd3-shape';
-import produce from 'immer';
 
-import { nDays } from '@core/constants';
-import { zeros1d } from '@core/utils';
+import { PatientProbabilities } from '@patients/models';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,91 +24,43 @@ export class PatientGraphsComponent implements OnChanges {
   public readonly curve = curveMonotoneX;
 
   @Input()
-  public akiProbs: number[] | null = zeros1d(nDays);
+  public isLoading: boolean | null = false;
 
   @Input()
-  public sepsisProbs: number[] | null = zeros1d(nDays);
+  public probs: PatientProbabilities | null = null;
 
-  @Input()
-  public miProbs: number[] | null = zeros1d(nDays);
-
-  @Input()
-  public vancomycinProbs: number[] | null = zeros1d(nDays);
-
-  public data: any[] = [
-    {
-      name: '急性肾损伤',
-      series: zeros1d(nDays).map((x, i) => ({
-        name: (i + 1).toString(),
-        value: x,
-      })),
-    },
-    {
-      name: '脓毒症',
-      series: zeros1d(nDays).map((x, i) => ({
-        name: (i + 1).toString(),
-        value: x,
-      })),
-    },
-    {
-      name: '心肌梗塞',
-      series: zeros1d(nDays).map((x, i) => ({
-        name: (i + 1).toString(),
-        value: x,
-      })),
-    },
-    {
-      name: '万古霉素',
-      series: zeros1d(nDays).map((x, i) => ({
-        name: (i + 1).toString(),
-        value: x,
-      })),
-    },
-  ];
+  public data: any[] = [];
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes.akiProbs) {
-      this.data = produce(this.data, (draft) => {
-        draft[0].series = changes.akiProbs.currentValue.map(
-          (x: number, i: number) => ({
-            name: (i + 1).toString(),
-            value: x,
-          })
-        );
-      });
-    }
+    if (changes.probs && changes.probs.currentValue) {
+      const probs = changes.probs.currentValue as PatientProbabilities;
+      console.log(probs);
+      const { aki, sepsis, mi, vancomycin } = probs;
 
-    if (changes.sepsisProbs) {
-      this.data = produce(this.data, (draft) => {
-        draft[1].series = changes.sepsisProbs.currentValue.map(
-          (x: number, i: number) => ({
+      this.data = [
+        {
+          name: '急性肾损伤',
+          series: aki.map((x, i) => ({ name: (i + 1).toString(), value: x })),
+        },
+        {
+          name: '脓毒症',
+          series: sepsis.map((x, i) => ({
             name: (i + 1).toString(),
             value: x,
-          })
-        );
-      });
-    }
-
-    if (changes.miProbs) {
-      this.data = produce(this.data, (draft) => {
-        draft[2].series = changes.miProbs.currentValue.map(
-          (x: number, i: number) => ({
+          })),
+        },
+        {
+          name: '心肌梗塞',
+          series: mi.map((x, i) => ({ name: (i + 1).toString(), value: x })),
+        },
+        {
+          name: '万古霉素',
+          series: vancomycin.map((x, i) => ({
             name: (i + 1).toString(),
             value: x,
-          })
-        );
-      });
-    }
-
-    if (changes.vancomycinProbs) {
-      this.data = produce(this.data, (draft) => {
-        draft[3].series = changes.vancomycinProbs.currentValue.map(
-          (x: number, i: number) => ({
-            name: (i + 1).toString(),
-            value: x,
-          })
-        );
-      });
+          })),
+        },
+      ];
     }
   }
 }
