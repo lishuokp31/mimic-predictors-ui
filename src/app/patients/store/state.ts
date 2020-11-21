@@ -96,4 +96,21 @@ export class PatientsState {
   ) {
     patchState({ selectedPatientId: id });
   }
+
+  @Action(actions.ImportPatientAction)
+  public async importPatient(
+    { patchState }: StateContext<PatientsStateModel>,
+    { payload }: actions.ImportPatientAction
+  ) {
+    patchState({ isLoading: true });
+
+    try {
+      const patient = await this.api.import(payload).toPromise();
+      this.patientsEntities.addOne(patient);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      patchState({ isLoading: false });
+    }
+  }
 }

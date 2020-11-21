@@ -8,7 +8,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -20,7 +19,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatIconModule,
     MatInputModule,
     MatSelectModule,
-    MatSnackBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -31,7 +29,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatIconModule,
     MatInputModule,
     MatSelectModule,
-    MatSnackBarModule,
   ],
 })
 export class PatientsMaterialModule {}

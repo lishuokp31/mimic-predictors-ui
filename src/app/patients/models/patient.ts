@@ -1,9 +1,13 @@
 export interface Patient {
   id: string;
   name: string;
-  gender: Gender;
   age: number;
+  gender: Gender;
+  weight: number;
+  height: number;
   ethnicity: Ethnicity;
+  added_at: string;
+  updated_at: string;
 }
 
 export type Gender = '男' | '女';

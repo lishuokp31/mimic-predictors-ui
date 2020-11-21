@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -6,8 +7,6 @@ import { Observable } from 'rxjs';
 import { Patient } from '@patients/models';
 import * as actions from '@patients/store/actions';
 import { PatientsState } from '@patients/store';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NewPatientFormDialog } from '@patients/dialogs';
 
 @Component({
@@ -23,7 +22,6 @@ export class PatientsComponent {
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private snackBar: MatSnackBar,
     private store: Store
   ) {
     this.patients$ = this.store.select(PatientsState.patients);
@@ -35,13 +33,19 @@ export class PatientsComponent {
   }
 
   public importPatient() {
-    // initialize config for the dialog
     const config = new MatDialogConfig();
-    config.data = undefined;
     config.width = '600px';
 
     const dialogRef = this.dialog.open(NewPatientFormDialog, config);
-    dialogRef.afterClosed().subscribe(console.log);
+    dialogRef.afterClosed().subscribe((result) => {
+      // closing the dialog by clicking outside its area will yield an undefined result
+      // clicking the cancel button yields an empty string as a result
+      // we only process a result with a valid value
+      if (result !== undefined && result !== '') {
+        const action = new actions.ImportPatientAction(result);
+        this.store.dispatch(action);
+      }
+    });
   }
 
   public onPatientClicked(event: Patient) {

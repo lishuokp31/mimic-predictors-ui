@@ -38,6 +38,7 @@
           placeholder="请输入患者的年龄"
           required
         />
+        <span matSuffix>岁</span>
       </mat-form-field>
 
       <!-- Gender -->
@@ -48,7 +49,6 @@
           <mat-option value="男">男</mat-option>
           <mat-option value="女">女</mat-option>
         </mat-select>
-        <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
       </mat-form-field>
 
       <!-- Ethnicity -->
@@ -60,7 +60,6 @@
             >{{ option }}</mat-option
           >
         </mat-select>
-        <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
       </mat-form-field>
     </div>
 
@@ -69,14 +68,17 @@
       <button mat-stroked-button color="primary" (click)="inputFile.click()">
         选择文件
       </button>
-      <span class="label-file-name">请选择导入文件</span>
+      <span class="label-file-name">
+        {{ currentSelectedFilename ? currentSelectedFilename : fileInputHint }}
+      </span>
       <input
         hidden
         #inputFile
         type="file"
         name="inputfile"
         id="inputfile"
-        (change)="onFileSelected($event)"
+        (change)="onFileSelectedChanged($event)"
+        accept=".csv"
       />
     </div>
   </form>
@@ -88,7 +90,7 @@
     mat-button
     color="primary"
     (click)="import()"
-    [disabled]="form.invalid"
+    [disabled]="form.invalid || !currentSelectedFilename"
   >
     导入
   </button>
