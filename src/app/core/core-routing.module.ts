@@ -5,6 +5,11 @@ import { PageNotFoundPage } from '@core/containers';
 
 const routes: Routes = [
   {
+    path: 'patients',
+    loadChildren: () =>
+      import('../patients/patients.module').then((m) => m.PatientsModule),
+  },
+  {
     path: 'sepsis',
     loadChildren: () =>
       import('../sepsis/sepsis.module').then((m) => m.SepsisModule),
@@ -22,7 +27,7 @@ const routes: Routes = [
     path: 'aki',
     loadChildren: () => import('../aki/aki.module').then((m) => m.AkiModule),
   },
-  { path: '', redirectTo: '/aki', pathMatch: 'full' },
+  { path: '', redirectTo: '/patients', pathMatch: 'full' },
   { path: '**', component: PageNotFoundPage },
 ];
 

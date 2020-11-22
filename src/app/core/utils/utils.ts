@@ -8,6 +8,12 @@ export function zeros2d(a1: number, a2: number): number[][] {
   return Array(a1).fill(Array(a2).fill(0));
 }
 
+export function range(end: number): number[] {
+  return Array(end)
+    .fill(0)
+    .map((_, i) => i);
+}
+
 export function getFeatureWeight(
   feature: Feature,
   day: number,

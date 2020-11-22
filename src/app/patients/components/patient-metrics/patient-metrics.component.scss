@@ -1,0 +1,74 @@
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.dashboard-card-content {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.loading-wrapper {
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  box-sizing: border-box;
+
+  .main {
+    margin-bottom: 16px;
+    text-align: center;
+
+    .label {
+      color: rgba($color: black, $alpha: 0.54);
+
+      .unit {
+        font-size: 8pt;
+      }
+    }
+  }
+
+  .mean {
+    font-size: 24pt;
+    font-weight: 700;
+    line-height: 24pt;
+  }
+
+  .aggregates {
+    font-size: 10pt;
+
+    .min:before {
+      content: 'min: ';
+      font-size: 8pt;
+      color: rgba($color: black, $alpha: 0.54);
+    }
+
+    .max:before {
+      content: 'max: ';
+      font-size: 8pt;
+      color: rgba($color: black, $alpha: 0.54);
+    }
+
+    .std:before {
+      content: 'std: ';
+      font-size: 8pt;
+      color: rgba($color: black, $alpha: 0.54);
+    }
+  }
+
+  &:not(:last-of-type) {
+    border-right: 1px solid rgba(black, 0.2);
+  }
+}

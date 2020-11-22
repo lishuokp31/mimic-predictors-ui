@@ -1,0 +1,32 @@
+.header {
+  color: #1976d2;
+  margin-top: 10px;
+  font-size: 24pt;
+  font-weight: 700;
+  line-height: 24pt;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.dashboard-card-content {
+  padding: 0 15px;
+  font-size: 13pt;
+  line-height: 13pt;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.spacer {
+  width: 45px;
+}
+
+.label {
+  font-size: 11pt;
+  line-height: 11pt;
+  color: rgba($color: black, $alpha: 0.54);
+}

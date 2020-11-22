@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="actions-container">
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="refresh()"
+      [disabled]="isLoading$ | async"
+    >
+      <mat-icon>refresh</mat-icon>
+      刷新
+    </button>
+    <div class="spacer"></div>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="importPatient()"
+      [disabled]="isLoading$ | async"
+    >
+      <mat-icon>add</mat-icon>
+      导入患者
+    </button>
+  </div>
+  <div class="table-container elevated">
+    <app-patients-table
+      [patients]="patients$ | async"
+      [isLoading]="isLoading$ | async"
+      (patientClick)="onPatientClicked($event)"
+    ></app-patients-table>
+  </div>
+</div>

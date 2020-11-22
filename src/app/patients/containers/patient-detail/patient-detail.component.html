@@ -1,0 +1,31 @@
+<div class="grid-container">
+  <mat-grid-list *ngIf="patient$ | async as patient" cols="4" rowHeight="220px">
+    <mat-grid-tile [colspan]="2" [rowspan]="1">
+      <app-patient-summary
+        [name]="patient.name"
+        [age]="patient.age"
+        [gender]="patient.gender"
+        [ethnicity]="patient.ethnicity"
+      ></app-patient-summary>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="2">
+      <app-patient-graphs
+        [isLoading]="isLoading$ | async"
+        [probs]="probabilities$ | async"
+      ></app-patient-graphs>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <app-patient-metrics
+        [isLoading]="isLoading$ | async"
+        [metrics]="metrics1$ | async"
+      ></app-patient-metrics>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <app-patient-metrics
+        [isLoading]="isLoading$ | async"
+        [metrics]="metrics2$ | async"
+      ></app-patient-metrics>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

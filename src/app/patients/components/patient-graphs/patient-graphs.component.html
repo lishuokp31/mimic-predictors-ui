@@ -1,0 +1,52 @@
+<mat-card class="dashboard-card">
+  <mat-card-header>
+    <mat-card-title class="header">出现疾病的概率</mat-card-title>
+  </mat-card-header>
+  <mat-card-content
+    *ngIf="!isLoading; else loading"
+    class="dashboard-card-content"
+  >
+    <div class="chart-container">
+      <ngx-charts-line-chart
+        [results]="data"
+        [scheme]="colorScheme"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        xAxisLabel="住院天数"
+        [timeline]="true"
+        [yAxisTicks]="yAxisTicks"
+        [yScaleMax]="1"
+        [yScaleMin]="0"
+        [curve]="curve"
+        [showRefLines]="true"
+        [showRefLabels]="false"
+        [referenceLines]="referenceLines"
+      ></ngx-charts-line-chart>
+    </div>
+    <div class="legend-label">图例</div>
+    <div class="actions-container">
+      <button mat-stroked-button>
+        <span class="legend legend-aki">&#9679;</span>
+        急性肾损伤
+      </button>
+      <button mat-stroked-button>
+        <span class="legend legend-sepsis">&#9679;</span>脓毒症
+      </button>
+      <button mat-stroked-button>
+        <span class="legend legend-mi">&#9679;</span>
+        心肌梗塞
+      </button>
+      <button mat-stroked-button>
+        <span class="legend legend-vancomycin">&#9679;</span>
+        万古霉素
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #loading>
+  <div class="loading-wrapper">
+    <mat-spinner [diameter]="45"></mat-spinner>
+  </div>
+</ng-template>

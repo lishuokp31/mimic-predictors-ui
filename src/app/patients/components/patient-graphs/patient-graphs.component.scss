@@ -1,0 +1,65 @@
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.header {
+  color: #1976d2;
+  margin-top: 10px;
+  font-size: 24pt;
+  font-weight: 700;
+  line-height: 24pt;
+}
+
+.dashboard-card-content {
+  display: flex;
+  flex-direction: column;
+
+  .chart-container {
+    height: 320px;
+  }
+}
+
+.legend-label {
+  margin-top: -66px;
+  margin-bottom: 12px;
+  font-size: 14pt;
+  font-weight: 700;
+  line-height: 14pt;
+}
+
+.actions-container {
+  & button {
+    margin-right: 10px;
+  }
+}
+
+.legend {
+  font-size: 25pt;
+  margin-left: -10px;
+
+  &.legend-aki {
+    color: #ff6485;
+  }
+
+  &.legend-sepsis {
+    color: #2196f3;
+  }
+
+  &.legend-mi {
+    color: #afb42b;
+  }
+
+  &.legend-vancomycin {
+    color: #ff9800;
+  }
+}
+
+.loading-wrapper {
+  height: 80%;
+  display: grid;
+  place-items: center;
+}

@@ -36,19 +36,18 @@ const initialState: StateModel = {
 })
 @Injectable()
 export class AkiState {
-  @Selector()
+  @Selector([AkiState])
   static features(state: StateModel): Feature[] {
     return state.features;
   }
 
-  @Selector()
-  static x(state: StateModel) {
+  @Selector([AkiState])
+  static x(state: StateModel): number[][] {
     return state.x;
   }
 
   @Selector([AkiState.features, AkiState.x, AkiState.emptyDayStart])
   static formattedX(
-    _: StateModel,
     features: Feature[],
     x: number[][],
     emptyDayStart: number
@@ -65,37 +64,35 @@ export class AkiState {
   }
 
   @Selector([AkiState.x])
-  static emptyDayStart(_: StateModel, x: number[][]): number {
+  static emptyDayStart(x: number[][]): number {
     return getEmptyDayStart(x);
   }
 
   @Selector([AkiState.emptyDayStart])
-  static disableInfer(_: StateModel, emptyDayStart: number): boolean {
+  static disableInfer(emptyDayStart: number): boolean {
     return emptyDayStart === 0;
   }
 
-  @Selector()
-  static predictions(state: StateModel) {
+  @Selector([AkiState])
+  static predictions(state: StateModel): number[] {
     return state.predictions;
   }
 
   @Selector([AkiState.predictions, AkiState.emptyDayStart])
   static slicedPredictions(
-    _: StateModel,
     predictions: number[],
     emptyDayStart: number
   ): number[] {
     return predictions.slice(0, emptyDayStart);
   }
 
-  @Selector()
-  static weights(state: StateModel) {
+  @Selector([AkiState])
+  static weights(state: StateModel): number[][] {
     return state.weights;
   }
 
   @Selector([AkiState.showWeights, AkiState.features, AkiState.weights])
   static computedWeights(
-    _: StateModel,
     showWeights: boolean,
     features: Feature[],
     weights: number[][]
@@ -115,18 +112,18 @@ export class AkiState {
       );
   }
 
-  @Selector()
-  static showPredictions(state: StateModel) {
-    return state.predictions.some((probability) => probability != 0);
+  @Selector([AkiState.predictions])
+  static showPredictions(predictions: number[]): boolean {
+    return predictions.some((probability) => probability != 0);
   }
 
-  @Selector()
-  static showWeights(state: StateModel) {
-    return state.weights.some((day) => day.some((weight) => weight != 0));
+  @Selector([AkiState.weights])
+  static showWeights(weights: number[][]): boolean {
+    return weights.some((day) => day.some((weight) => weight != 0));
   }
 
-  @Selector()
-  static isLoading(state: StateModel) {
+  @Selector([AkiState])
+  static isLoading(state: StateModel): boolean {
     return state.isLoading;
   }
 
