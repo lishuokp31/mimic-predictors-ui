@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   Output,
 } from '@angular/core';
 import { Patient } from '@patients/models';
@@ -19,7 +20,7 @@ import {
   styleUrls: ['./patients-table.component.scss'],
   templateUrl: './patients-table.component.html',
 })
-export class PatientsTableComponent {
+export class PatientsTableComponent implements OnDestroy {
   private gridApi?: GridApi;
   public readonly columnDefs = [
     {
@@ -53,17 +54,21 @@ export class PatientsTableComponent {
   @Output()
   public patientClick = new EventEmitter<Patient>();
 
+  public resizeColumnsCallback = () => setTimeout(() => this.gridApi?.sizeColumnsToFit());
+
   public onGridReady(params: GridReadyEvent) {
     // save API reference for showing the loading overlay
     this.gridApi = params.api;
 
     // makes sure that the table always fits its container
     params.api.sizeColumnsToFit();
-    window.addEventListener('resize', function () {
-      setTimeout(function () {
-        params.api.sizeColumnsToFit();
-      });
-    });
+    window.addEventListener('resize', this.resizeColumnsCallback);
+  }
+
+  public ngOnDestroy() {
+    // prevent memory leak by removing the resize columns callback
+    // when the component is destroyed
+    window.removeEventListener('resize', this.resizeColumnsCallback);
   }
 
   public onFirstDataRendered(params: FirstDataRenderedEvent) {
