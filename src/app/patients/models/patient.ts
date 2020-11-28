@@ -6,6 +6,8 @@ export interface Patient {
   ethnicity: Ethnicity;
   added_at: string;
   updated_at: string;
+  admitDate: string;
+  los: number;
   metrics?: PatientMetric[];
   probabilities?: PatientProbabilities;
 }

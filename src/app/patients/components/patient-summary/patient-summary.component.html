@@ -11,7 +11,7 @@
         <td class="spacer">&nbsp;</td>
         <td class="label">入院日期</td>
         <td>：</td>
-        <td>2000年5月9日</td>
+        <td>{{ _admissionDate | date: 'yyyy年M月d日' }}</td>
       </tr>
       <tr>
         <td class="label">年龄</td>
@@ -20,7 +20,7 @@
         <td class="spacer">&nbsp;</td>
         <td class="label">出院日期</td>
         <td>：</td>
-        <td>暂无信息</td>
+        <td>—</td>
       </tr>
       <tr>
         <td class="label">性别</td>
@@ -29,7 +29,7 @@
         <td class="spacer">&nbsp;</td>
         <td class="label">住院天数</td>
         <td>：</td>
-        <td>6天</td>
+        <td>{{ los }}天</td>
       </tr>
       <tr>
         <td class="label">民族</td>
@@ -38,7 +38,7 @@
         <td class="spacer">&nbsp;</td>
         <td class="label">疾病</td>
         <td>：</td>
-        <td>急性肾损伤</td>
+        <td>—</td>
       </tr>
     </table>
   </mat-card-content>

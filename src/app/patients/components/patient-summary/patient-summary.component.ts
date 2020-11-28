@@ -20,4 +20,12 @@ export class PatientSummaryComponent {
 
   @Input()
   public ethnicity: Ethnicity = Ethnicity.汉族;
+
+  public _admissionDate: Date = new Date();
+  @Input() set admitDate(value: string) {
+    this._admissionDate = new Date(value);
+  }
+
+  @Input()
+  public los: number = 0;
 }
