@@ -6,6 +6,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SharedMaterialModule } from '@shared/shared-material.module';
 import { components } from '@shared/components';
 import { dialogs } from '@shared/dialogs';
+import { pipes } from '@shared/pipes';
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { dialogs } from '@shared/dialogs';
     SharedMaterialModule,
     NgxChartsModule,
   ],
-  declarations: [...components, ...dialogs],
+  declarations: [...components, ...dialogs, ...pipes],
   exports: [CommonModule, ...components],
 })
 export class SharedModule {}

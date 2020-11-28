@@ -7,8 +7,12 @@ import {
 export function format(
   identifier: string,
   group: string,
-  value: number
+  value: number | null
 ): string {
+  if (value === null) {
+    return '~';
+  }
+
   if (genderIdentifiers.has(identifier)) {
     return formatGender(value);
   }

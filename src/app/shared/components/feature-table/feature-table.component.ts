@@ -6,6 +6,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { nDays } from '@core/constants';
 
 import {
   Feature,
@@ -13,6 +14,7 @@ import {
   FeatureUnaryValue,
   isFeatureValueEqual,
 } from '@core/types';
+import { range } from '@core/utils';
 import { FeatureValueEditorDialog, DialogData } from '@shared/dialogs';
 
 export interface FeatureValueChangeEvent {
@@ -28,17 +30,22 @@ export interface FeatureValueChangeEvent {
   templateUrl: './feature-table.component.html',
 })
 export class FeatureTableComponent {
-  public readonly days: number[] = Array(14)
-    .fill(0)
-    .map((_, i) => i);
-
   @Input() features: Feature[] | null = null;
 
-  @Input() x: number[][] | null = null;
+  @Input() x: (number | null)[][] | null = null;
 
   @Input() formattedX: string[][] | null = null;
 
   @Input() weights: object[][] | null = null;
+
+  public _days = range(nDays);
+  @Input() set days(value: number | undefined) {
+    if (value === undefined) {
+      value = nDays;
+    }
+
+    this._days = range(value);
+  }
 
   @Output() change = new EventEmitter<FeatureValueChangeEvent>();
 
@@ -75,13 +82,13 @@ export class FeatureTableComponent {
   ): FeatureUnaryValue | FeatureMultipleValues {
     if (feature.aggregates !== null) {
       return {
-        mean: this.x![day][feature.id],
-        min: this.x![day][feature.aggregates.min],
-        max: this.x![day][feature.aggregates.max],
-        std: this.x![day][feature.aggregates.std],
+        mean: this.x![day][feature.id]!,
+        min: this.x![day][feature.aggregates.min]!,
+        max: this.x![day][feature.aggregates.max]!,
+        std: this.x![day][feature.aggregates.std]!,
       };
     }
 
-    return this.x![day][feature.id];
+    return this.x![day][feature.id]!;
   }
 }

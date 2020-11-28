@@ -15,11 +15,13 @@ import { resolvers } from '@patients/resolvers';
 import { guards } from '@patients/guards';
 import { pipes } from '@patients/pipes';
 import { PatientsEntitiesState, PatientsState } from '@patients/store';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [...components, ...containers, ...dialogs, ...pipes],
   imports: [
     CommonModule,
+    SharedModule,
     PatientsMaterialModule,
     PatientsRoutingModule,
     ReactiveFormsModule,

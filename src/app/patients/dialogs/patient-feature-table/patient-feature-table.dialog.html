@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{ dialogTitle }}</h2>
+<mat-dialog-content class="mat-dialog-content mat-typography">
+  <app-feature-table
+    [features]="features"
+    [x]="x$ | async"
+    [days]="days"
+    [formattedX]="formattedX$ | async"
+    [weights]="weights"
+    weightsBaseColor="#4CAF50"
+    (change)="onChange($event)"
+  ></app-feature-table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-dialog-close mat-button color="primary">OK</button>
+</mat-dialog-actions>

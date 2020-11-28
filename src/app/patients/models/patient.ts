@@ -27,10 +27,13 @@ export interface PatientProbabilities {
 }
 
 export interface DiseaseProbabilities {
-  values: number[];
+  x: (number | null)[][];
+  predictions: number[] | null;
+  weights: number[][] | null;
   nMissingFeatures: number;
 }
 
+export type Target = 'aki' | 'sepsis' | 'mi' | 'vancomycin';
 export type Gender = '男' | '女';
 export enum Ethnicity {
   '汉族' = '汉族',
