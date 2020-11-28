@@ -8,11 +8,12 @@ import sepsisFeatures from '@sepsis/mapping.json';
 import miFeatures from '@mi/mapping.json';
 import vancomycinFeatures from '@vancomycin/mapping.json';
 
+import { wr, wg, wb } from '@core/constants';
 import { Target } from '@patients/models';
 import { PatientsState } from '@patients/store';
 import { filter, map } from 'rxjs/operators';
 import { Feature } from '@core/types';
-import { format } from '@core/utils';
+import { format, getFeatureWeight } from '@core/utils';
 
 export interface DialogData {
   target: Target;
@@ -27,24 +28,43 @@ export interface DialogData {
 export class PatientFeatureTableDialog {
   public x$: Observable<(number | null)[][]>;
   public formattedX$: Observable<string[][]>;
+  public weights$: Observable<object[][]>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: DialogData,
     private store: Store
   ) {
     const { target } = data;
-    const patient = this.store.select(PatientsState.selectedPatient);
+    const patient = this.store
+      .select(PatientsState.selectedPatient)
+      .pipe(
+        filter((patient) => patient != null && patient.probabilities != null)
+      );
 
-    this.x$ = patient.pipe(
-      filter((patient) => patient != null && patient.probabilities != null),
-      map((patient) => patient!.probabilities![target].x)
-    );
+    this.x$ = patient.pipe(map((patient) => patient!.probabilities![target].x));
     this.formattedX$ = this.x$.pipe(
       map((x) => {
         return x!.map((_, day) =>
           this.features.map((feature) =>
             format(feature.identifier, feature.group, x![day][feature.id])
           )
+        );
+      })
+    );
+    this.weights$ = patient.pipe(
+      map((patient) => {
+        const weights = patient!.probabilities![target].weights;
+
+        if (!weights) {
+          return Array(this.days).fill(Array(225).fill(null));
+        }
+
+        return weights.map((_, day) =>
+          this.features
+            .map((feature) => getFeatureWeight(feature, day, weights))
+            .map((weight) => ({
+              'background-color': `rgba(${wr}, ${wg}, ${wb}, ${weight})`,
+            }))
         );
       })
     );
@@ -83,10 +103,6 @@ export class PatientFeatureTableDialog {
   public get days() {
     const { target } = this.data;
     return target === 'aki' ? 8 : 14;
-  }
-
-  public get weights() {
-    return Array(this.days).fill(Array(this.features.length).fill(0));
   }
 
   public onChange(event: any) {}
