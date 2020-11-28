@@ -13,10 +13,11 @@ import { dialogs } from '@patients/dialogs';
 import { services } from '@patients/services';
 import { resolvers } from '@patients/resolvers';
 import { guards } from '@patients/guards';
+import { pipes } from '@patients/pipes';
 import { PatientsEntitiesState, PatientsState } from '@patients/store';
 
 @NgModule({
-  declarations: [...components, ...containers, ...dialogs],
+  declarations: [...components, ...containers, ...dialogs, ...pipes],
   imports: [
     CommonModule,
     PatientsMaterialModule,

@@ -3,8 +3,6 @@ export interface Patient {
   name: string;
   age: number;
   gender: Gender;
-  weight: number;
-  height: number;
   ethnicity: Ethnicity;
   added_at: string;
   updated_at: string;
@@ -22,10 +20,15 @@ export interface PatientMetric {
 }
 
 export interface PatientProbabilities {
-  aki: number[];
-  sepsis: number[];
-  mi: number[];
-  vancomycin: number[];
+  aki: DiseaseProbabilities;
+  sepsis: DiseaseProbabilities;
+  mi: DiseaseProbabilities;
+  vancomycin: DiseaseProbabilities;
+}
+
+export interface DiseaseProbabilities {
+  values: number[];
+  nMissingFeatures: number;
 }
 
 export type Gender = '男' | '女';

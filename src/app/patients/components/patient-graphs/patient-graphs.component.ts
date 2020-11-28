@@ -30,32 +30,45 @@ export class PatientGraphsComponent implements OnChanges {
   public probs: PatientProbabilities | null = null;
 
   public data: any[] = [];
+  public nMissingAki = 0;
+  public nMissingSepsis = 0;
+  public nMissingMi = 0;
+  public nMissingVancomycin = 0;
 
   public ngOnChanges(changes: SimpleChanges) {
     if (changes.probs && changes.probs.currentValue) {
       const probs = changes.probs.currentValue as PatientProbabilities;
-      console.log(probs);
       const { aki, sepsis, mi, vancomycin } = probs;
 
+      this.nMissingAki = aki.nMissingFeatures;
+      this.nMissingSepsis = sepsis.nMissingFeatures;
+      this.nMissingMi = mi.nMissingFeatures;
+      this.nMissingVancomycin = vancomycin.nMissingFeatures;
       this.data = [
         {
           name: '急性肾损伤',
-          series: aki.map((x, i) => ({ name: (i + 1).toString(), value: x })),
+          series: aki.values.map((x, i) => ({
+            name: (i + 1).toString(),
+            value: x,
+          })),
         },
         {
           name: '脓毒症',
-          series: sepsis.map((x, i) => ({
+          series: sepsis.values.map((x, i) => ({
             name: (i + 1).toString(),
             value: x,
           })),
         },
         {
           name: '心肌梗塞',
-          series: mi.map((x, i) => ({ name: (i + 1).toString(), value: x })),
+          series: mi.values.map((x, i) => ({
+            name: (i + 1).toString(),
+            value: x,
+          })),
         },
         {
           name: '万古霉素',
-          series: vancomycin.map((x, i) => ({
+          series: vancomycin.values.map((x, i) => ({
             name: (i + 1).toString(),
             value: x,
           })),
