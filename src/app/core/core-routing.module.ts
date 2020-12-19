@@ -10,6 +10,11 @@ const routes: Routes = [
       import('../patients/patients.module').then((m) => m.PatientsModule),
   },
   {
+    path: 'ner',
+    loadChildren: () =>
+      import('../ner/ner.module').then((m) => m.NerModule),
+  },
+  {
     path: 'sepsis',
     loadChildren: () =>
       import('../sepsis/sepsis.module').then((m) => m.SepsisModule),
@@ -26,6 +31,10 @@ const routes: Routes = [
   {
     path: 'aki',
     loadChildren: () => import('../aki/aki.module').then((m) => m.AkiModule),
+  },
+  {
+    path: 'DB',
+    loadChildren: () => import('../DB/DB.module').then((m) => m.DBModule),
   },
   { path: '', redirectTo: '/patients', pathMatch: 'full' },
   { path: '**', component: PageNotFoundPage },

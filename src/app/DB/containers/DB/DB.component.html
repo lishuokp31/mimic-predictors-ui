@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="actions-container">
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="refresh()"
+    >
+      清除操作
+    </button>
+
+    <div class="spacer"></div>
+
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="entity_recognition()"
+    >
+      阈值筛查
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="entity_recognition()"
+    >
+      推荐相似病历
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="entity_recognition()"
+    >
+      执行数据库操作
+    </button>
+  </div>
+
+  <div>
+      <input #box class="box1"
+      (keyup.enter)="values=box.value"
+      (blur)="values=box.value">
+      <input #box class="box2"
+      (keyup.enter)="values=box.value"
+      (blur)="values=box.value">
+
+  </div>
+
+
+
+  <ag-grid-angular
+  style="width: 100%; height: 100%"
+  class="ag-theme-material"
+  [rowData]="patients"
+  [columnDefs]="columnDefs"
+  [suppressCellSelection]="true"
+  (firstDataRendered)="onFirstDataRendered($event)"
+  (gridReady)="onGridReady($event)"
+  (rowClicked)="onRowClicked($event)"
+  ></ag-grid-angular>
+
+
+
+
+
+</div>
+
