@@ -23,10 +23,12 @@
       "@core/*": ["src/app/core/*"],
       "@shared/*": ["src/app/shared/*"],
       "@patients/*": ["src/app/patients/*"],
+      "@ner/*": ["src/app/ner/*"],
       "@aki/*": ["src/app/aki/*"],
       "@sepsis/*": ["src/app/sepsis/*"],
       "@mi/*": ["src/app/mi/*"],
       "@vancomycin/*": ["src/app/vancomycin/*"],
+      "@DB/*": ["src/app/DB/*"],
       "@app/*": ["src/app/*"]
     }
   },
