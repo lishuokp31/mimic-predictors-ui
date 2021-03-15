@@ -5,11 +5,9 @@
   <cdk-virtual-scroll-viewport itemSize="20" class="cdk-viewport">
     <div *cdkVirtualFor="let feature of features; let i = index">
       <span *ngIf="feature.header" class="lbl-header">{{
-        <!-- 个人信息等第一栏 -->
         feature.header
       }}</span>
       <span class="lbl-label" [matTooltip]="feature.identifier">
-        <!-- 年龄等第二栏 -->
         {{ feature.label }}
         <span *ngIf="feature.unit" class="lbl-unit">{{ feature.unit }}</span>
       </span>
