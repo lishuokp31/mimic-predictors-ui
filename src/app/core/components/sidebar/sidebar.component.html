@@ -1,4 +1,4 @@
-<!-- <nz-layout class="app-layout">
+<nz-layout class="app-layout">
   <nz-sider
     class="menu-sidebar"
     nzCollapsible
@@ -10,7 +10,7 @@
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo" />
-        <h1>Ant Design Of Angular</h1>
+        <h1>医疗疾病预警系统</h1>
       </a>
     </div>
     <ul
@@ -18,28 +18,50 @@
       nzTheme="dark"
       nzMode="inline"
       [nzInlineCollapsed]="isCollapsed"
+      [nzInlineIndent] = "20"
+      class="menu"
     >
-      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+      <li nz-submenu nzOpen nzTitle="账户" nzIcon="user">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/welcome">Welcome</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Monitor</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Workplace</a>
+            <a>账户信息</a>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
+      <li nz-submenu nzOpen nzTitle="实体识别" nzIcon="form">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a>Basic Form</a>
+            <a>实体识别</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="数据库" nzIcon="database">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/patients">病历查询</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="疾病预测" nzIcon="dashboard">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/sepsis">脓毒症</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/mi">心肌梗塞</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/vancomycin">万古霉素</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/aki">急性肾损伤</a>
           </li>
         </ul>
       </li>
     </ul>
+    <div class="logo">
+        <img src="./assets/project-logo.png"/>
+    </div>
   </nz-sider>
   <nz-layout>
     <nz-header>
@@ -59,4 +81,5 @@
       </div>
     </nz-content>
   </nz-layout>
-</nz-layout> -->
+</nz-layout>
+

@@ -22,6 +22,7 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { zh_CN } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 registerLocaleData(zh);
 
@@ -31,6 +32,7 @@ registerLocaleData(zh);
     BrowserAnimationsModule,
     HttpClientModule,
     CoreModule,
+    NzSwitchModule,
     RouterModule.forRoot([], { preloadingStrategy: PreloadAllModules }),
     NgxsModule.forRoot([], {
       developmentMode: !environment.production,
