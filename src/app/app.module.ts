@@ -17,6 +17,13 @@ import { CoreModule } from '@core/core.module';
 import { MainComponent } from '@core/containers';
 
 import { environment } from '../environments/environment';
+import { FormsModule } from '@angular/forms';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { zh_CN } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
+
+registerLocaleData(zh);
 
 @NgModule({
   imports: [
@@ -42,7 +49,9 @@ import { environment } from '../environments/environment';
           NgxsLoggerPluginModule.forRoot(),
         ]
       : []),
+    FormsModule,
   ],
   bootstrap: [MainComponent],
+  providers: [{ provide: NZ_I18N, useValue: zh_CN }],
 })
 export class AppModule {}

@@ -27,7 +27,22 @@ const routes: Routes = [
     path: 'aki',
     loadChildren: () => import('../aki/aki.module').then((m) => m.AkiModule),
   },
+  {
+    path: 'login',
+    loadChildren: () => import('../login/login.module').then((m) => m.LoginModule),
+  },
+  // {
+  //   path: 'ner',
+  //   loadChildren: () =>
+  //     import('../ner/ner.module').then((m) => m.NerModule),
+  // },
+  // {
+  //   path: 'DB',
+  //   loadChildren: () => import('../DB/DB.module').then((m) => m.DBModule),
+  // },
+
   { path: '', redirectTo: '/patients', pathMatch: 'full' },
+  // { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundPage },
 ];
 

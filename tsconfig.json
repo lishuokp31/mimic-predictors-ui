@@ -27,6 +27,7 @@
       "@sepsis/*": ["src/app/sepsis/*"],
       "@mi/*": ["src/app/mi/*"],
       "@vancomycin/*": ["src/app/vancomycin/*"],
+      "@login/*": ["src/app/login/*"],
       "@app/*": ["src/app/*"]
     }
   },

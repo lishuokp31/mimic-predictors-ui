@@ -1,0 +1,5 @@
+package.json：定义项目名称、版本，各种依赖
+src.app：放模块
+src.asserts：放静态资源文件
+index.html：入口
+styl.scss：全局scss文件
