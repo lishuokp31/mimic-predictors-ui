@@ -29,6 +29,7 @@
       "@vancomycin/*": ["src/app/vancomycin/*"],
       "@login/*": ["src/app/login/*"],
       "@register/*": ["src/app/register/*"],
+      "@ner/*": ["src/app/ner/*"],
       "@app/*": ["src/app/*"],
 
     }
