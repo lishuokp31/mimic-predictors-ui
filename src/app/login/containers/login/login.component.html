@@ -1,26 +1,52 @@
-
-<!DOCTYPE html>
-<html lang="en" >
-<head>
-<meta charset="UTF-8">
-<title>JS文本导航滑块高亮显示特效 - 站长素材</title>
-
-<!-- <link rel="stylesheet" href="css/style.css"> -->
-
-</head>
-<body>
-
-<div id="app">
-	<ul>
-		<li>登录</li>
-		<li>注册</li>
-		<div class="focus-el el--1"></div>
-		<div class="focus-el el--2"></div>
-	</ul>
+<div class="logo">
+  <img src="./assets/project-logo.png"/>
 </div>
-
-<script src='js/gsap.min.js'></script>
-<script src="js/script.js"></script>
-
-</body>
-</html>
+<form
+  nz-form
+  [formGroup]="validateForm"
+  class="login-form"
+  (ngSubmit)="submitForm()"
+>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="用户名为不能空!">
+      <nz-input-group nzPrefixIcon="user">
+        <input
+          type="text"
+          nz-input
+          formControlName="userName"
+          placeholder="用户名或邮箱"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="密码不能为空!">
+      <nz-input-group nzPrefixIcon="lock">
+        <input
+          type="password"
+          nz-input
+          formControlName="password"
+          placeholder="密码"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <div nz-row class="login-form-margin">
+    <div nz-col [nzSpan]="12">
+      <label nz-checkbox formControlName="remember">
+        <span>记住我</span>
+      </label>
+    </div>
+  </div>
+  <button
+    nz-button
+    class="login-form-button login-form-margin"
+    [nzType]="'primary'"
+  >
+    登录
+  </button>
+  <div nz-col [nzSpan]="20" class="forgotAndRegister">
+    <a class="forgot">忘记密码？</a>
+    <a class="register" routerLink = "/register"> 注册账户</a>
+  </div>
+</form>

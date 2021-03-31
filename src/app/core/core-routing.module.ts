@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('../login/login.module').then((m) => m.LoginModule),
   },
+  {
+    path: 'register',
+    loadChildren: () => import('../register/register.module').then((m) => m.RegisterModule),
+  },
   // {
   //   path: 'ner',
   //   loadChildren: () =>
@@ -41,8 +45,8 @@ const routes: Routes = [
   //   loadChildren: () => import('../DB/DB.module').then((m) => m.DBModule),
   // },
 
-  { path: '', redirectTo: '/patients', pathMatch: 'full' },
-  // { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // { path: '', redirectTo: '/patients', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundPage },
 ];
 

@@ -28,7 +28,9 @@
       "@mi/*": ["src/app/mi/*"],
       "@vancomycin/*": ["src/app/vancomycin/*"],
       "@login/*": ["src/app/login/*"],
-      "@app/*": ["src/app/*"]
+      "@register/*": ["src/app/register/*"],
+      "@app/*": ["src/app/*"],
+
     }
   },
   "angularCompilerOptions": {

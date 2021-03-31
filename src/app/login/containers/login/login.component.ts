@@ -1,19 +1,30 @@
-/* 引入核心模块里面的component */
-import { Component, OnInit , ChangeDetectionStrategy} from '@angular/core';
-import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-login',/* 使用这个组件的名称 */
-  templateUrl: './login.component.html',//html
-  styleUrls: ['./login.component.scss'],//css
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {/* 定义属性 */
+export class LoginComponent implements OnInit {
+  validateForm!: FormGroup;
+  public logged : boolean = false;
 
-  // constructor() { }
+  submitForm(): void {
+    for (const i in this.validateForm.controls) {
+      this.validateForm.controls[i].markAsDirty();
+      this.validateForm.controls[i].updateValueAndValidity();
+    }
+    // console.log(this.validateForm.value);
+  }
 
-  // ngOnInit() {
-  // }
+  constructor(private fb: FormBuilder) {}
 
+  ngOnInit(): void {
+    this.validateForm = this.fb.group({
+      userName: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+      remember: [true]
+    });
+  }
 }
