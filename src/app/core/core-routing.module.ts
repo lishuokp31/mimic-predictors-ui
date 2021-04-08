@@ -44,10 +44,10 @@ const routes: Routes = [
   //   loadChildren: () =>
   //     import('../ner/ner.module').then((m) => m.NerModule),
   // },
-  // {
-  //   path: 'DB',
-  //   loadChildren: () => import('../DB/DB.module').then((m) => m.DBModule),
-  // },
+  {
+    path: 'DB',
+    loadChildren: () => import('../DB/DB.module').then((m) => m.DBModule),
+  },
 
   // { path: '', redirectTo: '/patients', pathMatch: 'full' },
   { path: '', redirectTo: '/login', pathMatch: 'full' },

@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    // console.log(this.validateForm.value);
+    console.log(this.validateForm.value);
   }
 
   constructor(private fb: FormBuilder) {}

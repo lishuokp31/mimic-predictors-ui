@@ -1,4 +1,4 @@
-.stringUploadArea{
+.stringUploadArea {
   position: relative;
   // height: 100%;
   width: 40%;
@@ -10,7 +10,7 @@
     left: 66%;
   }
 }
-.fileUploadArea{
+.fileUploadArea {
   position: relative;
   height: 24%;
   width: 40%;
@@ -24,32 +24,8 @@
   }
 }
 
-.entities_table{
+.entities_table {
   position: relative;
-  top:-12%;
-  height:30%;
-  // .table{
-    background : rgba(99, 93, 93 , 0.5);
-  // }
-  .td{
-    color : rgba(99, 93, 93 , 0.5)
-  }
-
-  .search-box {
-    padding: 8px;
-  }
-
-  .search-box input {
-    width: 188px;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  .search-box button {
-    width: 90px;
-  }
-
-  .search-button {
-    margin-right: 8px;
-  }
+  top: -5%;
+  height: 40%;
 }

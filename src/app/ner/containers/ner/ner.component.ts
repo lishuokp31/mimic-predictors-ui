@@ -1,26 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
+import { Observable } from 'rxjs';
 
-interface entities {
-  Tnumber: string;
-  kind: string;
-  start_index: number;
-  end_index: number;
-  actual_value: string;
-}
-
+import { Ner } from '@ner/models';
+import * as actions from '@ner/store/actions';
+import { NerState } from '@ner/store';
+import { ImportNerByTXTPayload } from '@ner/models';
 @Component({
   selector: 'app-ner',
   templateUrl: './ner.component.html',
   styleUrls: ['./ner.component.scss'],
 })
 export class NerComponent implements OnInit {
-  inputValue?: string;
+  // 文本输入框中输入的文本
+  inputValue: string = '';
+  // 不采用绑定事件监听，而是使用可观察对象来执行事件
+  public sequence$: Observable<string>;
+  public entities$: Observable<string[][]>;
+  public isLoading$: Observable<boolean>;
+  // 文件上传框中选择上传的文件
+  public currentSelectedFilename: string | null = null;
+  public currentSelectedFile: File | null = null;
 
-  constructor(private msg: NzMessageService) {}
+  constructor(private msg: NzMessageService, private store: Store) {
+    // 从应用程序状态返回一段数据，并将其包装成一个可观察的对象
+    this.sequence$ = this.store.select(NerState.sequence);
+    this.entities$ = this.store.select(NerState.entities);
+    this.isLoading$ = this.store.select(NerState.isLoading);
+  }
 
-  clearString(){
+  public importByTXT() {
+    console.log(this.inputValue)
+    this.currentSelectedFile = null;
+    this.currentSelectedFilename = null;
+    const outData: ImportNerByTXTPayload = {
+      sequence: this.inputValue,
+    };
+    const action = new actions.ImportNerByTXTAction(outData);
+    this.store.dispatch(action);
+    console.log("entities:" + this.entities$.toPromise());
+    // this.entitiesdata = this.store.select(NerState.ner);
+  }
+
+  public importByFile() {
+    // TODO:
+  }
+
+  clearString() {
     this.inputValue = '';
   }
 
@@ -38,70 +66,8 @@ export class NerComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  searchValue = '';
-  visible = false;
-  listOfData: entities[] = [
-    {
-      Tnumber: 'T1',
-      kind: 'DRUG_DOSAGE',
-      start_index: 447,
-      end_index: 450,
-      actual_value: '小蜜丸',
-    },
-    {
-      Tnumber: 'T2',
-      kind: 'DRUG_TASTE',
-      start_index: 451,
-      end_index: 453,
-      actual_value: '味甜',
-    },
-    {
-      Tnumber: 'T3',
-      kind: 'DRUG_TASTE',
-      start_index: 454,
-      end_index: 456,
-      actual_value: '微苦',
-    },
-    {
-      Tnumber: 'T4',
-      kind: 'DRUG_EFFICACY',
-      start_index: 1,
-      end_index: 5,
-      actual_value: '补气养血',
-    },
-    {
-      Tnumber: 'T5',
-      kind: 'SYMPTOM',
-      start_index: 13,
-      end_index: 17,
-      actual_value: '月经不调',
-    },
-    {
-      Tnumber: 'T6',
-      kind: 'SYMPTOM',
-      start_index: 18,
-      end_index: 22,
-      actual_value: '经期腹痛',
-    },
-    {
-      Tnumber: 'T7',
-      kind: 'PERSON_GROUP',
-      start_index: 433,
-      end_index: 435,
-      actual_value: '孕妇',
-    },
-  ];
-  listOfDisplayData = [...this.listOfData];
-
-  reset(): void {
-    this.searchValue = '';
-    this.search();
-  }
-
-  search(): void {
-    this.visible = false;
-    this.listOfDisplayData = this.listOfData.filter(
-      (item: entities) => item.Tnumber.indexOf(this.searchValue) !== -1
-    );
+  public onNerClicked(event: Ner) {
+    // const { Tnumber } = event;
+    // this.router.navigate(['/patients', id]);
   }
 }

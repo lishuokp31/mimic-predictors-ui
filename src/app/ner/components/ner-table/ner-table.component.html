@@ -1,0 +1,74 @@
+<div class = "entities_table" >
+  <!-- <nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed" class="table" -->
+  <!-- <nz-table #nzTable nzTableLayout="fixed" class="table"
+  [nzPageSize] = '4'
+  [nzBordered] = "true"
+  [nzOuterBordered] = "true"
+  > -->
+  <nz-table #headerTable [nzPageSize]="50" [nzScroll]="{ y: '240px' }">
+    <thead>
+      <tr color = "blank">
+        <!-- <th nzCustomFilter>
+          Tnumber
+          <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th> -->
+        <th>实体类别
+          <!-- <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchValue2.length > 0" [nzDropdownMenu]="menu2">
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger> -->
+        </th>
+        <th>起始位置</th>
+        <th>结束位置</th>
+        <th>实体值
+          <!-- <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchValue3.length > 0" [nzDropdownMenu]="menu3">
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger> -->
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of entities">
+        <!-- <td>{{ data.Tnumber }}</td> -->
+        <td>{{ data[0] }}</td>
+        <td>{{ data[1] }}</td>
+        <td>{{ data[2] }}</td>
+        <td>{{ data[3] }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <!-- <nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="搜索Tnumber" [(ngModel)]="searchValue" />
+        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+          搜索
+        </button>
+        <button nz-button nzSize="small" (click)="reset()">重置</button>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menu2="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown2">
+      <div class="search-box2">
+        <input type="text" nz-input placeholder="搜索kind" [(ngModel)]="searchValue2" />
+        <button nz-button nzSize="small" nzType="primary" (click)="search2()" class="search-button3">
+          搜索
+        </button>
+        <button nz-button nzSize="small" (click)="reset()">重置</button>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menu3="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown3">
+      <div class="search-box3">
+        <input type="text" nz-input placeholder="搜索actual_value" [(ngModel)]="searchValue3" />
+        <button nz-button nzSize="small" nzType="primary" (click)="search3()" class="search-button3">
+          搜索
+        </button>
+        <button nz-button nzSize="small" (click)="reset()">重置</button>
+      </div>
+    </div>
+  </nz-dropdown-menu> -->
+</div>

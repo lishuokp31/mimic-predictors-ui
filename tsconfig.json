@@ -30,6 +30,7 @@
       "@login/*": ["src/app/login/*"],
       "@register/*": ["src/app/register/*"],
       "@ner/*": ["src/app/ner/*"],
+      "@DB/*": ["src/app/DB/*"],
       "@app/*": ["src/app/*"],
 
     }

@@ -3,10 +3,15 @@
   <textarea rows="6" nz-input [(ngModel)]="inputValue"></textarea>
   <h2></h2>
   <div>
-    <button nz-button nzType="primary" class="uploadAndAnalysis">
+    <button
+      nz-button
+      nzType="primary"
+      (click)="importByTXT()"
+      class="uploadAndAnalysis"
+    >
       上传并分析
     </button>
-    <button class="clear_button" (click) = "clearString()">清空</button>
+    <button class="clear_button" (click)="clearString()">清空</button>
   </div>
 </div>
 <div class="fileUploadArea">
@@ -33,45 +38,9 @@
   </div>
 </div>
 
-<div class = "entities_table" >
-  <nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed" class="table"
-  [nzPageSize] = '4'
-  [nzBordered] = "true"
-  [nzOuterBordered] = "true"
-  >
-    <thead>
-      <tr color = "blank">
-        <th nzCustomFilter>
-          Tnumber
-          <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
-            <i nz-icon nzType="search"></i>
-          </nz-filter-trigger>
-        </th>
-        <th>kind</th>
-        <th>start_index</th>
-        <th>end_index</th>
-        <th>actual_value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of nzTable.data">
-        <td>{{ data.Tnumber }}</td>
-        <td>{{ data.kind }}</td>
-        <td>{{ data.start_index }}</td>
-        <td>{{ data.end_index }}</td>
-        <td>{{ data.actual_value }}</td>
-      </tr>
-    </tbody>
-  </nz-table>
-  <nz-dropdown-menu #menu="nzDropdownMenu">
-    <div class="ant-table-filter-dropdown">
-      <div class="search-box">
-        <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
-        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
-          搜索
-        </button>
-        <button nz-button nzSize="small" (click)="reset()">重置</button>
-      </div>
-    </div>
-  </nz-dropdown-menu>
+<div class="entities_table">
+  <app-ner-table
+    [entities]="entities$ | async"
+    [isLoading]="isLoading$ | async"
+  ></app-ner-table>
 </div>

@@ -7,6 +7,7 @@ import { ImportPatientPayload, Patient } from '@patients/models';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
+// 数据交互
 export class PatientsApiService {
   constructor(private http: HttpClient) {}
 

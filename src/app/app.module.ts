@@ -15,6 +15,8 @@ import {
 
 import { CoreModule } from '@core/core.module';
 import { MainComponent } from '@core/containers';
+import { LoginModule} from '@login/login.module';
+import { LoginComponent} from '@login/containers';
 
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
@@ -32,6 +34,7 @@ registerLocaleData(zh);
     BrowserAnimationsModule,
     HttpClientModule,
     CoreModule,
+    LoginModule,
     NzSwitchModule,
     RouterModule.forRoot([], { preloadingStrategy: PreloadAllModules }),
     NgxsModule.forRoot([], {
@@ -54,6 +57,7 @@ registerLocaleData(zh);
     FormsModule,
   ],
   bootstrap: [MainComponent],
+  // bootstrap: [LoginComponent],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
 })
 export class AppModule {}
