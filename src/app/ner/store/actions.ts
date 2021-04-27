@@ -1,4 +1,4 @@
-import { ImportNerByTXTPayload, Ner } from '@ner/models';
+import { ImportNerByTXTPayload, Ner , ImportNerByFilePayload} from '@ner/models';
 
 // export class LoadAll {
 //   static readonly type = '[ner] load all';
@@ -20,6 +20,11 @@ import { ImportNerByTXTPayload, Ner } from '@ner/models';
 // }
 
 export class ImportNerByTXTAction {
-  static readonly type = '[ner] import';
+  static readonly type = '[ner] import by txt';
   constructor(public payload: ImportNerByTXTPayload) {}
+}
+
+export class ImportNerByFileAction {
+  static readonly type = '[ner] import by file';
+  constructor(public payload: ImportNerByFilePayload) {}
 }

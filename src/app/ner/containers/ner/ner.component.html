@@ -16,6 +16,15 @@
 </div>
 <div class="fileUploadArea">
   <h2>文件输入：</h2>
+
+    <!-- <button
+      nz-button
+      nzType="primary"
+      (click)="showfile_inputValue()"
+      class="uploadAndAnalysis2"
+    >
+      展示上传文件
+    </button> -->
   <nz-upload
     nzType="drag"
     [nzMultiple]="true"
@@ -27,14 +36,21 @@
       <i nz-icon nzType="inbox"></i>
     </p>
     <p class="ant-upload-text">单击或将文件拖到该区域以上传</p>
-    <p class="ant-upload-hint">支持单个或批量上传文件</p>
+    <!-- <p class="ant-upload-hint">支持单个或批量上传文件</p> -->
+    <p class="ant-upload-hint">请单个上传文件</p>
   </nz-upload>
   <h2></h2>
-  <div>
-    <button nz-button nzType="primary" class="uploadAndAnalysis2">
+  <button
+      nz-button
+      nzType="primary"
+      (click)="importByFile()"
+      class="uploadAndAnalysis2"
+    >
       上传并分析
     </button>
-    <button class="clear_button2">清空</button>
+  <div>
+
+    <!-- <button class="clear_button2" (click)="clearFile()">清空</button> -->
   </div>
 </div>
 

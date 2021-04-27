@@ -4,7 +4,7 @@ export interface ImportNerByTXTPayload {
 }
 
 export interface ImportNerByFilePayload {
-  importfile: File;
+  file_sequence: string[];
 }
 
 // export interface ImportNerPayload {

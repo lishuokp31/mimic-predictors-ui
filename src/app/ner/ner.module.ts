@@ -24,6 +24,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 import { AgGridModule } from 'ag-grid-angular';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 /* @NgModule装饰器,@NgModule接受一个元数据对象,告诉Angular如何编译和启动应用 */
 @NgModule({
@@ -31,6 +32,7 @@ import { AgGridModule } from 'ag-grid-angular';
   imports: [
     /* 配置当前模块运行依赖的其他模块 */ CommonModule,
     NerRoutingModule,
+    NzTabsModule,
     NzTableModule,
     NzDropDownModule,
     FormsModule,

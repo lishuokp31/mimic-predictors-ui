@@ -26,14 +26,14 @@ import {
 //   public primaryKey: string = 'id';
 // }
 
-
-
 @State<NerStateModel>({
   name: 'ner',
   defaults: {
     isLoading: false,
     sequence : "",
     entities : [],
+    file_sequence: [],
+    file_entities: [],
   },
 })
 @Injectable()
@@ -56,6 +56,16 @@ export class NerState {
   @Selector([NerState])
   public static entities(state: NerStateModel) : string[][] {
     return state.entities;
+  }
+
+  @Selector([NerState])
+  public static file_sequence(state: NerStateModel) : string[] {
+    return state.file_sequence;
+  }
+
+  @Selector([NerState])
+  public static file_entities(state: NerStateModel) : string[][][] {
+    return state.file_entities;
   }
 
   // @Selector([NerEntitiesState])
@@ -119,19 +129,40 @@ export class NerState {
   // }
 
   @Action(actions.ImportNerByTXTAction)
-  public async importNer(
+  public async importNerByTXT(
     { patchState }: StateContext<NerStateModel>,
     { payload }: actions.ImportNerByTXTAction
   ) {
     patchState({ isLoading: true });
 
     try {
-      const entities = await this.api.import(payload);
+      const entities = await this.api.importByTXT(payload);
       console.log('entities:' + entities);
       // this.nerEntities.addOne(entities);
       patchState({
         sequence : entities.sequence,
         entities : entities.entities,
+      })
+    } catch (e) {
+      console.error(e);
+    } finally {
+      patchState({ isLoading: false });
+    }
+  }
+
+  @Action(actions.ImportNerByFileAction)
+  public async importNerByFile(
+    { patchState }: StateContext<NerStateModel>,
+    { payload }: actions.ImportNerByFileAction
+  ) {
+    patchState({ isLoading: true });
+
+    try {
+      const file_entities = await this.api.importByFile(payload);
+      console.log('file_entities:' + file_entities);
+      // this.nerEntities.addOne(entities);
+      patchState({
+        file_entities : file_entities.file_entities,
       })
     } catch (e) {
       console.error(e);
