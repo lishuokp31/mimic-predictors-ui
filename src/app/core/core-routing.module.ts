@@ -28,6 +28,11 @@ const routes: Routes = [
     loadChildren: () => import('../aki/aki.module').then((m) => m.AkiModule),
   },
   {
+    path: 'login',
+    loadChildren: () =>
+      import('../login/login.module').then((m) => m.LoginModule),
+  },
+  {
     path: 'register',
     loadChildren: () =>
       import('../register/register.module').then((m) => m.RegisterModule),
