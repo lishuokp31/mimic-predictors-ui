@@ -1,52 +1,63 @@
-<div class="logo">
-  <img src="./assets/project-logo.png"/>
+<div *ngIf="userinfo.login">
+  <h2>欢迎！！</h2>
+  <button type="button">退出登录</button>
 </div>
-<form
-  nz-form
-  [formGroup]="validateForm"
-  class="login-form"
-  (ngSubmit)="submitForm()"
->
-  <nz-form-item>
-    <nz-form-control nzErrorTip="用户名为不能空!">
-      <nz-input-group nzPrefixIcon="user">
-        <input
-          type="text"
-          nz-input
-          formControlName="userName"
-          placeholder="用户名或邮箱"
-        />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-control nzErrorTip="密码不能为空!">
-      <nz-input-group nzPrefixIcon="lock">
-        <input
-          type="password"
-          nz-input
-          formControlName="password"
-          placeholder="密码"
-        />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <div nz-row class="login-form-margin">
-    <div nz-col [nzSpan]="12">
-      <label nz-checkbox formControlName="remember">
-        <span>记住我</span>
-      </label>
-    </div>
+<div *ngIf="!userinfo.login">
+  <div class="logo">
+    <img src="./assets/project-logo.png"/>
   </div>
-  <button
-    nz-button
-    class="login-form-button login-form-margin"
-    [nzType]="'primary'"
+  <form
+    nz-form
+    [formGroup]="validateForm"
+    class="login-form"
+    (ngSubmit)="submitForm()"
   >
-    登录
-  </button>
-  <div nz-col [nzSpan]="20" class="forgotAndRegister">
-    <a class="forgot">忘记密码？</a>
-    <a class="register" routerLink = "/register"> 注册账户</a>
-  </div>
-</form>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="用户名为不能空!">
+        <nz-input-group nzPrefixIcon="user">
+          <input
+            type="text"
+            nz-input
+            formControlName="userName"
+            placeholder="用户名或邮箱"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="密码不能为空!">
+        <nz-input-group nzPrefixIcon="lock">
+          <input
+            type="password"
+            nz-input
+            formControlName="password"
+            placeholder="密码"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row class="login-form-margin">
+      <div nz-col [nzSpan]="12">
+        <label nz-checkbox formControlName="remember">
+          <span>记住我</span>
+        </label>
+      </div>
+    </div>
+    <button
+      nz-button
+      class="login-form-button login-form-margin"
+      [nzType]="'primary'"
+    >
+      登录
+    </button>
+    <div nz-col [nzSpan]="20" class="forgotAndRegister">
+      <a class="forgot">忘记密码？</a>
+      <a class="register" routerLink = "/register"> 注册账户</a>
+    </div>
+  </form>
+</div>
+
+
+
+
+

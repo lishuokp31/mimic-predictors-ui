@@ -1,6 +1,11 @@
 <div class="container">
   <!-- <app-navbar></app-navbar> -->
-  <app-sidebar></app-sidebar>
+  <!-- <div *ngIf="!userinfo.login"> -->
+    <app-sidebar></app-sidebar>
+  <!-- </div> -->
+  <!-- <div *ngIf="!userinfo.login">
+    <app-login></app-login>
+  </div> -->
   <div class="content">
     <router-outlet></router-outlet>
   </div>
