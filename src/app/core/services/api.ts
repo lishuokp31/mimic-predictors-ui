@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import produce from 'immer';
+import { Userinfo } from '@core/models';
 
 import { environment } from 'src/environments/environment';
 import {
@@ -48,6 +49,25 @@ export class ApiService {
         })
       );
   }
+
+  userinfo: Userinfo = {
+    login: false,
+    username: '',
+    email: '',
+    phone: '',
+    level: -1,
+  };
+
+  logout(): void {
+    this.userinfo = {
+      login: false,
+      username: '',
+      email: '',
+      phone: '',
+      level: -1,
+    };
+  }
+
 }
 
 export interface LoadSampleResponse {
