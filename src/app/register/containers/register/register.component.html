@@ -1,142 +1,110 @@
-<div class="logo">
-  <img src="./assets/project-logo.png"/>
-</div>
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email"
-      >E-mail</nz-form-label
-    >
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="邮箱不能为空!">
-      <input nz-input formControlName="email" id="email" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <!-- <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nickname" nzRequired nzTooltipTitle="What do you want other to call you"> -->
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nickname" nzRequired>
-      <span>用户名</span>
-    </nz-form-label>
-    <nz-form-control
-      [nzSm]="14"
-      [nzXs]="24"
-      nzErrorTip="用户名不能为空!"
-    >
-      <input nz-input id="nickname" formControlName="nickname" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired
-      >密码</nz-form-label
-    >
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="密码不能为空!">
-      <input
-        nz-input
-        type="password"
-        id="password"
-        formControlName="password"
-        (ngModelChange)="updateConfirmValidator()"
-      />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired
-      >确认密码</nz-form-label
-    >
-    <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
-      <input
-        nz-input
-        type="password"
-        formControlName="checkPassword"
-        id="checkPassword"
-      />
-      <ng-template #errorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          请再次输入你的密码!
-        </ng-container>
-        <ng-container *ngIf="control.hasError('confirm')">
-          两次输入的密码不一致!
-        </ng-container>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
+<div>
+  <div class="logo">
+    <img src="./assets/project-logo.png" />
+  </div>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email"
+        >E-mail</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="邮箱不能为空!">
+        <input nz-input formControlName="email" id="email" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <!-- <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="username" nzRequired nzTooltipTitle="What do you want other to call you"> -->
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="username" nzRequired>
+        <span>用户名</span>
+      </nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="用户名不能为空!">
+        <input nz-input id="username" formControlName="username" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired
+        >密码</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="密码不能为空!">
+        <input
+          nz-input
+          type="password"
+          id="password"
+          formControlName="password"
+          (ngModelChange)="updateConfirmValidator()"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired
+        >确认密码</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+        <input
+          nz-input
+          type="password"
+          formControlName="checkPassword"
+          id="checkPassword"
+        />
+        <ng-template #errorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            请再次输入你的密码!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('confirm')">
+            两次输入的密码不一致!
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber" nzRequired
-      >电话号码</nz-form-label
-    >
-    <nz-form-control
-      [nzSm]="14"
-      [nzXs]="24"
-      [nzValidateStatus]="validateForm.controls['phoneNumber']"
-      nzErrorTip="电话号码不能为空!"
-    >
-      <!-- <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
-        <ng-template #addOnBeforeTemplate>
-          <nz-select formControlName="phoneNumberPrefix" class="phone-select">
-            <nz-option nzLabel="+86" nzValue="+86"></nz-option>
-            <nz-option nzLabel="+87" nzValue="+87"></nz-option>
-          </nz-select>
-        </ng-template> -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber" nzRequired
+        >电话号码</nz-form-label
+      >
+      <nz-form-control
+        [nzSm]="14"
+        [nzXs]="24"
+        [nzValidateStatus]="validateForm.controls['phoneNumber']"
+        nzErrorTip="电话号码不能为空!"
+      >
         <input formControlName="phoneNumber" id="'phoneNumber'" nz-input />
-      <!-- </nz-input-group> -->
-    </nz-form-control>
-  </nz-form-item>
-  <!-- 个人网页 -->
-  <!-- <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="website" nzRequired
-      >Website</nz-form-label
-    >
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input website!">
-      <input
-        nz-input
-        id="website"
-        formControlName="website"
-        placeholder="website"
-      />
-    </nz-form-control>
-  </nz-form-item> -->
-  <!-- 人机验证 -->
-  <!-- <nz-form-item>
-    <nz-form-label
-      [nzSm]="6"
-      [nzXs]="24"
-      nzFor="captcha"
-      nzRequired
-      nzTooltipTitle="Please click 'Get captcha'"
-      [nzTooltipIcon]="captchaTooltipIcon"
-    >
-      Captcha
-    </nz-form-label>
-    <nz-form-control
-      [nzSm]="14"
-      [nzXs]="24"
-      nzErrorTip="Please input the captcha you got!"
-      nzExtra="We must make sure that your are a human."
-    >
-      <div nz-row [nzGutter]="8">
-        <div nz-col [nzSpan]="12">
-          <input nz-input formControlName="captcha" id="captcha" />
-        </div>
-        <div nz-col [nzSpan]="12">
-          <button nz-button (click)="getCaptcha($event)">Get captcha</button>
-        </div>
-      </div>
-    </nz-form-control>
-  </nz-form-item> -->
-  <!-- 用户协议 -->
-  <!-- <nz-form-item nz-row class="register-area">
-    <nz-form-control [nzSpan]="14" [nzOffset]="6">
-      <label nz-checkbox formControlName="agree">
-        <span>
-          I have read the
-          <a>agreement</a>
-        </span>
-      </label>
-    </nz-form-control>
-  </nz-form-item> -->
-  <nz-form-item nz-row class="register-area">
-    <nz-form-control [nzSpan]="14" [nzOffset]="6">
-      <button nz-button nzType="primary" class = "register_button">注册</button>
-      <button class = "backe_button" routerLink = "/login">返回</button>
-    </nz-form-control>
-  </nz-form-item>
-</form>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-row class="register-area">
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <button
+          nz-button
+          nzType="primary"
+          class="register_button"
+          (click)="onRegister()"
+        >
+          注册
+        </button>
+        <button class="backe_button" routerLink="/login">返回</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <nz-modal
+    [(nzVisible)]="isVisible_failed"
+    nzTitle="注册失败"
+    nzCentered
+    (nzOnCancel)="handleCancel_failed()"
+    (nzOnOk)="handleOk_failed()"
+  >
+    <ng-container *nzModalContent>
+      <p>该用户名已存在，请更换用户名</p>
+    </ng-container>
+  </nz-modal>
+  <nz-modal
+    [(nzVisible)]="isVisible_successed"
+    nzTitle="注册成功"
+    nzCentered
+    (nzOnCancel)="handleCancel_successed()"
+    (nzOnOk)="handleOk_successed()"
+  >
+    <ng-container *nzModalContent>
+      <p>注册成功！</p>
+      <p>Content two</p>
+      <p>Content three</p>
+    </ng-container>
+  </nz-modal>
+</div>

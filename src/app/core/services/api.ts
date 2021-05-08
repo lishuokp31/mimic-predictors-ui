@@ -10,6 +10,8 @@ import {
 } from '@core/utils';
 import { nDays } from '@core/constants';
 
+import { LoadSpecifiedSamplePayload } from '@aki/models';
+
 export type TargetModel = 'aki' | 'sepsis' | 'mi' | 'vancomycin';
 
 @Injectable()
@@ -19,6 +21,7 @@ export class ApiService {
   public loadSample(target: TargetModel): Promise<LoadSampleResponse> {
     const url = `${environment.apiUrl}/load-sample`;
     const params = new HttpParams().set('target', target);
+    console.log('params:' + params);
 
     return this.http
       .get<LoadSampleResponse>(url, { params })
@@ -27,6 +30,42 @@ export class ApiService {
         // the API server only returns the days with actual data
         // but the UI displays up to `nDays` days, so we pad them
         produce(response, (draft) => {
+          console.log('draft:' + draft.id);
+          draft.x = addPaddingDays2d(draft.x, nDays);
+        })
+      );
+  }
+
+  public loadSpecifiedSample(
+    target: TargetModel,
+    payload: LoadSpecifiedSamplePayload
+  ): Promise<LoadSampleResponse> {
+    const url = `${environment.apiUrl}/load-specified-sample`;
+    // const params = new HttpParams()
+    //   .set('target', target)
+    //   .set('objectid', payload.objectid);
+    // console.log('params:' + params);
+    // return this.http
+    //   .get<LoadSampleResponse>(url, { params })
+    //   .toPromise()
+    //   .then((response) =>
+    //     produce(response, (draft) => {
+    //       console.log('draft:' + draft.id);
+    //       draft.x = addPaddingDays2d(draft.x, nDays);
+    //     })
+    //   );
+
+    const formData = new FormData();
+    formData.append('target', target);
+    formData.append('objectid', payload.objectid);
+    console.log('target:' + target);
+    console.log('objectid:' + payload.objectid);
+    return this.http
+      .post<LoadSampleResponse>(url, formData)
+      .toPromise()
+      .then((response) =>
+        produce(response, (draft) => {
+          console.log('draft:' + draft.id);
           draft.x = addPaddingDays2d(draft.x, nDays);
         })
       );

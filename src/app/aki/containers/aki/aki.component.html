@@ -14,8 +14,11 @@
       [isLoading]="isLoading$ | async"
       [disableInfer]="disableInfer$ | async"
       (loadSample)="onLoadSample()"
+      (loadSpecifiedSample)="onLoadSpecifiedSample($event)"
+      (thresholdWarning)="onThresholdWarning()"
       (reset)="onReset()"
       (predict)="onPredict()"
+      (objectid)="(objectid)"
     ></app-data-operations>
     <app-model-results
       [showResults]="showPredictions$ | async"
@@ -23,4 +26,20 @@
       label="患者当日出现急性肾损伤的概率如下"
     ></app-model-results>
   </div>
+  <nz-drawer
+    [nzClosable]="false"
+    [nzVisible]="visible"
+    nzPlacement="right"
+    nzTitle="阈值预警"
+    (nzOnClose)="close()"
+    [nzWidth] = "512"
+  >
+    <ng-container *nzDrawerContent>
+      <ul>
+        <li *ngFor="let item of result_string">
+          {{ item }}
+        </li>
+      </ul>
+    </ng-container>
+  </nz-drawer>
 </div>

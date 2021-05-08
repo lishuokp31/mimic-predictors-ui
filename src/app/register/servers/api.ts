@@ -5,7 +5,7 @@ import { BehaviorSubject  } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginApiService {
+export class RegisterApiService {
   private userinfo: Userinfo = {
     login: false,
     username: '',

@@ -13,6 +13,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 /* @NgModule装饰器,@NgModule接受一个元数据对象,告诉Angular如何编译和启动应用 */
 @NgModule({
@@ -25,7 +26,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzFormModule,
     ReactiveFormsModule,
     NzCheckboxModule,
-    NzSelectModule
+    NzSelectModule,
+    NzModalModule
   ],
   // providers: [], /* 配置项目所需要的服务 */
   // bootstrap: [AppComponent] /* 指定应用的主视图(称为根组件)通过引导根AppModule来启动应用,这里一般写的是根组件 */

@@ -51,7 +51,7 @@ const routes: Routes = [
   },
 
   // { path: '', redirectTo: '/patients', pathMatch: 'full' },
-  { path: '', redirectTo: '/user', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundPage },
 ];
 

@@ -1,10 +1,10 @@
-import { Component, OnInit, Output , EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Userinfo } from '@login/models';
-import {LoginApiService} from '@login/servers';
+import { LoginApiService } from '@login/servers';
 
 @Component({
   selector: 'app-login',
@@ -36,14 +36,12 @@ export class LoginComponent implements OnInit {
         this.userinfo = res;
         console.log(this.userinfo);
 
-
         // 登陆成功，将用户信息记录到服务,并路由至用户中心
         if (this.userinfo.login) {
-          this.LoginApi.userinfo = this.userinfo;
+          this.LoginApi.setuserinfo(this.userinfo);
           this.router.navigateByUrl('user');
         }
       });
-
   }
 
   toFormData(validateForm: FormGroup): FormData {
@@ -61,7 +59,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private LoginApi : LoginApiService,
+    private LoginApi: LoginApiService
   ) {}
 
   ngOnInit(): void {

@@ -143,6 +143,22 @@ export class AkiState {
     });
   }
 
+  @Action(actions.LoadSpecifiedSample)
+  public async loadSpecifiedSample(
+    { patchState }: StateContext<StateModel>,
+    { payload }: actions.LoadSpecifiedSample
+  ) {
+    patchState({ isLoading: true });
+    const response = await this.api.loadSpecifiedSample('aki' , payload);
+
+    patchState({
+      x: response.x,
+      predictions: zeros1d(nDays),
+      weights: zeros2d(nDays, nFeatures),
+      isLoading: false,
+    });
+  }
+
   @Action(actions.Reset)
   public reset({ patchState }: StateContext<StateModel>) {
     patchState({

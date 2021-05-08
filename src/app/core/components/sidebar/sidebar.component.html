@@ -1,3 +1,10 @@
+<!-- <button
+      nz-button
+      nzType="primary"
+      (click)="showuserinfo()"
+    >
+      展示用户信息
+    </button> -->
 <nz-layout class="app-layout">
   <nz-sider
     class="menu-sidebar"
@@ -28,6 +35,7 @@
           </li>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/user">账户信息</a>
+            <!-- <a routerLink="/user" *ngIf="userinfo.login">账户信息</a> -->
           </li>
         </ul>
       </li>
@@ -35,6 +43,7 @@
         <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink = "/ner">实体识别</a>
+            <!-- <a routerLink = "/ner" *ngIf="userinfo.login">实体识别</a> -->
           </li>
         </ul>
       </li>

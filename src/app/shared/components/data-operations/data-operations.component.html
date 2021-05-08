@@ -10,10 +10,25 @@
   <button
     mat-stroked-button
     color="primary"
+    (click)="onLoadSpecifiedSample(newItem.value)"
+    [disabled]="isLoading"
+  >
+    加载指定示例
+  </button>
+  <button
+    mat-stroked-button
+    color="primary"
     (click)="onReset()"
     [disabled]="isLoading"
   >
     重置
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="onThresholdWarning()"
+  >
+    阈值预警
   </button>
   <button
     mat-flat-button
@@ -28,3 +43,16 @@
     <mat-spinner [diameter]="30"></mat-spinner>
   </div>
 </div>
+<h2></h2>
+<!-- <input
+          matInput
+          formControlName="id"
+          autocomplete="off"
+          placeholder="请输入需导入的病历编号："
+          required
+          [(ngModel)] = "objectid"
+        >
+<h2>{{objectid}}</h2> -->
+
+<input #newItem type="text" [(ngModel)]="objectid" class="objectidEnter">
+  <!-- {{objectid}} -->

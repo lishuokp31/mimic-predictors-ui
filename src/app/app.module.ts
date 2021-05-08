@@ -26,6 +26,8 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
+import {LoginApiService} from '@login/servers';
+
 registerLocaleData(zh);
 
 @NgModule({
@@ -58,6 +60,6 @@ registerLocaleData(zh);
   ],
   bootstrap: [MainComponent],
   // bootstrap: [LoginComponent],
-  providers: [{ provide: NZ_I18N, useValue: zh_CN }],
+  providers: [LoginApiService , { provide: NZ_I18N, useValue: zh_CN }],
 })
 export class AppModule {}

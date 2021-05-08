@@ -1,7 +1,12 @@
 import { Feature, FeatureUnaryValue } from '@core/types';
-
+import {LoadSpecifiedSamplePayload} from '@aki/models';
 export class LoadSample {
   static readonly type = '[AKI] load';
+}
+
+export class LoadSpecifiedSample {
+  static readonly type = '[AKI] LoadSpecified';
+  constructor(public payload: LoadSpecifiedSamplePayload) {}
 }
 
 export class Reset {
