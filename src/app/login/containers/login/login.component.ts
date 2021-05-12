@@ -12,6 +12,9 @@ import { LoginApiService } from '@login/servers';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+
+  @Output() getUserinfo = new EventEmitter<Userinfo>();
+
   userinfo: Userinfo = {
     login: false,
     username: '',
@@ -21,6 +24,10 @@ export class LoginComponent implements OnInit {
   };
   validateForm!: FormGroup;
   public logged: boolean = false;
+
+  public onGetUserinfo(userinfo: Userinfo){
+    this.getUserinfo.emit(userinfo);
+  }
 
   submitForm(): void {
     for (const i in this.validateForm.controls) {
@@ -40,6 +47,8 @@ export class LoginComponent implements OnInit {
         if (this.userinfo.login) {
           this.LoginApi.setuserinfo(this.userinfo);
           this.router.navigateByUrl('user');
+          console.log("flagflagflagflagflagflagflagflag")
+          this.onGetUserinfo(this.userinfo);
         }
       });
   }

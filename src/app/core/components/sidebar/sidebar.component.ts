@@ -33,7 +33,13 @@ export class SidebarComponent {
       console.log(result)
       console.log(this.userinfo)
     })
-
   }
+
+  getUserinfo(userinfo: Userinfo){
+      this.userinfo = userinfo;
+      console.log(this.userinfo);
+  }
+
+
 }
 

@@ -11,6 +11,9 @@ import { SharedModule } from '@shared/shared.module';
 import { MatDialogModule } from '@angular/material/dialog';
 // import { AKIMaterialModule } from '@aki/aki-material.module';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [...containers, ...components , ...dialogs, ],
@@ -20,6 +23,9 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
     MatDialogModule,
     AkiRoutingModule,
     NzDrawerModule,
+    NzModalModule,
+    NzCheckboxModule,
+    FormsModule,
     // AKIMaterialModule,
     NgxsModule.forFeature([AkiState]),
   ],

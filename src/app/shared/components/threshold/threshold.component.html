@@ -1,0 +1,15 @@
+<div *ngIf="showResults" class="container">
+  <ngx-charts-line-chart
+    [results]="data"
+    [scheme]="colorScheme"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showXAxisLabel]="true"
+    xAxisLabel="住院天数"
+    [timeline]="true"
+    [yAxisTicks]="yAxisTicks"
+    [showRefLines]="true"
+    [showRefLabels]="false"
+    [referenceLines]="referenceLines"
+  ></ngx-charts-line-chart>
+</div>
