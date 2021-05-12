@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { Userinfo } from '@core/models';
-// import { LoginApiService } from '@login/servers';
+import { Userinfo } from '@login/models';
+import { LoginApiService } from '@login/servers';
 
 @Component({
   selector: 'app-login',
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
 
         // 登陆成功，将用户信息记录到服务,并路由至用户中心
         if (this.userinfo.login) {
-          // this.LoginApi.setuserinfo(this.userinfo);
+          this.LoginApi.setuserinfo(this.userinfo);
           this.router.navigateByUrl('user');
           console.log("flagflagflagflagflagflagflagflag")
           this.onGetUserinfo(this.userinfo);
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    // private LoginApi: LoginApiService
+    private LoginApi: LoginApiService
   ) {}
 
   ngOnInit(): void {
