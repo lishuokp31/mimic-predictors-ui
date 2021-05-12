@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Userinfo } from '@login/models';
-import { LoginApiService } from '@login/servers';
+import { Userinfo } from '@core/models';
 @Component({
   selector: 'app-sidebar',
   styleUrls: ['./sidebar.component.scss'],
@@ -17,23 +16,7 @@ export class SidebarComponent {
     level: -1,
   };
 
-  constructor(private LoginApi: LoginApiService) {}
-
-  ngOnInit() {
-    this.LoginApi.userinfoEvent$.subscribe((result) => {
-      this.userinfo = result;
-      console.log(result)
-      console.log(this.userinfo)
-    })
-  }
-
-  showuserinfo(){
-    this.LoginApi.userinfoEvent$.subscribe((result) => {
-      this.userinfo = result;
-      console.log(result)
-      console.log(this.userinfo)
-    })
-  }
+  constructor() {}
 
   getUserinfo(userinfo: Userinfo){
       this.userinfo = userinfo;
