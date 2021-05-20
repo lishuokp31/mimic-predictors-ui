@@ -1,4 +1,5 @@
 export interface StateModel {
+  id: number;
   features: Feature[];
   x: number[][];
   predictions: number[];

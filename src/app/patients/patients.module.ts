@@ -16,6 +16,7 @@ import { guards } from '@patients/guards';
 import { pipes } from '@patients/pipes';
 import { PatientsEntitiesState, PatientsState } from '@patients/store';
 import { SharedModule } from '@shared/shared.module';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
   declarations: [...components, ...containers, ...dialogs, ...pipes],
@@ -27,6 +28,7 @@ import { SharedModule } from '@shared/shared.module';
     ReactiveFormsModule,
     AgGridModule.withComponents([]),
     NgxChartsModule,
+    NzModalModule,
     NgxsModule.forFeature([PatientsEntitiesState, PatientsState]),
   ],
   providers: [...services, ...guards, ...resolvers],

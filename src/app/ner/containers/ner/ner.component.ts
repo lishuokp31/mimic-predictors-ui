@@ -8,13 +8,28 @@ import { Ner } from '@ner/models';
 import * as actions from '@ner/store/actions';
 import { NerState } from '@ner/store';
 import { ImportNerByTXTPayload, ImportNerByFilePayload } from '@ner/models';
-// import fs from 'fs';
+import { Userinfo } from '@login/models';
+import { LoginState} from '../../../store';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-ner',
   templateUrl: './ner.component.html',
   styleUrls: ['./ner.component.scss'],
 })
 export class NerComponent implements OnInit {
+  userinfo: Userinfo = {
+    login: false,
+    username: '',
+    email: '',
+    phone: '',
+    level: -1,
+  };
+  public login$: Observable<boolean>;
+  public username$: Observable<string>;
+  public email$: Observable<string>;
+  public phone$: Observable<string>;
+  public level$: Observable<number>;
+
   // 文本输入框中输入的文本以及文件中的文本
   inputValue: string = '';
   file_inputValue: Array<string> = new Array<string>();
@@ -25,6 +40,9 @@ export class NerComponent implements OnInit {
   public file_entities$: Observable<string[][][]>;
   public isLoading$: Observable<boolean>;
 
+  // 权限信息
+  public isVisible_level_modal : boolean = false;
+
   file: NzUploadFile = {
     uid: '-1',
     name: 'xxx.png',
@@ -34,13 +52,46 @@ export class NerComponent implements OnInit {
   fileList: NzUploadFile[] = [];
   string: string = '';
 
-  constructor(private msg: NzMessageService, private store: Store) {
-    // 从应用程序状态返回一段数据，并将其包装成一个可观察的对象
+  constructor(private msg: NzMessageService, private store: Store,private router: Router) {
+    var tmp = setInterval(() => {
+      if(!this.userinfo.login){
+        this.router.navigate(['/login'])
+      }
+    } , 20)
+    this.login$ = this.store.select(LoginState.login);
+    this.username$ = this.store.select(LoginState.username);
+    this.email$ = this.store.select(LoginState.email);
+    this.phone$ = this.store.select(LoginState.phone);
+    this.level$ = this.store.select(LoginState.level);
+
     this.sequence$ = this.store.select(NerState.sequence);
     this.entities$ = this.store.select(NerState.entities);
     this.file_sequence$ = this.store.select(NerState.file_sequence);
     this.file_entities$ = this.store.select(NerState.file_entities);
     this.isLoading$ = this.store.select(NerState.isLoading);
+  }
+
+  ngOnInit(): void {
+    this.login$.subscribe((value) => {
+      this.userinfo.login = value;
+    });
+    this.username$.subscribe((value) => {
+      this.userinfo.username = value;
+    });
+    this.email$.subscribe((value) => {
+      this.userinfo.email = value;
+    });
+    this.phone$.subscribe((value) => {
+      this.userinfo.phone = value;
+    });
+    this.level$.subscribe((value) => {
+      this.userinfo.level = value;
+    });
+
+    if(this.userinfo.level > 2){
+      console.log("权限不足！" + this.userinfo.level)
+      this.isVisible_level_modal = true;
+    }
   }
 
   public importByTXT() {
@@ -129,7 +180,15 @@ export class NerComponent implements OnInit {
     // }
   }
 
-  ngOnInit(): void {}
+  handleCancel_level_modal(){
+    this.isVisible_level_modal = false;
+    this.router.navigate(['/user']);
+  }
+
+  handleOk_level_modal(){
+    this.isVisible_level_modal = false;
+    this.router.navigate(['/user']);
+  }
 
   public onNerClicked(event: Ner) {
     // const { Tnumber } = event;

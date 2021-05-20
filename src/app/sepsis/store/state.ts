@@ -23,6 +23,7 @@ const staticFeatureIds = [
   150, // gender
 ];
 const initialState: StateModel = {
+  id: 0,
   features: sepsisFeatures,
   x: zeros2d(nDays, nFeatures),
   predictions: zeros1d(nDays),
@@ -139,6 +140,7 @@ export class SepsisState {
 
     const response = await this.api.loadSample('sepsis');
     patchState({
+      id: response.id,
       x: response.x,
       predictions: zeros1d(nDays),
       weights: zeros2d(nDays, nFeatures),

@@ -7,6 +7,7 @@ import { components } from '@sepsis/components';
 import { containers } from '@sepsis/containers';
 import { SepsisState } from '@sepsis/store';
 import { SharedModule } from '@shared/shared.module';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
   declarations: [...components, ...containers],
@@ -14,6 +15,7 @@ import { SharedModule } from '@shared/shared.module';
     CommonModule,
     SharedModule,
     SepsisRoutingModule,
+    NzModalModule,
     NgxsModule.forFeature([SepsisState]),
   ],
 })

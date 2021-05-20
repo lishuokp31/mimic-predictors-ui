@@ -6,13 +6,22 @@ import { Observable } from 'rxjs';
 import { Feature, FeatureUnaryValue } from '@core/types';
 import { AkiState } from '@aki/store';
 import * as actions from '@aki/store/actions';
+import * as actions_user from '@user/store/actions';
 import { FeatureValueChangeEvent } from '@shared/components';
+
+import { ActivatedRoute } from '@angular/router';
 
 import { ObjectIdFormDialog } from '@aki/dialogs';
 import { LoadSpecifiedSamplePayload } from '@aki/models';
 
 import { mapping } from './../../mapping-aki';
 import { FocusTrapManager } from '@angular/cdk/a11y/focus-trap/focus-trap-manager';
+
+import { AddFavoritePayload, Favorite } from '@user/models';
+
+import { Userinfo } from '@login/models';
+import { LoginState } from '../../../store';
+import { Router } from '@angular/router';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-aki',
@@ -20,7 +29,21 @@ import { FocusTrapManager } from '@angular/cdk/a11y/focus-trap/focus-trap-manage
   styleUrls: ['./aki.component.scss'],
 })
 export class AkiComponent {
+  userinfo: Userinfo = {
+    login: false,
+    username: '',
+    email: '',
+    phone: '',
+    level: -1,
+  };
+  public login$: Observable<boolean>;
+  public username$: Observable<string>;
+  public email$: Observable<string>;
+  public phone$: Observable<string>;
+  public level$: Observable<number>;
+
   public readonly features_num = 16;
+  public id$: Observable<number>;
   public features$: Observable<Feature[]>;
   public x$: Observable<number[][]>;
   public formattedX$: Observable<string[][]>;
@@ -31,6 +54,7 @@ export class AkiComponent {
   public disableInfer$: Observable<boolean>;
 
   public x: number[][] = [];
+  public id: number = 0;
   visible = false;
   isVisible_setting = false;
 
@@ -54,12 +78,38 @@ export class AkiComponent {
   public ThresholdResult: Array<Array<number>> = new Array<Array<number>>();
   public result_string: string[] = [];
 
-  constructor(private store: Store, private dialog: MatDialog) {
+
+  // 收藏信息
+  public isVisible_fav_modal : boolean = false;
+  public favinfo : Favorite = {
+    id : '',
+    fav_type : 'aki',
+    remark : '',
+    value: '',
+  };
+  public select_label = {
+    importment : "重点观察样例"
+  }
+  public value = '';
+
+  // 权限信息
+  public isVisible_level_modal : boolean = false;
+
+
+  constructor(private store: Store, private dialog: MatDialog , public route: ActivatedRoute , private router: Router,) {
+    this.login$ = this.store.select(LoginState.login);
+    this.username$ = this.store.select(LoginState.username);
+    this.email$ = this.store.select(LoginState.email);
+    this.phone$ = this.store.select(LoginState.phone);
+    this.level$ = this.store.select(LoginState.level);
+
     this.mapping = mapping;
     for (let i = 0; i < this.features_num; i++) {
       this.thresholdOptionArray.push(false);
     }
     this.thresholdOptionArray[3] = true; // 默认肌酸酐
+
+    this.id$ = this.store.select(AkiState.id);
     this.features$ = this.store.select(AkiState.features);
     this.x$ = this.store.select(AkiState.x);
     this.formattedX$ = this.store.select(AkiState.formattedX);
@@ -190,9 +240,41 @@ export class AkiComponent {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.value = params["value"];
+    })
+    console.log("this.value:" + this.value)
+    if(this.value){
+      console.log("加载收藏病例")
+      this.onLoadSpecifiedSample(this.value);
+    }
+    this.login$.subscribe((value) => {
+      this.userinfo.login = value;
+    });
+    this.username$.subscribe((value) => {
+      this.userinfo.username = value;
+    });
+    this.email$.subscribe((value) => {
+      this.userinfo.email = value;
+    });
+    this.phone$.subscribe((value) => {
+      this.userinfo.phone = value;
+    });
+    this.level$.subscribe((value) => {
+      this.userinfo.level = value;
+    });
+
+    this.id$.subscribe((value) => {
+      this.id = value;
+    });
     this.x$.subscribe((value) => {
       this.x = value;
     });
+
+    if(this.userinfo.level > 2){
+      console.log("权限不足！" + this.userinfo.level)
+      this.isVisible_level_modal = true;
+    }
   }
 
   open(): void {
@@ -201,5 +283,43 @@ export class AkiComponent {
 
   close(): void {
     this.visible = false;
+  }
+
+  onAddFavorite(){
+    this.isVisible_fav_modal = true;
+  }
+
+  handleCancel_fav_modal(){
+    this.isVisible_fav_modal = false;
+  }
+  handleOk_fav_modal(){
+    const outData: AddFavoritePayload = {
+      username : this.userinfo.username,
+      id : this.favinfo.id,
+      fav_type : 'aki',
+      remark : this.favinfo.remark,
+      value: this.id.toString(),
+    };
+
+    console.log(this.favinfo)
+    console.log(outData)
+    this.store.dispatch(new actions_user.AddFavoriteAction(outData));
+    this.isVisible_fav_modal = false;
+    this.favinfo.id = '';
+    this.favinfo.remark = '';
+  }
+
+  handleCancel_level_modal(){
+    this.isVisible_level_modal = false;
+    this.router.navigate(['/user']);
+  }
+
+  handleOk_level_modal(){
+    this.isVisible_level_modal = false;
+    this.router.navigate(['/user']);
+  }
+
+  onCallSimilarity(){
+
   }
 }

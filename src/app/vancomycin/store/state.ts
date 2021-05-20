@@ -23,6 +23,7 @@ const staticFeatureIds = [
   150, // gender
 ];
 const initialState: StateModel = {
+  id: 0,
   features: vancomycinFeatures,
   x: zeros2d(nDays, nFeatures),
   predictions: zeros1d(nDays),
@@ -144,6 +145,7 @@ export class VancomycinState {
     const response = await this.api.loadSample('vancomycin');
 
     patchState({
+      id: response.id,
       x: response.x,
       predictions: zeros1d(nDays),
       weights: zeros2d(nDays, nFeatures),

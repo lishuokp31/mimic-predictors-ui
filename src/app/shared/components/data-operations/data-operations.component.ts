@@ -20,6 +20,8 @@ export class DataOperationsComponent {
   @Output() loadSample = new EventEmitter<void>();
   @Output() loadSpecifiedSample = new EventEmitter<string>();
   @Output() thresholdWarning = new EventEmitter<void>();
+  @Output() addFavorite = new EventEmitter<void>();
+  @Output() callSimilarity = new EventEmitter<void>();
   @Output() reset = new EventEmitter<void>();
   @Output() predict = new EventEmitter<void>();
 
@@ -34,6 +36,14 @@ export class DataOperationsComponent {
 
   public onThresholdWarning(){
     this.thresholdWarning.emit();
+  }
+
+  public onAddFavorite(){
+    this.addFavorite.emit();
+  }
+
+  public onCallSimilarity(){
+    this.callSimilarity.emit();
   }
 
   public onReset() {

@@ -7,13 +7,14 @@ import { components } from '@vancomycin/components';
 import { containers } from '@vancomycin/containers';
 import { VancomycinState } from '@vancomycin/store';
 import { SharedModule } from '@shared/shared.module';
-
+import { NzModalModule } from 'ng-zorro-antd/modal';
 @NgModule({
   declarations: [...components, ...containers],
   imports: [
     CommonModule,
     SharedModule,
     VancomycinRoutingModule,
+    NzModalModule,
     NgxsModule.forFeature([VancomycinState]),
   ],
 })

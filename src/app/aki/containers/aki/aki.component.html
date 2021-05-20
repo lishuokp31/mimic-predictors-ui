@@ -16,6 +16,8 @@
       (loadSample)="onLoadSample()"
       (loadSpecifiedSample)="onLoadSpecifiedSample($event)"
       (thresholdWarning)="onThresholdWarning()"
+      (addFavorite)="onAddFavorite()"
+      (callSimilarity) = "onCallSimilarity()"
       (reset)="onReset()"
       (predict)="onPredict()"
       (objectid)="(objectid)"
@@ -30,7 +32,6 @@
       [probabilities]="slicedPredictions$ | async"
       label="患者当日出现急性肾损伤的概率如下"
     ></app-model-results>
-
   </div>
   <nz-drawer
     [nzClosable]="false"
@@ -54,36 +55,145 @@
   nzTitle="请选择需要阈值筛查的医疗指标："
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
-  [nzCancelText] = "null"
+  [nzCancelText]="null"
 >
   <ng-container *nzModalContent>
-    <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="onChangeThreshold($event)">
+    <nz-checkbox-wrapper
+      style="width: 100%"
+      (nzOnChange)="onChangeThreshold($event)"
+    >
       <div nz-row>
         <div nz-col nzSpan="8">
-          <label class="option" nz-checkbox nzValue="0" [ngModel]="thresholdOptionArray[0]">碳酸氢盐</label>
-          <label class="option" nz-checkbox nzValue="2" [ngModel]="thresholdOptionArray[2]">氯化物</label>
-          <label class="option" nz-checkbox nzValue="3" [ngModel]="thresholdOptionArray[3]">肌酸酐</label>
-          <label class="option" nz-checkbox nzValue="4" [ngModel]="thresholdOptionArray[4]">葡萄糖</label>
+          <label
+            class="option"
+            nz-checkbox
+            nzValue="0"
+            [ngModel]="thresholdOptionArray[0]"
+            >碳酸氢盐</label
+          >
+          <label
+            class="option"
+            nz-checkbox
+            nzValue="2"
+            [ngModel]="thresholdOptionArray[2]"
+            >氯化物</label
+          >
+          <label
+            class="option"
+            nz-checkbox
+            nzValue="3"
+            [ngModel]="thresholdOptionArray[3]"
+            >肌酸酐</label
+          >
+          <label
+            class="option"
+            nz-checkbox
+            nzValue="4"
+            [ngModel]="thresholdOptionArray[4]"
+            >葡萄糖</label
+          >
         </div>
-        <br/>
+        <br />
         <div nz-col nzSpan="8">
-          <label class="option" nz-checkbox nzValue="7" [ngModel]="thresholdOptionArray[7]">镁</label>
-          <label class="option" nz-checkbox nzValue="9" [ngModel]="thresholdOptionArray[9]">钾</label>
-          <label class="option" nz-checkbox nzValue="10" [ngModel]="thresholdOptionArray[10]">钠</label>
-          <label class="option" nz-checkbox nzValue="1" [ngModel]="thresholdOptionArray[1]">血尿素氮</label>
+          <label
+            class="option"
+            nz-checkbox
+            nzValue="7"
+            [ngModel]="thresholdOptionArray[7]"
+            >镁</label
+          >
+          <label
+            class="option"
+            nz-checkbox
+            nzValue="9"
+            [ngModel]="thresholdOptionArray[9]"
+            >钾</label
+          >
+          <label
+            class="option"
+            nz-checkbox
+            nzValue="10"
+            [ngModel]="thresholdOptionArray[10]"
+            >钠</label
+          >
+          <label
+            class="option"
+            nz-checkbox
+            nzValue="1"
+            [ngModel]="thresholdOptionArray[1]"
+            >血尿素氮</label
+          >
         </div>
-        <br/>
+        <br />
         <div nz-col nzSpan="8">
-          <label class="option" nz-checkbox nzValue="6" [ngModel]="thresholdOptionArray[6]">血红蛋白</label>
-          <label class="option" nz-checkbox nzValue="8" [ngModel]="thresholdOptionArray[8]">血小板</label>
-          <label class="option" nz-checkbox nzValue="11" [ngModel]="thresholdOptionArray[11]">白细胞</label>
+          <label
+            class="option"
+            nz-checkbox
+            nzValue="6"
+            [ngModel]="thresholdOptionArray[6]"
+            >血红蛋白</label
+          >
+          <label
+            class="option"
+            nz-checkbox
+            nzValue="8"
+            [ngModel]="thresholdOptionArray[8]"
+            >血小板</label
+          >
+          <label
+            class="option"
+            nz-checkbox
+            nzValue="11"
+            [ngModel]="thresholdOptionArray[11]"
+            >白细胞</label
+          >
         </div>
       </div>
     </nz-checkbox-wrapper>
   </ng-container>
   <div *nzModalFooter>
     <button nz-button color="default" (click)="handleAll()">全选</button>
-    <button nz-button nzType="default" (click)="handleAllNot()" >全不选</button>
-    <button nz-button nzType="primary" (click)="handleOk()" [disabled] = "!enableThreshold">确定</button>
+    <button nz-button nzType="default" (click)="handleAllNot()">全不选</button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="handleOk()"
+      [disabled]="!enableThreshold"
+    >
+      确定
+    </button>
+  </div>
+</nz-modal>
+
+<!-- 收藏对话框 -->
+<nz-modal
+  class="fav_modal"
+  [(nzVisible)]="isVisible_fav_modal"
+  nzTitle="添加收藏"
+  (nzOnCancel)="handleCancel_fav_modal()"
+  (nzOnOk)="handleOk_fav_modal()"
+>
+  <ng-container *nzModalContent>
+    <nz-input-group nzAddOnBefore="id:">
+      <input type="text" nz-input [(ngModel)]="favinfo.id" />
+    </nz-input-group>
+    <h2></h2>
+    <h4>备注：</h4>
+    <textarea rows="4" nz-input [(ngModel)]="favinfo.remark"></textarea>
+  </ng-container>
+</nz-modal>
+
+<!-- 权限提醒框 -->
+<nz-modal
+  class="level_modal"
+  [(nzVisible)]="isVisible_level_modal"
+  nzTitle="权限提醒"
+  (nzOnCancel)="handleCancel_level_modal()"
+>
+  <ng-container *nzModalContent>
+    <h4>很抱歉，您当前的权限不允许进行此操作！</h4>
+  </ng-container>
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="handleOk_level_modal()">确定</button>
   </div>
 </nz-modal>

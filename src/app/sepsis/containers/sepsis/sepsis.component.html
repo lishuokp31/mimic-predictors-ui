@@ -24,3 +24,18 @@
     ></app-model-results>
   </div>
 </div>
+
+<!-- 权限提醒框 -->
+<nz-modal
+  class="level_modal"
+  [(nzVisible)]="isVisible_level_modal"
+  nzTitle="权限提醒"
+  (nzOnCancel)="handleCancel_level_modal()"
+>
+  <ng-container *nzModalContent>
+    <h4>很抱歉，您当前的权限不允许进行此操作！</h4>
+  </ng-container>
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="handleOk_level_modal()">确定</button>
+  </div>
+</nz-modal>

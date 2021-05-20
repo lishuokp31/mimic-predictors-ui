@@ -23,6 +23,7 @@ const staticFeatureIds = [
   15, // ethnicity
 ];
 const initialState: StateModel = {
+  id: 0,
   features: akiFeatures,
   x: zeros2d(nDays, nFeatures),
   predictions: zeros1d(nDays),
@@ -36,6 +37,11 @@ const initialState: StateModel = {
 })
 @Injectable()
 export class AkiState {
+  @Selector([AkiState])
+  static id(state: StateModel): number {
+    return state.id;
+  }
+
   @Selector([AkiState])
   static features(state: StateModel): Feature[] {
     return state.features;
@@ -137,6 +143,7 @@ export class AkiState {
 
     patchState({
       x: response.x,
+      id:response.id,
       predictions: zeros1d(nDays),
       weights: zeros2d(nDays, nFeatures),
       isLoading: false,

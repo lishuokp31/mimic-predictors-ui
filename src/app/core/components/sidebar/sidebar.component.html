@@ -1,10 +1,3 @@
-<button
-      nz-button
-      nzType="primary"
-      (click)="showuserinfo()"
-    >
-      展示用户信息
-    </button>
 <nz-layout class="app-layout">
   <nz-sider
     class="menu-sidebar"
@@ -30,16 +23,16 @@
     >
       <li nz-submenu nzOpen nzTitle="账户" nzIcon="user">
         <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/login" (getUserinfo) = "getUserinfo($event)">登录</a>
+          <li nz-menu-item nzMatchRouter *ngIf="!userinfo.login">
+            <a routerLink="/login">登录</a>
           </li>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/user">账户信息</a>
+          <li nz-menu-item nzMatchRouter *ngIf="userinfo.login">
+            <a routerLink="/user">用户中心</a>
             <!-- <a routerLink="/user" *ngIf="userinfo.login">账户信息</a> -->
           </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="实体识别" nzIcon="form">
+      <li nz-submenu nzOpen nzTitle="实体识别" nzIcon="form" *ngIf="userinfo.login">
         <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink = "/ner">实体识别</a>
@@ -47,20 +40,20 @@
           </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="数据库" nzIcon="database">
+      <li nz-submenu nzOpen nzTitle="数据库" nzIcon="database" *ngIf="userinfo.login">
         <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/patients">病历</a>
           </li>
-          <li nz-menu-item nzMatchRouter>
+          <!-- <li nz-menu-item nzMatchRouter>
             <a routerLink="/DB">疾病预测</a>
-          </li>
+          </li> -->
           <!-- <li nz-menu-item nzMatchRouter>
             <a routerLink="/DB">实体识别数据库</a>
           </li> -->
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="疾病预测" nzIcon="dashboard">
+      <li nz-submenu nzOpen nzTitle="疾病预测" nzIcon="dashboard" *ngIf="userinfo.login">
         <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/sepsis">脓毒症</a>

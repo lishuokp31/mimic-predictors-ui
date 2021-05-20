@@ -1,10 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { Userinfo, LoginPayload } from '@login/models';
+import { Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { LoginState } from '../../../store';
+import * as actions from '../../../store';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { Userinfo } from '@login/models';
-import { LoginApiService } from '@login/servers';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,13 @@ import { LoginApiService } from '@login/servers';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   @Output() getUserinfo = new EventEmitter<Userinfo>();
+
+  public login$: Observable<boolean>;
+  public username$: Observable<string>;
+  public email$: Observable<string>;
+  public phone$: Observable<string>;
+  public level$: Observable<number>;
 
   userinfo: Userinfo = {
     login: false,
@@ -23,9 +29,27 @@ export class LoginComponent implements OnInit {
     level: -1,
   };
   validateForm!: FormGroup;
-  public logged: boolean = false;
+  public autojump: boolean = false;
 
-  public onGetUserinfo(userinfo: Userinfo){
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private store: Store
+  ) {
+    var tmp = setInterval(() => {
+      if(this.userinfo.login && !this.autojump){
+        this.router.navigate(['/user'])
+        this.autojump = true
+      }
+    } , 20)
+    this.login$ = this.store.select(LoginState.login);
+    this.username$ = this.store.select(LoginState.username);
+    this.email$ = this.store.select(LoginState.email);
+    this.phone$ = this.store.select(LoginState.phone);
+    this.level$ = this.store.select(LoginState.level);
+  }
+
+  public onGetUserinfo(userinfo: Userinfo) {
     this.getUserinfo.emit(userinfo);
   }
 
@@ -34,23 +58,17 @@ export class LoginComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    const url = `${environment.apiUrl}/ner/login`;
-    console.log(this.validateForm.value);
-    this.http
-      .post<Userinfo>(url, this.toFormData(this.validateForm))
-      .subscribe((res) => {
-        console.log(res);
-        this.userinfo = res;
-        console.log(this.userinfo);
 
-        // 登陆成功，将用户信息记录到服务,并路由至用户中心
-        if (this.userinfo.login) {
-          this.LoginApi.setuserinfo(this.userinfo);
-          this.router.navigateByUrl('user');
-          console.log("flagflagflagflagflagflagflagflag")
-          this.onGetUserinfo(this.userinfo);
-        }
-      });
+    console.log(this.validateForm.value);
+
+    const outData: LoginPayload = {
+      userName: this.validateForm.value.userName,
+      password: this.validateForm.value.password,
+      // remember: this.validateForm.value.remember,
+    };
+
+    const action = new actions.loginAction(outData);
+    this.store.dispatch(action);
   }
 
   toFormData(validateForm: FormGroup): FormData {
@@ -64,18 +82,27 @@ export class LoginComponent implements OnInit {
     return formData;
   }
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private router: Router,
-    private LoginApi: LoginApiService
-  ) {}
-
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       userName: [null, [Validators.required]],
       password: [null, [Validators.required]],
       remember: [true],
+    });
+
+    this.login$.subscribe((value) => {
+      this.userinfo.login = value;
+    });
+    this.username$.subscribe((value) => {
+      this.userinfo.username = value;
+    });
+    this.email$.subscribe((value) => {
+      this.userinfo.email = value;
+    });
+    this.phone$.subscribe((value) => {
+      this.userinfo.phone = value;
+    });
+    this.level$.subscribe((value) => {
+      this.userinfo.level = value;
     });
   }
 }

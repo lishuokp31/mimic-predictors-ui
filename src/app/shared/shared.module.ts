@@ -9,6 +9,9 @@ import { components } from '@shared/components';
 import { dialogs } from '@shared/dialogs';
 import { pipes } from '@shared/pipes';
 
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +19,8 @@ import { pipes } from '@shared/pipes';
     SharedMaterialModule,
     NgxChartsModule,
     FormsModule,
+    NzPopconfirmModule,
+    NzGridModule,
   ],
   declarations: [...components, ...dialogs, ...pipes],
   exports: [CommonModule, ...components],

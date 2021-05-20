@@ -15,8 +15,7 @@ import {
 
 import { CoreModule } from '@core/core.module';
 import { MainComponent } from '@core/containers';
-import { LoginModule} from '@login/login.module';
-import { LoginComponent} from '@login/containers';
+import { LoginModule } from '@login/login.module';
 
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
@@ -26,7 +25,9 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
-import {LoginApiService} from '@login/servers';
+// import {LoginApiService} from '@login/servers';
+import { LoginState } from './store';
+import { services } from './store';
 
 registerLocaleData(zh);
 
@@ -39,7 +40,7 @@ registerLocaleData(zh);
     LoginModule,
     NzSwitchModule,
     RouterModule.forRoot([], { preloadingStrategy: PreloadAllModules }),
-    NgxsModule.forRoot([], {
+    NgxsModule.forRoot([LoginState], {
       developmentMode: !environment.production,
       selectorOptions: {
         suppressErrors: false,
@@ -60,6 +61,6 @@ registerLocaleData(zh);
   ],
   bootstrap: [MainComponent],
   // bootstrap: [LoginComponent],
-  providers: [LoginApiService , { provide: NZ_I18N, useValue: zh_CN }],
+  providers: [services, { provide: NZ_I18N, useValue: zh_CN }],
 })
 export class AppModule {}

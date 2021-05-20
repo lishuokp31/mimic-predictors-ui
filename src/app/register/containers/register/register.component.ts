@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
     console.log(this.validateForm.value);
-    const url = `${environment.apiUrl}/ner/register`;
+    const url = `${environment.apiUrl}/register`;
     this.http
       .post<number>(url, this.toFormData(this.validateForm))
       .subscribe((res) => {
@@ -63,17 +63,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegister(){
-    // if (this.registersucceed == 1) {
-    //   console.log("注册成功！")
-    //   this.showModal_successed();
-    // } else if (this.registersucceed == 0) {
-    //   console.log("注册失败！用户名重复！")
-    //   this.showModal_failed();
-    // }
-    // else if (this.registersucceed == -1) {
-    //   console.log("注册失败！请联系管理员！")
-    //   this.showModal_failed();
-    // }
+
   }
 
   updateConfirmValidator(): void {
@@ -135,12 +125,12 @@ export class RegisterComponent implements OnInit {
 
   handleOk_successed(): void {
     this.isVisible_successed = false;
-    this.router.navigateByUrl('user');
+    this.router.navigateByUrl('login');
   }
 
   handleCancel_successed(): void {
     this.isVisible_successed = false;
-    this.router.navigateByUrl('user');
+    this.router.navigateByUrl('login');
   }
 
   showModal_failed(): void {

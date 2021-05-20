@@ -1,1 +1,98 @@
-<h2>欢迎登录！！！</h2>
+<div class="container">
+  <div *ngIf="userinfo.login">
+    <div nz-row [nzGutter]="8">
+      <div nz-col [nzSpan]="8">
+        <h2>{{ userinfo.username }},欢迎！！！</h2>
+      </div>
+      <div nz-col [nzSpan]="12"></div>
+      <div nz-col [nzSpan]="4">
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="logout()"
+          [disabled]="isLoading$ | async"
+        >
+          <!-- <mat-icon>add</mat-icon> -->
+          退出登录
+        </button>
+      </div>
+    </div>
+
+    <div nz-row [nzGutter]="8">
+      <h3>当前时间是 {{ date }}</h3>
+    </div>
+    <div nz-row [nzGutter]="8">
+      <div nz-col [nzSpan]="6">
+        <h3>您的收藏夹：</h3>
+      </div>
+      <div nz-col [nzSpan]="14"></div>
+      <div nz-col [nzSpan]="4">
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="refresh()"
+          [disabled]="isLoading$ | async"
+        >
+          <!-- <mat-icon>add</mat-icon> -->
+          刷新收藏夹
+        </button>
+      </div>
+
+      <div nz-col [nzSpan]="24" class="card_fav">
+        <!-- <nz-card nzTitle="收藏夹">
+          <p>Card content</p>
+            <app-user-favtable
+            [favorites]="favorites$ | async"
+            [isLoading]="isLoading$ | async"
+            (favoriteClick)="onFavoriteClicked($event)"
+          ></app-user-favtable>
+          <p>Card content</p>
+        </nz-card> -->
+
+        <app-user-favtable
+          [favorites]="favorites$ | async"
+          [isLoading]="isLoading$ | async"
+          (favoriteClick)="onFavoriteClicked($event)"
+        ></app-user-favtable>
+      </div>
+      <!-- <div nz-col [nzSpan]="12" class="card_log">
+          <app-user-favtable
+            [favorites]="favorites$ | async"
+            [isLoading]="isLoading$ | async"
+            (favoriteClick)="onFavoriteClicked($event)"
+          ></app-user-favtable>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- 收藏对话框 -->
+<nz-modal
+  [(nzVisible)]="isVisible_fav_modal"
+  nzTitle="收藏"
+  (nzOnCancel)="handleCancel_fav_modal()"
+>
+  <ng-container *nzModalContent>
+    <nz-input-group nzAddOnBefore="id:">
+      <input type="text" nz-input [(ngModel)]="selected_favinfo.id" />
+    </nz-input-group>
+    <h2></h2>
+    <h4>备注：</h4>
+    <textarea
+      rows="4"
+      nz-input
+      [(ngModel)]="selected_favinfo.remark"
+    ></textarea>
+  </ng-container>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="deleteFavorite()">
+      删除该收藏
+    </button>
+    <button nz-button nzType="default" (click)="loadSelectedFavorite()">
+      加载当前病历
+    </button>
+    <button nz-button nzType="primary" (click)="handleOk_fav_modal()">
+      确定
+    </button>
+  </div>
+</nz-modal>
