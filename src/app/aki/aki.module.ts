@@ -16,6 +16,8 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { FormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @NgModule({
   declarations: [...containers, ...components , ...dialogs, ],
@@ -31,6 +33,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzInputModule,
     NzSelectModule,
     // AKIMaterialModule,
+    NzGridModule,
+    NzPopconfirmModule,
     NgxsModule.forFeature([AkiState]),
   ],
 })

@@ -1,8 +1,13 @@
-import { AddFavoritePayload, DeleteFavoritePayload ,  Favorite } from '@user/models';
+import { FavoritePayload, DeleteFavoritePayload ,  Favorite } from '@user/models';
 
 export class LoadAll {
   static readonly type = '[favorites] load all';
   constructor(public username: string) {}
+}
+
+export class LoadAll_User {
+  static readonly type = '[users] load all';
+  constructor() {}
 }
 
 export class LoadOne {
@@ -22,7 +27,12 @@ export class SelectedFavoriteChangedAction {
 
 export class AddFavoriteAction {
   static readonly type = '[favorites] import';
-  constructor(public payload: AddFavoritePayload) {}
+  constructor(public payload: FavoritePayload) {}
+}
+
+export class ModifyFavoriteAction {
+  static readonly type = '[favorites] modify';
+  constructor(public payload: FavoritePayload) {}
 }
 
 export class DeleteFavoriteAction{

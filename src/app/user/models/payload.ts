@@ -1,4 +1,4 @@
-export interface AddFavoritePayload {
+export interface FavoritePayload {
   username : string;
   id : string;
   fav_type : string;

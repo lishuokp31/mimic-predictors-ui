@@ -22,8 +22,11 @@ export class DataOperationsComponent {
   @Output() thresholdWarning = new EventEmitter<void>();
   @Output() addFavorite = new EventEmitter<void>();
   @Output() callSimilarity = new EventEmitter<void>();
+  @Output() backCurrent = new EventEmitter<void>();
   @Output() reset = new EventEmitter<void>();
   @Output() predict = new EventEmitter<void>();
+
+  public isVisible_SpecifiedLoad : boolean = false;
 
   public onLoadSample() {
     this.loadSample.emit();
@@ -46,6 +49,10 @@ export class DataOperationsComponent {
     this.callSimilarity.emit();
   }
 
+  public onBackCurrent(){
+    this.backCurrent.emit();
+  }
+
   public onReset() {
     this.reset.emit();
   }
@@ -53,4 +60,18 @@ export class DataOperationsComponent {
   public onPredict() {
     this.predict.emit();
   }
+
+  showSpecifiedLoadModal(){
+    this.isVisible_SpecifiedLoad = true;
+  }
+
+  handleCancelSpecifiedLoad(){
+    this.isVisible_SpecifiedLoad = false;
+  }
+
+  handleOkSpecifiedLoad(){
+    this.onLoadSpecifiedSample(this.objectid);
+    this.isVisible_SpecifiedLoad = false;
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ChangeDetectorRef } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -30,11 +30,41 @@ export class RegisterComponent implements OnInit {
     email: '',
     phone: '',
   };
-  registersucceed: number = -1;
+  registersucceed: number = -2;
   isVisible_failed = false;
   isVisible_successed = false;
+  public has_warned = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router,
+    private ref: ChangeDetectorRef
+  ) {
+    var tmp = setInterval(() => {
+      if (this.registersucceed == 1 && !this.has_warned) {
+        console.log("注册成功！")
+        this.showModal_successed();
+        this.has_warned = true;
+        this.registersucceed = -2
+      } else if (this.registersucceed == 0 && !this.has_warned) {
+        console.log("注册失败！用户名重复！")
+        this.showModal_failed();
+        this.has_warned = true;
+        this.registersucceed = -2
+      }
+      else if (this.registersucceed == -1 && !this.has_warned) {
+        console.log("注册失败！请联系管理员！")
+        this.showModal_failed();
+        this.has_warned = true;
+        this.registersucceed = -2
+      }
+      this.ref.markForCheck();
+    }, 20);
+  }
 
   submitForm(): void {
+    this.has_warned = false;
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
@@ -46,17 +76,7 @@ export class RegisterComponent implements OnInit {
       .subscribe((res) => {
         console.log(res);
         this.registersucceed = res;
-        if (this.registersucceed == 1) {
-          console.log("注册成功！")
-          this.showModal_successed();
-        } else if (this.registersucceed == 0) {
-          console.log("注册失败！用户名重复！")
-          this.showModal_failed();
-        }
-        else if (this.registersucceed == -1) {
-          console.log("注册失败！请联系管理员！")
-          this.showModal_failed();
-        }
+
         console.log("isVisible_successed:" + this.isVisible_successed)
         console.log("isVisible_failed:" + this.isVisible_failed)
       });
@@ -88,22 +108,14 @@ export class RegisterComponent implements OnInit {
 
   toFormData(validateForm: FormGroup): FormData {
     const formData = new FormData();
-    console.log('username:' + validateForm.value.username);
     formData.append('username', validateForm.value.username);
-    console.log('password:' + validateForm.value.password);
     formData.append('password', validateForm.value.password);
-    console.log('email:' + validateForm.value.email);
     formData.append('email', validateForm.value.email);
-    console.log('phone:' + validateForm.value.phone);
     formData.append('phone', validateForm.value.phone);
     return formData;
   }
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private router: Router
-  ) {}
+
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({

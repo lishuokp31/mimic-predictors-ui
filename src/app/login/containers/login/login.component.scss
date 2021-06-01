@@ -1,7 +1,7 @@
 .login-form {
   max-width: 300px;
   position: relative;
-  top: 20%;
+  top: 30%;
   left: 35%;
   // margin-left: -($width / 2);
   // margin-top: -($height / 2);
@@ -34,8 +34,6 @@
   }
 }
 
-
-
 .logo {
   max-width: 300px;
   position: relative;
@@ -48,4 +46,8 @@
   // line-height: 200px;
   // height: 40px;
   // vertical-align: middle;
+}
+
+.usernotexist_message , .passworderror_message{
+  color: red
 }

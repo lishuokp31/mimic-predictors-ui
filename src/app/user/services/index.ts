@@ -1,5 +1,5 @@
-export { FavoritesApiService } from './api';
+export { FavoritesApiService , UsersApiService } from './api';
 
-import { FavoritesApiService } from './api';
+import { FavoritesApiService , UsersApiService } from './api';
 
-export const services = [FavoritesApiService];
+export const services = [FavoritesApiService , UsersApiService];

@@ -1,0 +1,10 @@
+<ag-grid-angular
+  style="width: 100%; height: 100%"
+  class="ag-theme-material"
+  [rowData]="similarities"
+  [columnDefs]="columnDefs"
+  [suppressCellSelection]="true"
+  (firstDataRendered)="onFirstDataRendered($event)"
+  (gridReady)="onGridReady($event)"
+  (rowClicked)="onRowClicked($event)"
+></ag-grid-angular>

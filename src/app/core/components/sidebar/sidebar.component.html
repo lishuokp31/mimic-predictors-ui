@@ -28,7 +28,6 @@
           </li>
           <li nz-menu-item nzMatchRouter *ngIf="userinfo.login">
             <a routerLink="/user">用户中心</a>
-            <!-- <a routerLink="/user" *ngIf="userinfo.login">账户信息</a> -->
           </li>
         </ul>
       </li>
@@ -36,14 +35,13 @@
         <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink = "/ner">实体识别</a>
-            <!-- <a routerLink = "/ner" *ngIf="userinfo.login">实体识别</a> -->
           </li>
         </ul>
       </li>
       <li nz-submenu nzOpen nzTitle="数据库" nzIcon="database" *ngIf="userinfo.login">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/patients">病历</a>
+            <a routerLink="/patients">病历数据库</a>
           </li>
           <!-- <li nz-menu-item nzMatchRouter>
             <a routerLink="/DB">疾病预测</a>

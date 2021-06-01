@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Userinfo } from '@login/models';
 
-import { AddFavoritePayload, DeleteFavoritePayload , Favorite } from '@user/models';
+import { FavoritePayload, DeleteFavoritePayload , Favorite } from '@user/models';
 
 import { environment } from 'src/environments/environment';
 
@@ -21,9 +22,21 @@ export class FavoritesApiService {
     return this.http.get<Favorite>(url);
   }
 
-  public add(payload: AddFavoritePayload): Observable<Favorite> {
+  public add(payload: FavoritePayload): Observable<Favorite> {
     console.log(payload);
     const url = `${environment.apiUrl}/favorites/add`;
+    const formData = new FormData();
+    formData.append('username', payload.username);
+    formData.append('id', payload.id);
+    formData.append('fav_type', payload.fav_type);
+    formData.append('remark', payload.remark);
+    formData.append('value', payload.value);
+    return this.http.post<Favorite>(url, formData);
+  }
+
+  public modify(payload: FavoritePayload): Observable<Favorite> {
+    console.log(payload);
+    const url = `${environment.apiUrl}/favorites/modify`;
     const formData = new FormData();
     formData.append('username', payload.username);
     formData.append('id', payload.id);
@@ -41,5 +54,16 @@ export class FavoritesApiService {
     formData.append('username', payload.username);
     formData.append('id', payload.id);
     return this.http.post<Favorite>(url, formData);
+  }
+}
+
+
+@Injectable()
+export class UsersApiService {
+  constructor(private http: HttpClient) {}
+
+  public loadAll(): Observable<Userinfo[]> {
+    const url = `${environment.apiUrl}/users`;
+    return this.http.get<Userinfo[]>(url);
   }
 }

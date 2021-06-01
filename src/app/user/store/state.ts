@@ -9,8 +9,9 @@ import { NgxsDataEntityCollectionsRepository } from '@ngxs-labs/data/repositorie
 
 import { Favorite } from '@user/models';
 import * as actions from '@user/store/actions';
-import { FavoritesStateModel } from '@user/store/types';
-import { FavoritesApiService } from '@user/services';
+import { FavoritesStateModel , UsersStateModel } from '@user/store/types';
+import { FavoritesApiService , UsersApiService } from '@user/services';
+import { Userinfo } from '@login/models';
 
 @StateRepository()
 @State({
@@ -130,6 +131,23 @@ export class FavoritesState {
     }
   }
 
+  @Action(actions.ModifyFavoriteAction)
+  public async modifyFavorite(
+    { patchState }: StateContext<FavoritesStateModel>,
+    { payload }: actions.ModifyFavoriteAction
+  ) {
+    patchState({ isLoading: true });
+
+    try {
+      const favorite = await this.api.modify(payload).toPromise();
+      this.favoritesEntities.addOne(favorite);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      patchState({ isLoading: false });
+    }
+  }
+
   @Action(actions.DeleteFavoriteAction)
   public async deleteFavorite(
     { patchState }: StateContext<FavoritesStateModel>,
@@ -147,5 +165,86 @@ export class FavoritesState {
     } finally {
       patchState({ isLoading: false });
     }
+  }
+}
+
+
+
+
+
+
+@StateRepository()
+@State({
+  name: 'usersEntities',
+  defaults: createEntityCollections(),
+})
+@Injectable()
+export class UsersEntitiesState extends NgxsDataEntityCollectionsRepository<
+  Userinfo,
+  string
+> {
+  public primaryKey: string = 'username';
+}
+
+@State<UsersStateModel>({
+  name: 'users',
+  defaults: {
+    isLoading: false,
+    selectedUserId: null,
+  },
+})
+@Injectable()
+export class UsersState{
+  constructor(
+    private api: UsersApiService,
+    private usersEntities: UsersEntitiesState
+  ) {}
+
+  @Selector([UsersState])
+  public static isLoading(state: UsersStateModel) {
+    return state.isLoading;
+  }
+
+  @Selector([UsersEntitiesState])
+  public static usersCollection(
+    state: UsersEntitiesState
+  ): EntityDictionary<string, Userinfo> {
+    return state.entities;
+  }
+
+  @Selector([UsersState.usersCollection])
+  public static users(
+    usersCollection: EntityDictionary<string, Userinfo>
+  ): Userinfo[] {
+    return Object.values(usersCollection);
+  }
+
+  @Selector([UsersState])
+  private static selectedUserId(state: UsersStateModel): string | null {
+    return state.selectedUserId;
+  }
+
+  @Selector([
+    UsersState.selectedUserId,
+    UsersState.usersCollection,
+  ])
+  public static selectedUser(
+    selectedUserId: string | null,
+    users: EntityDictionary<string, Userinfo>
+  ): Userinfo | null {
+    return selectedUserId ? users[selectedUserId] : null;
+  }
+
+  @Action(actions.LoadAll_User)
+  public async loadAll(
+    { patchState }: StateContext<UsersStateModel>,
+  ) {
+    patchState({ isLoading: true });
+
+    const users = await this.api.loadAll().toPromise();
+    console.log(users);
+    this.usersEntities.setAll(users);
+
+    patchState({ isLoading: false });
   }
 }

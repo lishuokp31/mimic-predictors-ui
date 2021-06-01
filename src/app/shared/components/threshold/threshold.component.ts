@@ -23,9 +23,10 @@ export class ThresholdComponent {
     275,
     300,
   ];
-  public readonly colorScheme = {
+  public readonly colorScheme_list = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
   };
+
   public readonly referenceLines = [{ name: '超过阈值', value: 1.3 }];
   // public readonly curve = curveMonotoneX;
 
@@ -36,7 +37,18 @@ export class ThresholdComponent {
   public showResults: boolean | null = false;
 
   @Input()
+  public title: string = '';
+
+  @Input()
   public data: any[] = [];
+
+  @Input()
+  public singal: boolean | null = false;
+
+  @Input()
+  public index: number = 0;
+
+  public colorScheme = this.singal ? {domain: [this.colorScheme_list.domain[this.index % 6]]} : this.colorScheme_list;
 
   public data2: any[] = [
     {
@@ -57,6 +69,10 @@ export class ThresholdComponent {
       ],
     },
   ];
+
+  ngOnInit(): void {
+    this.colorScheme = this.singal ? {domain: [this.colorScheme_list.domain[this.index % 6]]} : this.colorScheme_list;
+  }
 
   // @Input() set probabilities(value: number[] | null) {
   //   if(value) {

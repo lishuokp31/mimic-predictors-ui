@@ -1,33 +1,20 @@
-<div class = "entities_table" >
-  <div class="DBTab">
-    <nz-tabset>
-      <nz-tab nzTitle="1">
-        <nz-table #headerTable [nzPageSize]="50" [nzScroll]="{ y: '240px' }">
-          <thead>
-            <tr color = "blank">
-              <th>实体类别
-              </th>
-              <th>起始位置</th>
-              <th>结束位置</th>
-              <th>实体值
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of entities">
-              <td>{{ data[0] }}</td>
-              <td>{{ data[1] }}</td>
-              <td>{{ data[2] }}</td>
-              <td>{{ data[3] }}</td>
-            </tr>
-          </tbody>
-        </nz-table>
-      </nz-tab>
-      <nz-tab nzTitle="2"> TODO </nz-tab>
-      <nz-tab nzTitle="3"> TODO </nz-tab>
-      <nz-tab nzTitle="4"> TODO </nz-tab>
-      <nz-tab nzTitle="5"> TODO </nz-tab>
-    </nz-tabset>
-  </div>
-
+<div class="entities_table">
+  <nz-table #headerTable [nzPageSize]="50" [nzScroll]="{ y: '240px' }">
+    <thead>
+      <tr color="blank">
+        <th>实体类别</th>
+        <th>起始位置</th>
+        <th>结束位置</th>
+        <th>实体值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of entities">
+        <td>{{ data[0] }}</td>
+        <td>{{ data[1] }}</td>
+        <td>{{ data[2] }}</td>
+        <td>{{ data[3] }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
 </div>

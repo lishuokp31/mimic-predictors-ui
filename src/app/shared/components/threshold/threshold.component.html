@@ -1,4 +1,6 @@
 <div *ngIf="showResults" class="container">
+  <h2 *ngIf="!singal">{{title}}</h2>
+  <h4 *ngIf="singal">{{title}}</h4>
   <ngx-charts-line-chart
     [results]="data"
     [scheme]="colorScheme"

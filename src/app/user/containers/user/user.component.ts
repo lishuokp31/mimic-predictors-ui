@@ -5,11 +5,21 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoginState} from '../../../store';
 import  * as actions_log  from '../../../store'
-import { Favorite } from '@user/models';
+import { FavoritePayload , Favorite } from '@user/models';
 
 import * as actions from '@user/store/actions';
-import { FavoritesState } from '@user/store';
+import { FavoritesState , UsersState } from '@user/store';
 import { DeleteFavoritePayload } from '@user/models'
+import {
+  FirstDataRenderedEvent,
+  GridApi,
+  GridReadyEvent,
+  RowClickedEvent,
+} from 'ag-grid-community';
+
+import { HttpClient } from '@angular/common/http';
+
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user',
@@ -17,6 +27,27 @@ import { DeleteFavoritePayload } from '@user/models'
   styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit {
+  private gridApi?: GridApi;
+  public readonly columnDefs = [
+    {
+      headerName: '用户名',
+      field: 'username',
+      sortable: true,
+      filter: true,
+      suppressSizeToFit: true,
+      lockPosition: true,
+    },
+    { headerName: '邮箱', field: 'email', sortable: true, filter: true },
+    { headerName: '电话号码', field: 'phone', sortable: true, filter: true },
+    { headerName: '权限等级', field: 'level', sortable: true, filter: true },
+  ];
+
+  public modified_level : string = "";
+
+  public users$ : Observable<Userinfo[]>;
+  public users : Userinfo[] = [];
+  public resizeColumnsCallback = () => setTimeout(() => this.gridApi?.sizeColumnsToFit());
+
   date: any;
   public login$: Observable<boolean>;
   public username$: Observable<string>;
@@ -29,6 +60,10 @@ export class UserComponent implements OnInit {
 
   public favorites: Favorite[] = [];
 
+  public modify_model : boolean = false;
+  public modified_id : string = "";
+  public modified_remark : string = "";
+
   userinfo: Userinfo = {
     login: false,
     username: '',
@@ -38,6 +73,8 @@ export class UserComponent implements OnInit {
   };
 
   public isVisible_fav_modal: boolean = false;
+  public isVisible_delete_fav_confirm_modal:boolean = false;
+  public isVisible_user_modal : boolean = false;
 
   public selected_favinfo: Favorite = {
     id: '',
@@ -46,7 +83,22 @@ export class UserComponent implements OnInit {
     value: '',
   };
 
-  constructor(private router: Router, private store: Store , private ref : ChangeDetectorRef) {
+  public selected_userinfo : Userinfo = {
+    login: false,
+    username: '',
+    email: '',
+    phone: '',
+    level: -1,
+  }
+
+  public level_table = {
+    "1" : "A",
+    "2" : "B",
+    "3" : "C",
+    "-1" : "Z",
+  }
+
+  constructor(private router: Router, private store: Store , private ref : ChangeDetectorRef , private http: HttpClient,) {
     this.date = new Date();
     var tmp = setInterval(() => {
       this.date = new Date();
@@ -65,10 +117,15 @@ export class UserComponent implements OnInit {
 
     this.favorites$ = this.store.select(FavoritesState.favorites);
     this.isLoading$ = this.store.select(FavoritesState.isLoading);
+
+    this.users$ = this.store.select(UsersState.users)
   }
 
   public refresh() {
     this.store.dispatch(new actions.LoadAll(this.userinfo.username));
+    if(this.userinfo.level == 1){
+      this.store.dispatch(new actions.LoadAll_User());
+    }
   }
 
   ngOnInit() {
@@ -91,6 +148,12 @@ export class UserComponent implements OnInit {
     this.favorites$.subscribe((value) => {
       this.favorites = value;
     });
+
+    this.users$.subscribe((value) => {
+      this.users = value;
+    })
+
+    this.refresh();
   }
 
   public onFavoriteClicked(event: Favorite) {
@@ -131,6 +194,34 @@ export class UserComponent implements OnInit {
     }
   }
 
+  changeToModifyModel(){
+    this.modify_model = true;
+  }
+
+  modifySelectedFavorite(){
+    const outData: FavoritePayload = {
+      username : this.userinfo.username,
+      id : this.modified_id,
+      fav_type : 'aki',
+      remark : this.modified_remark,
+      value: this.selected_favinfo.value,
+    };
+    this.store.dispatch(new actions.ModifyFavoriteAction(outData));
+    this.isVisible_fav_modal = false;
+    this.modify_model = false;
+    this.modified_id = '';
+    this.modified_remark = '';
+    this.refresh()
+  }
+
+  cancelModify(){
+    this.modify_model = false;
+  }
+
+  showDeleteFavoriteConfirm(){
+    this.isVisible_delete_fav_confirm_modal = true;
+  }
+
   deleteFavorite(){
     const outData: DeleteFavoritePayload = {
       username : this.userinfo.username,
@@ -138,10 +229,75 @@ export class UserComponent implements OnInit {
     }
     this.store.dispatch(new actions.DeleteFavoriteAction(outData))
     this.isVisible_fav_modal = false;
+    this.isVisible_delete_fav_confirm_modal = false;
+  }
+
+  cancelDelete(){
+    this.isVisible_delete_fav_confirm_modal = false;
   }
 
   logout(){
     this.store.dispatch(new actions_log.LogoutAction());
     this.router.navigate(['/login'])
+  }
+
+  public onGridReady(params: GridReadyEvent) {
+    this.gridApi = params.api;
+    params.api.sizeColumnsToFit();
+    window.addEventListener('resize', this.resizeColumnsCallback);
+  }
+
+  public ngOnDestroy() {
+    window.removeEventListener('resize', this.resizeColumnsCallback);
+  }
+
+  public onFirstDataRendered(params: FirstDataRenderedEvent) {
+    params.api.sizeColumnsToFit();
+  }
+
+  public onRowClicked(event: any) {
+    console.log("flag")
+    console.log(event)
+    console.log(event.rowIndex)
+
+    this.selected_userinfo = event.data
+    if(this.selected_userinfo.level == 1){
+      this.modified_level = "A";
+    }
+    else if(this.selected_userinfo.level == 2){
+      this.modified_level = "B";
+    }
+    else if(this.selected_userinfo.level == 3){
+      this.modified_level = "C";
+    }
+    else {
+      this.modified_level = "Z";
+    }
+
+    this.isVisible_user_modal = true;
+  }
+
+  handleCancel_user_modal(){
+    this.isVisible_user_modal = false;
+  }
+
+  modifySelectedUserLevel(){
+    const url = `${environment.apiUrl}/users/update`;
+    const formData = new FormData();
+    formData.append('username', this.selected_userinfo.username);
+    var modified_level = 0;
+    if(this.modified_level == "B"){
+      modified_level = 2;
+    }
+    else if(this.modified_level == "C"){
+      modified_level = 3;
+    }
+    else {
+      modified_level = -1;
+    }
+    formData.append('modified_level', modified_level.toString());
+    this.http.post<number>(url, formData).subscribe((response) => {})
+    this.refresh()
+    this.isVisible_user_modal = false;
   }
 }

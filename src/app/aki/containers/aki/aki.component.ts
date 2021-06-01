@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
@@ -7,17 +8,16 @@ import { Feature, FeatureUnaryValue } from '@core/types';
 import { AkiState } from '@aki/store';
 import * as actions from '@aki/store/actions';
 import * as actions_user from '@user/store/actions';
+import * as actions_similarity from '@shared/store/actions'
 import { FeatureValueChangeEvent } from '@shared/components';
 
-import { ActivatedRoute } from '@angular/router';
 
-import { ObjectIdFormDialog } from '@aki/dialogs';
 import { LoadSpecifiedSamplePayload } from '@aki/models';
-
 import { mapping } from './../../mapping-aki';
-import { FocusTrapManager } from '@angular/cdk/a11y/focus-trap/focus-trap-manager';
+import { FavoritePayload, Favorite } from '@user/models';
+import {SimilaritiesState} from '@shared/store';
 
-import { AddFavoritePayload, Favorite } from '@user/models';
+import { Similarity } from '@shared/models';
 
 import { Userinfo } from '@login/models';
 import { LoginState } from '../../../store';
@@ -60,6 +60,9 @@ export class AkiComponent {
 
   public showThreshold: boolean = false;
   public threshold_data: any[] = [];
+  public threshold_data_array: any[] = [];
+  public threshold_data_length_array: any[] = [];
+  public threshold_title: any[] = [];
   public mapping: any[];
   // 选项表映射
   public thresholdOptionArray: boolean[] = [];
@@ -95,6 +98,12 @@ export class AkiComponent {
   // 权限信息
   public isVisible_level_modal : boolean = false;
 
+  // 相似病例信息
+  public similarity_drawer_visible : boolean = false;
+  public similarities$: Observable<Similarity[]>;
+  // public isLoading$: Observable<boolean>;
+  public similarities: Similarity[] = [];
+  public previous_id : number[] = [];
 
   constructor(private store: Store, private dialog: MatDialog , public route: ActivatedRoute , private router: Router,) {
     this.login$ = this.store.select(LoginState.login);
@@ -118,31 +127,69 @@ export class AkiComponent {
     this.showPredictions$ = this.store.select(AkiState.showPredictions);
     this.isLoading$ = this.store.select(AkiState.isLoading);
     this.disableInfer$ = this.store.select(AkiState.disableInfer);
+
+    this.similarities$ = this.store.select(SimilaritiesState.similarities)
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.value = params["value"];
+    })
+    console.log("this.value:" + this.value)
+    if(this.value){
+      console.log("加载收藏病例")
+      this.onLoadSpecifiedSample(this.value);
+    }
+    this.login$.subscribe((value) => {
+      this.userinfo.login = value;
+    });
+    this.username$.subscribe((value) => {
+      this.userinfo.username = value;
+    });
+    this.email$.subscribe((value) => {
+      this.userinfo.email = value;
+    });
+    this.phone$.subscribe((value) => {
+      this.userinfo.phone = value;
+    });
+    this.level$.subscribe((value) => {
+      this.userinfo.level = value;
+    });
+
+    this.id$.subscribe((value) => {
+      this.id = value;
+    });
+    this.x$.subscribe((value) => {
+      this.x = value;
+    });
+
+    this.similarities$.subscribe((value) => {
+      this.similarities = value;
+    })
+
+    if(this.userinfo.level > 2){
+      console.log("权限不足！" + this.userinfo.level)
+      this.isVisible_level_modal = true;
+    }
   }
 
   public onLoadSample() {
     this.store.dispatch(new actions.LoadSample());
+    this.showThreshold = false;
   }
 
   public onLoadSpecifiedSample(objectid: string) {
-    // const config = new MatDialogConfig();
-    // config.width = '600px';
-
-    // const dialogRef = this.dialog.open(ObjectIdFormDialog, config);
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result !== undefined && result !== '') {
-    //     this.store.dispatch(new actions.LoadSpecifiedSample(result));
-    //   }
-    // });
     const outData: LoadSpecifiedSamplePayload = {
       objectid: objectid,
     };
     this.store.dispatch(new actions.LoadSpecifiedSample(outData));
+    this.showThreshold = false;
   }
 
   public onReset() {
     this.store.dispatch(new actions.Reset());
     this.showThreshold = false;
+    this.id = 0;
   }
 
   public onPredict() {
@@ -184,6 +231,9 @@ export class AkiComponent {
 
     // 开始构造图表数据
     this.threshold_data = [];
+    this.threshold_data_array = [];
+    this.threshold_data_length_array = [];
+    this.threshold_title = [];
     for (var i = 0; i < this.thresholdIndex.length; i++) {
       let tmp = [];
       for (var j = 0; j < this.x.length; j++) {
@@ -193,14 +243,20 @@ export class AkiComponent {
             value: this.x[j][this.thresholdIndex[i]],
           });
         }
-
       }
       this.threshold_data.push({
         name: this.thresholdName[i],
         series: tmp,
       });
+      this.threshold_data_array.push([{
+        name: this.thresholdName[i],
+        series: tmp,
+      }])
+      this.threshold_data_length_array.push(i)
+      this.threshold_title.push("指标 " + this.thresholdName[i] + " 的筛查结果如下：")
     }
 
+    console.log(this.threshold_data_length_array)
     this.isVisible_setting = false;
     this.showThreshold = true;
   }
@@ -239,44 +295,6 @@ export class AkiComponent {
     }
   }
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.value = params["value"];
-    })
-    console.log("this.value:" + this.value)
-    if(this.value){
-      console.log("加载收藏病例")
-      this.onLoadSpecifiedSample(this.value);
-    }
-    this.login$.subscribe((value) => {
-      this.userinfo.login = value;
-    });
-    this.username$.subscribe((value) => {
-      this.userinfo.username = value;
-    });
-    this.email$.subscribe((value) => {
-      this.userinfo.email = value;
-    });
-    this.phone$.subscribe((value) => {
-      this.userinfo.phone = value;
-    });
-    this.level$.subscribe((value) => {
-      this.userinfo.level = value;
-    });
-
-    this.id$.subscribe((value) => {
-      this.id = value;
-    });
-    this.x$.subscribe((value) => {
-      this.x = value;
-    });
-
-    if(this.userinfo.level > 2){
-      console.log("权限不足！" + this.userinfo.level)
-      this.isVisible_level_modal = true;
-    }
-  }
-
   open(): void {
     // this.visible = true;
   }
@@ -293,7 +311,7 @@ export class AkiComponent {
     this.isVisible_fav_modal = false;
   }
   handleOk_fav_modal(){
-    const outData: AddFavoritePayload = {
+    const outData: FavoritePayload = {
       username : this.userinfo.username,
       id : this.favinfo.id,
       fav_type : 'aki',
@@ -319,7 +337,28 @@ export class AkiComponent {
     this.router.navigate(['/user']);
   }
 
-  onCallSimilarity(){
+  similarity_drawer_open(){
+    this.store.dispatch(new actions_similarity.LoadAll(this.id.toString()))
+    this.similarity_drawer_visible = true;
+  }
 
+  similarity_drawer_close(){
+    this.similarity_drawer_visible = false;
+  }
+
+  onBackCurrent(){
+    this.onLoadSpecifiedSample(this.previous_id[this.previous_id.length - 1].toString());
+  }
+
+  onSimilarityClicked(event : Similarity){
+    const { id } = event;
+    for (var i = 0; i < this.similarities.length; ++ i) {
+      if(this.similarities[i].id == id) {
+        this.previous_id.push(this.id)
+        this.onLoadSpecifiedSample(this.similarities[i].value)
+        this.select_label
+        break;
+      }
+    }
   }
 }

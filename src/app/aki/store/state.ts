@@ -160,6 +160,7 @@ export class AkiState {
 
     patchState({
       x: response.x,
+      id:response.id,
       predictions: zeros1d(nDays),
       weights: zeros2d(nDays, nFeatures),
       isLoading: false,

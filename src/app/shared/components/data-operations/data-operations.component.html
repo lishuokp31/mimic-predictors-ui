@@ -5,12 +5,12 @@
     (click)="onLoadSample()"
     [disabled]="isLoading"
   >
-    加载示例
+    随机加载示例
   </button>
   <button
     mat-stroked-button
     color="primary"
-    (click)="onLoadSpecifiedSample(newItem.value)"
+    (click)="showSpecifiedLoadModal()"
     [disabled]="isLoading"
   >
     加载指定示例
@@ -41,14 +41,14 @@
   >
     阈值预警设置
   </button>
-
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="onCallSimilarity()"
-    [disabled]="isLoading || disableInfer"
-  >
+  <!-- TODO: -->
+  <button mat-flat-button color="primary" (click)="onCallSimilarity()">
     推荐相似病例
+  </button>
+
+    <!-- TODO: -->
+  <button mat-flat-button color="primary" (click)="onBackCurrent()">
+    返回原病历
   </button>
 
   <button
@@ -61,20 +61,17 @@
   </button>
 
 
+
   <div *ngIf="isLoading" class="spinner">
     <mat-spinner [diameter]="30"></mat-spinner>
   </div>
 </div>
 
-<!-- <input
-          matInput
-          formControlName="id"
-          autocomplete="off"
-          placeholder="请输入需导入的病历编号："
-          required
-          [(ngModel)] = "objectid"
-        >
-<h2>{{objectid}}</h2> -->
 
-<input #newItem type="text" [(ngModel)]="objectid" class="objectidEnter">
-  <!-- {{objectid}} -->
+<!-- 指定加载对话框 -->
+<nz-modal [(nzVisible)]="isVisible_SpecifiedLoad" nzTitle="加载指定病历" (nzOnCancel)="handleCancelSpecifiedLoad()" (nzOnOk)="handleOkSpecifiedLoad()">
+  <ng-container *nzModalContent>
+    <span>请输入病历编号：</span>
+    <input #newItem type="text" [(ngModel)]="objectid" class="objectidEnter" />
+  </ng-container>
+</nz-modal>

@@ -1,55 +1,83 @@
-<div class="container">
-  <div class="feature-table">
-    <app-feature-table
-      [features]="features$ | async"
-      [x]="x$ | async"
-      [formattedX]="formattedX$ | async"
-      [weights]="weights$ | async"
-      weightsBaseColor="#9C27B0"
-      (change)="onChange($event)"
-    ></app-feature-table>
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="data-operations">
+      <app-data-operations
+        [isLoading]="isLoading$ | async"
+        [disableInfer]="disableInfer$ | async"
+        (loadSample)="onLoadSample()"
+        (loadSpecifiedSample)="onLoadSpecifiedSample($event)"
+        (thresholdWarning)="onThresholdWarning()"
+        (addFavorite)="onAddFavorite()"
+        (callSimilarity)="similarity_drawer_open()"
+        (backCurrent)="onBackCurrent()"
+        (reset)="onReset()"
+        (predict)="onPredict()"
+        (objectid)="(objectid)"
+      ></app-data-operations>
+    </div>
   </div>
-  <div class="results">
-    <app-data-operations
-      [isLoading]="isLoading$ | async"
-      [disableInfer]="disableInfer$ | async"
-      (loadSample)="onLoadSample()"
-      (loadSpecifiedSample)="onLoadSpecifiedSample($event)"
-      (thresholdWarning)="onThresholdWarning()"
-      (addFavorite)="onAddFavorite()"
-      (callSimilarity) = "onCallSimilarity()"
-      (reset)="onReset()"
-      (predict)="onPredict()"
-      (objectid)="(objectid)"
-    ></app-data-operations>
-    <app-threshold
-      [showResults]="showThreshold"
-      [data]="threshold_data"
-      label="阈值筛查结果如下"
-    ></app-threshold>
-    <app-model-results
-      [showResults]="showPredictions$ | async"
-      [probabilities]="slicedPredictions$ | async"
-      label="患者当日出现急性肾损伤的概率如下"
-    ></app-model-results>
-  </div>
-  <nz-drawer
-    [nzClosable]="false"
-    [nzVisible]="visible"
-    nzPlacement="right"
-    nzTitle="阈值预警"
-    (nzOnClose)="close()"
-    [nzWidth]="512"
-  >
-    <ng-container *nzDrawerContent>
-      <ul>
-        <li *ngFor="let item of result_string">
-          {{ item }}
-        </li>
-      </ul>
-    </ng-container>
-  </nz-drawer>
 </div>
+<div nz-row>
+  <span>当前病历编号：{{ this.id }}</span>
+</div>
+<div class="container">
+  <div nz-row>
+    <!-- <div nz-col nzSpan="24"> -->
+    <div class="feature-table">
+      <app-feature-table
+        [features]="features$ | async"
+        [x]="x$ | async"
+        [formattedX]="formattedX$ | async"
+        [weights]="weights$ | async"
+        weightsBaseColor="#9C27B0"
+        (change)="onChange($event)"
+      ></app-feature-table>
+    </div>
+    <!-- </div> -->
+  </div>
+</div>
+<div nz-row>
+  <div nz-col nzSpan="12">
+    <div class="results">
+      <app-model-results
+        [showResults]="showPredictions$ | async"
+        [probabilities]="slicedPredictions$ | async"
+        label="患者当日出现急性肾损伤的概率如下"
+      ></app-model-results>
+    </div>
+  </div>
+  <div nz-col nzSpan="12">
+    <div class="results">
+      <app-threshold
+        [title]="'阈值筛查结果如下：（总）'"
+        [singal] = "false"
+        [showResults]="showThreshold"
+        [data]="threshold_data"
+        label="阈值筛查结果如下"
+      ></app-threshold>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div
+    class="threshold_many_area"
+    *ngFor="let index of threshold_data_length_array"
+  >
+    <div nz-col nzSpan="24">
+      <app-threshold
+        class="threshold_many_table"
+        [title]="threshold_title[index]"
+        [singal] = "true"
+        [index] = "index"
+        [showResults]="showThreshold"
+        [data]="threshold_data_array[index]"
+        label="阈值筛查结果如下"
+      ></app-threshold>
+    </div>
+  </div>
+</div>
+
 <nz-modal
   [(nzVisible)]="isVisible_setting"
   nzTitle="请选择需要阈值筛查的医疗指标："
@@ -63,7 +91,7 @@
       (nzOnChange)="onChangeThreshold($event)"
     >
       <div nz-row>
-        <div nz-col nzSpan="8">
+        <div nz-col nzSpan="6">
           <label
             class="option"
             nz-checkbox
@@ -71,6 +99,8 @@
             [ngModel]="thresholdOptionArray[0]"
             >碳酸氢盐</label
           >
+        </div>
+        <div nz-col nzSpan="6">
           <label
             class="option"
             nz-checkbox
@@ -78,6 +108,8 @@
             [ngModel]="thresholdOptionArray[2]"
             >氯化物</label
           >
+        </div>
+        <div nz-col nzSpan="6">
           <label
             class="option"
             nz-checkbox
@@ -85,6 +117,8 @@
             [ngModel]="thresholdOptionArray[3]"
             >肌酸酐</label
           >
+        </div>
+        <div nz-col nzSpan="6">
           <label
             class="option"
             nz-checkbox
@@ -93,8 +127,9 @@
             >葡萄糖</label
           >
         </div>
-        <br />
-        <div nz-col nzSpan="8">
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="6">
           <label
             class="option"
             nz-checkbox
@@ -102,6 +137,8 @@
             [ngModel]="thresholdOptionArray[7]"
             >镁</label
           >
+        </div>
+        <div nz-col nzSpan="6">
           <label
             class="option"
             nz-checkbox
@@ -109,6 +146,8 @@
             [ngModel]="thresholdOptionArray[9]"
             >钾</label
           >
+        </div>
+        <div nz-col nzSpan="6">
           <label
             class="option"
             nz-checkbox
@@ -116,6 +155,8 @@
             [ngModel]="thresholdOptionArray[10]"
             >钠</label
           >
+        </div>
+        <div nz-col nzSpan="6">
           <label
             class="option"
             nz-checkbox
@@ -124,8 +165,9 @@
             >血尿素氮</label
           >
         </div>
-        <br />
-        <div nz-col nzSpan="8">
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="6">
           <label
             class="option"
             nz-checkbox
@@ -133,6 +175,8 @@
             [ngModel]="thresholdOptionArray[6]"
             >血红蛋白</label
           >
+        </div>
+        <div nz-col nzSpan="6">
           <label
             class="option"
             nz-checkbox
@@ -140,6 +184,8 @@
             [ngModel]="thresholdOptionArray[8]"
             >血小板</label
           >
+        </div>
+        <div nz-col nzSpan="6">
           <label
             class="option"
             nz-checkbox
@@ -194,6 +240,28 @@
     <h4>很抱歉，您当前的权限不允许进行此操作！</h4>
   </ng-container>
   <div *nzModalFooter>
-    <button nz-button nzType="primary" (click)="handleOk_level_modal()">确定</button>
+    <button nz-button nzType="primary" (click)="handleOk_level_modal()">
+      确定
+    </button>
   </div>
 </nz-modal>
+
+<!-- 相似度抽屉 -->
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="similarity_drawer_visible"
+  nzPlacement="right"
+  nzTitle="系统为您推荐的相似病例如下："
+  (nzOnClose)="similarity_drawer_close()"
+  [nzWidth]="512"
+>
+  <ng-container *nzDrawerContent>
+    <h4>点击以加载该病历</h4>
+    <app-similarity-table
+      [similarities]="similarities$ | async"
+      [isLoading]="isLoading$ | async"
+      (similarityClick)="onSimilarityClicked($event)"
+    >
+    </app-similarity-table>
+  </ng-container>
+</nz-drawer>
