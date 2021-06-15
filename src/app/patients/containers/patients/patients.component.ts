@@ -42,11 +42,11 @@ export class PatientsComponent {
     private router: Router,
     private store: Store
   ) {
-    var tmp = setInterval(() => {
-      if (!this.userinfo.login) {
-        this.router.navigate(['/login']);
-      }
-    }, 20);
+    // var tmp = setInterval(() => {
+    //   if (!this.userinfo.login) {
+    //     this.router.navigate(['/login']);
+    //   }
+    // }, 20);
     this.login$ = this.store.select(LoginState.login);
     this.username$ = this.store.select(LoginState.username);
     this.email$ = this.store.select(LoginState.email);
@@ -61,6 +61,9 @@ export class PatientsComponent {
     this.login$.subscribe((value) => {
       this.userinfo.login = value;
     });
+    if (!this.userinfo.login) {
+      this.router.navigate(['/login']);
+    }
     this.username$.subscribe((value) => {
       this.userinfo.username = value;
     });
@@ -74,7 +77,7 @@ export class PatientsComponent {
       this.userinfo.level = value;
     });
 
-    if(this.userinfo.level > 5){
+    if(this.userinfo.level > 5  || this.userinfo.level == -1){
       console.log("权限不足！" + this.userinfo.level)
       this.isVisible_level_modal = true;
     }

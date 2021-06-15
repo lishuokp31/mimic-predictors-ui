@@ -10,7 +10,7 @@ import {
 } from '@core/utils';
 import { nDays } from '@core/constants';
 
-import { LoadSpecifiedSamplePayload } from '@aki/models';
+import { LoadSpecifiedSamplePayload } from '@shared/models';
 
 export type TargetModel = 'aki' | 'sepsis' | 'mi' | 'vancomycin';
 

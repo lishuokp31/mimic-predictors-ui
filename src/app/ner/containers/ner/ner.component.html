@@ -1,23 +1,57 @@
 <div class="stringUploadArea">
-  <h2>文本输入：</h2>
-  <textarea rows="6" nz-input [(ngModel)]="inputValue"></textarea>
-  <h2></h2>
-  <div>
-    <button
-      nz-button
-      nzType="primary"
-      (click)="importByTXT()"
-      class="uploadAndAnalysis"
-    >
-      上传并分析
-    </button>
-    <button class="clear_button" (click)="clearString()">清空</button>
+  <div nz-row>
+    <div nz-col nzSpan="12">
+      <h2>文本输入：</h2>
+    </div>
+    <div nz-col nzSpan="12">
+      <h2>文件输入：</h2>
+      <input type="file" accept=".csv,.txt" (change)="openFile($event)" />
+    </div>
   </div>
-</div>
-<div class="fileUploadArea">
-  <h2>文件输入：</h2>
-
-    <!-- <button
+  <div nz-row>
+    <div nz-col nzSpan="10">
+      <textarea rows="6" nz-input [(ngModel)]="inputValue"></textarea>
+    </div>
+    <div nz-col nzSpan="2"></div>
+    <div nz-col nzSpan="12">
+      <nz-alert
+      nzType="info"
+      nzMessage="文件内容预览"
+      [nzDescription]="file_inputValue[0]"
+      nzShowIcon
+    ></nz-alert>
+    </div>
+  </div>
+  <h2></h2>
+  <div nz-row>
+    <div nz-col nzSpan="8">
+      <button
+        nz-button
+        nzType="primary"
+        (click)="importByTXT()"
+        class="uploadAndAnalysis"
+      >
+        上传并分析
+      </button>
+    </div>
+    <div nz-col nzSpan="4">
+      <button class="clear_button" nzType="default" (click)="clearString()">
+        清空
+      </button>
+    </div>
+    <div nz-col nzSpan="12">
+      <button
+        class="importByFile_button"
+        nz-button
+        nzType="primary"
+        (click)="importByFile()"
+        class="uploadAndAnalysis2"
+      >
+        上传并分析
+      </button>
+    </div>
+  </div>
+  <!-- <button
       nz-button
       nzType="primary"
       (click)="showfile_inputValue()"
@@ -25,7 +59,7 @@
     >
       展示上传文件
     </button> -->
-  <nz-upload
+  <!-- <nz-upload
     nzType="drag"
     [nzMultiple]="true"
     nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -36,20 +70,10 @@
       <i nz-icon nzType="inbox"></i>
     </p>
     <p class="ant-upload-text">单击或将文件拖到该区域以上传</p>
-    <!-- <p class="ant-upload-hint">支持单个或批量上传文件</p> -->
     <p class="ant-upload-hint">请单个上传文件</p>
-  </nz-upload>
+  </nz-upload> -->
   <h2></h2>
-  <button
-      nz-button
-      nzType="primary"
-      (click)="importByFile()"
-      class="uploadAndAnalysis2"
-    >
-      上传并分析
-    </button>
   <div>
-
     <!-- <button class="clear_button2" (click)="clearFile()">清空</button> -->
   </div>
 </div>
@@ -60,7 +84,6 @@
     [isLoading]="isLoading$ | async"
   ></app-ner-table>
 </div>
-
 
 <!-- 权限提醒框 -->
 <nz-modal
@@ -73,6 +96,8 @@
     <h4>很抱歉，您当前的权限不允许进行此操作！</h4>
   </ng-container>
   <div *nzModalFooter>
-    <button nz-button nzType="primary" (click)="handleOk_level_modal()">确定</button>
+    <button nz-button nzType="primary" (click)="handleOk_level_modal()">
+      确定
+    </button>
   </div>
 </nz-modal>

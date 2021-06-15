@@ -1,3 +1,4 @@
+export var mapping =
 [
   {
     "id": 149,
@@ -357,7 +358,7 @@
     "header": "药物"
   },
   {
-    "id": 223,
+    "id": 222,
     "identifier": "warfarin",
     "group": "药物",
     "label": "华法林",
@@ -605,7 +606,7 @@
     "aggregates": null
   },
   {
-    "id": 222,
+    "id": 221,
     "identifier": "vasopressin",
     "group": "药物",
     "label": "血管加压素",
@@ -765,7 +766,7 @@
     "aggregates": null
   },
   {
-    "id": 224,
+    "id": 223,
     "identifier": "zolpidem",
     "group": "药物",
     "label": "唑吡旦",
@@ -841,14 +842,6 @@
     "identifier": "cefepime",
     "group": "药物",
     "label": "头孢吡肟",
-    "unit": null,
-    "aggregates": null
-  },
-  {
-    "id": 221,
-    "identifier": "vancomycin",
-    "group": "药物",
-    "label": "万古霉素",
     "unit": null,
     "aggregates": null
   },

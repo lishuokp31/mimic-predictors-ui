@@ -1,29 +1,174 @@
-<div class="container">
-  <div class="feature-table">
-    <app-feature-table
-      [features]="features$ | async"
-      [x]="x$ | async"
-      [formattedX]="formattedX$ | async"
-      [weights]="weights$ | async"
-      weightsBaseColor="#F44336"
-      (change)="onChange($event)"
-    ></app-feature-table>
-  </div>
-  <div class="results">
-    <app-data-operations
-      [isLoading]="isLoading$ | async"
-      [disableInfer]="disableInfer$ | async"
-      (loadSample)="onLoadSample()"
-      (reset)="onReset()"
-      (predict)="onPredict()"
-    ></app-data-operations>
-    <app-model-results
-      [showResults]="showPredictions$ | async"
-      [probabilities]="slicedPredictions$ | async"
-      label="患者当日出现心肌梗塞的概率"
-    ></app-model-results>
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="data-operations">
+      <app-data-operations
+        [isLoading]="isLoading$ | async"
+        [disableInfer]="disableInfer$ | async"
+        (loadSample)="onLoadSample()"
+        (loadSpecifiedSample)="onLoadSpecifiedSample($event)"
+        (thresholdWarning)="onThresholdWarning()"
+        (addFavorite)="onAddFavorite()"
+        (callSimilarity)="similarity_drawer_open()"
+        (backCurrent)="onBackCurrent()"
+        (reset)="onReset()"
+        (predict)="onPredict()"
+        (objectid)="(objectid)"
+      ></app-data-operations>
+    </div>
   </div>
 </div>
+<div nz-row>
+  <span>当前病历编号：{{ this.id }}</span>
+</div>
+
+<div class="container">
+  <div nz-row>
+    <div class="feature-table">
+      <app-feature-table
+        [features]="features$ | async"
+        [x]="x$ | async"
+        [formattedX]="formattedX$ | async"
+        [weights]="weights$ | async"
+        weightsBaseColor="#F44336"
+        (change)="onChange($event)"
+      ></app-feature-table>
+    </div>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col nzSpan="12">
+    <div class="results">
+      <app-model-results
+        [showResults]="showPredictions$ | async"
+        [probabilities]="slicedPredictions$ | async"
+        label="患者当日出现心肌梗塞的概率"
+      ></app-model-results>
+    </div>
+  </div>
+  <div nz-col nzSpan="12">
+    <div class="results">
+      <app-threshold
+        [title]="'阈值筛查结果如下：（总）'"
+        [singal]="false"
+        [showResults]="showThreshold"
+        [data]="threshold_data"
+        label="阈值筛查结果如下"
+      ></app-threshold>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div
+    class="threshold_many_area"
+    *ngFor="let index of threshold_data_length_array"
+  >
+    <div nz-col nzSpan="24">
+      <app-threshold
+        class="threshold_many_table"
+        [title]="threshold_title[index]"
+        [singal]="true"
+        [index]="index"
+        [showResults]="showThreshold"
+        [data]="threshold_data_array[index]"
+        label="阈值筛查结果如下"
+      ></app-threshold>
+    </div>
+  </div>
+</div>
+
+<nz-modal
+  [(nzVisible)]="isVisible_setting"
+  nzTitle="请选择需要阈值筛查的医疗指标："
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzCancelText]="null"
+>
+  <ng-container *nzModalContent>
+    <nz-checkbox-wrapper
+      style="width: 100%"
+      (nzOnChange)="onChangeThreshold($event)"
+    >
+      <div>主要生命体征:</div>
+      <div class="threshold_options_area">
+        <div
+          class="threshold_options"
+          *ngFor="let index of threshold_mapping_array_index1"
+        >
+          <label
+            class="option"
+            nz-checkbox
+            [nzValue]="threshold_mapping_array[index][0]"
+            [ngModel]="threshold_mapping_array[index][3]"
+            >{{ threshold_mapping_array[index][1] }}</label
+          >
+        </div>
+      </div>
+      <br />
+      <div>血常规:</div>
+      <div class="threshold_options_area">
+        <div
+          class="threshold_options"
+          *ngFor="let index of threshold_mapping_array_index2"
+        >
+          <label
+            class="option"
+            nz-checkbox
+            [nzValue]="threshold_mapping_array[index][0]"
+            [ngModel]="threshold_mapping_array[index][3]"
+            >{{ threshold_mapping_array[index][1] }}</label
+          >
+        </div>
+      </div>
+      <br />
+      <div>实验数据:</div>
+      <div class="threshold_options_area">
+        <div
+          class="threshold_options"
+          *ngFor="let index of threshold_mapping_array_index3"
+        >
+          <label
+            class="option"
+            nz-checkbox
+            [nzValue]="threshold_mapping_array[index][0]"
+            [ngModel]="threshold_mapping_array[index][3]"
+            >{{ threshold_mapping_array[index][1] }}</label
+          >
+        </div>
+      </div>
+    </nz-checkbox-wrapper>
+  </ng-container>
+  <div *nzModalFooter>
+    <button nz-button color="default" (click)="handleAll()">全选</button>
+    <button nz-button nzType="default" (click)="handleAllNot()">全不选</button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="handleOk()"
+      [disabled]="!enableThreshold"
+    >
+      确定
+    </button>
+  </div>
+</nz-modal>
+
+<!-- 收藏对话框 -->
+<nz-modal
+  class="fav_modal"
+  [(nzVisible)]="isVisible_fav_modal"
+  nzTitle="添加收藏"
+  (nzOnCancel)="handleCancel_fav_modal()"
+  (nzOnOk)="handleOk_fav_modal()"
+>
+  <ng-container *nzModalContent>
+    <nz-input-group nzAddOnBefore="id:">
+      <input type="text" nz-input [(ngModel)]="favinfo.id" />
+    </nz-input-group>
+    <h2></h2>
+    <h4>备注：</h4>
+    <textarea rows="4" nz-input [(ngModel)]="favinfo.remark"></textarea>
+  </ng-container>
+</nz-modal>
 
 <!-- 权限提醒框 -->
 <nz-modal
@@ -36,6 +181,28 @@
     <h4>很抱歉，您当前的权限不允许进行此操作！</h4>
   </ng-container>
   <div *nzModalFooter>
-    <button nz-button nzType="primary" (click)="handleOk_level_modal()">确定</button>
+    <button nz-button nzType="primary" (click)="handleOk_level_modal()">
+      确定
+    </button>
   </div>
 </nz-modal>
+
+<!-- 相似度抽屉 -->
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="similarity_drawer_visible"
+  nzPlacement="right"
+  nzTitle="系统为您推荐的相似病例如下："
+  (nzOnClose)="similarity_drawer_close()"
+  [nzWidth]="512"
+>
+  <ng-container *nzDrawerContent>
+    <h4>点击以加载该病历</h4>
+    <app-similarity-table
+      [similarities]="similarities$ | async"
+      [isLoading]="isLoading$ | async"
+      (similarityClick)="onSimilarityClicked($event)"
+    >
+    </app-similarity-table>
+  </ng-container>
+</nz-drawer>

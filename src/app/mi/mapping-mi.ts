@@ -1,6 +1,7 @@
+export var mapping =
 [
   {
-    "id": 149,
+    "id": 145,
     "identifier": "age",
     "group": "个人信息",
     "label": "年龄",
@@ -9,7 +10,7 @@
     "header": "个人信息"
   },
   {
-    "id": 150,
+    "id": 146,
     "identifier": "m",
     "group": "个人信息",
     "label": "性别",
@@ -17,7 +18,7 @@
     "aggregates": null
   },
   {
-    "id": 148,
+    "id": 144,
     "identifier": "black",
     "group": "个人信息",
     "label": "是否黑人",
@@ -54,7 +55,7 @@
     "group": "主要生命体征",
     "label": "体温",
     "unit": "℃",
-    "aggregates": { "min": 108, "max": 144, "std": 72 },
+    "aggregates": { "min": 106, "max": 141, "std": 71 },
     "header": "主要生命体征"
   },
   {
@@ -63,7 +64,7 @@
     "group": "主要生命体征",
     "label": "心率",
     "unit": "bpm",
-    "aggregates": { "min": 95, "max": 131, "std": 59 }
+    "aggregates": { "min": 93, "max": 128, "std": 58 }
   },
   {
     "id": 32,
@@ -71,7 +72,7 @@
     "group": "主要生命体征",
     "label": "呼吸频率",
     "unit": "insp/min",
-    "aggregates": { "min": 105, "max": 141, "std": 69 }
+    "aggregates": { "min": 103, "max": 138, "std": 68 }
   },
   {
     "id": 34,
@@ -79,7 +80,7 @@
     "group": "主要生命体征",
     "label": "收缩压",
     "unit": "mmHg",
-    "aggregates": { "min": 107, "max": 143, "std": 71 }
+    "aggregates": { "min": 105, "max": 140, "std": 70 }
   },
   {
     "id": 19,
@@ -87,7 +88,7 @@
     "group": "主要生命体征",
     "label": "舒张压",
     "unit": "mmHg",
-    "aggregates": { "min": 92, "max": 128, "std": 56 }
+    "aggregates": { "min": 90, "max": 125, "std": 55 }
   },
   {
     "id": 31,
@@ -95,15 +96,7 @@
     "group": "主要生命体征",
     "label": "脉搏血氧饱和度",
     "unit": "%",
-    "aggregates": { "min": 104, "max": 140, "std": 68 }
-  },
-  {
-    "id": 39,
-    "identifier": "troponin",
-    "group": "主要生命体征",
-    "label": "肌钙蛋白",
-    "unit": "ng/mL",
-    "aggregates": { "min": 111, "max": 147, "std": 75 }
+    "aggregates": { "min": 102, "max": 137, "std": 67 }
   },
   {
     "id": 7,
@@ -111,7 +104,7 @@
     "group": "血常规",
     "label": "红细胞",
     "unit": "/mic l",
-    "aggregates": { "min": 83, "max": 119, "std": 47 },
+    "aggregates": { "min": 81, "max": 116, "std": 46 },
     "header": "血常规"
   },
   {
@@ -120,7 +113,7 @@
     "group": "血常规",
     "label": "白细胞",
     "unit": "K/uL",
-    "aggregates": { "min": 84, "max": 120, "std": 48 }
+    "aggregates": { "min": 82, "max": 117, "std": 47 }
   },
   {
     "id": 28,
@@ -128,7 +121,7 @@
     "group": "血常规",
     "label": "血小板",
     "unit": "K/uL",
-    "aggregates": { "min": 101, "max": 137, "std": 65 }
+    "aggregates": { "min": 99, "max": 134, "std": 64 }
   },
   {
     "id": 24,
@@ -136,7 +129,7 @@
     "group": "血常规",
     "label": "血红蛋白",
     "unit": "g/dl",
-    "aggregates": { "min": 97, "max": 133, "std": 61 }
+    "aggregates": { "min": 95, "max": 130, "std": 60 }
   },
   {
     "id": 23,
@@ -144,7 +137,7 @@
     "group": "血常规",
     "label": "细胞压积",
     "unit": "%",
-    "aggregates": { "min": 96, "max": 132, "std": 60 }
+    "aggregates": { "min": 94, "max": 129, "std": 59 }
   },
   {
     "id": 10,
@@ -152,7 +145,7 @@
     "group": "血常规",
     "label": "异型淋巴细胞",
     "unit": "%",
-    "aggregates": { "min": 86, "max": 122, "std": 50 }
+    "aggregates": { "min": 84, "max": 119, "std": 49 }
   },
   {
     "id": 11,
@@ -160,7 +153,7 @@
     "group": "血常规",
     "label": "带状的中性粒细胞",
     "unit": "%",
-    "aggregates": { "min": 87, "max": 123, "std": 51 }
+    "aggregates": { "min": 85, "max": 120, "std": 50 }
   },
   {
     "id": 12,
@@ -168,7 +161,7 @@
     "group": "血常规",
     "label": "嗜碱粒细胞",
     "unit": "%",
-    "aggregates": { "min": 88, "max": 124, "std": 52 }
+    "aggregates": { "min": 86, "max": 121, "std": 51 }
   },
   {
     "id": 20,
@@ -176,7 +169,7 @@
     "group": "血常规",
     "label": "嗜酸细胞",
     "unit": "%",
-    "aggregates": { "min": 93, "max": 129, "std": 57 }
+    "aggregates": { "min": 91, "max": 126, "std": 56 }
   },
   {
     "id": 27,
@@ -184,7 +177,7 @@
     "group": "血常规",
     "label": "中性白细胞",
     "unit": "%",
-    "aggregates": { "min": 100, "max": 136, "std": 64 }
+    "aggregates": { "min": 98, "max": 133, "std": 63 }
   },
   {
     "id": 25,
@@ -192,7 +185,7 @@
     "group": "血常规",
     "label": "淋巴细胞",
     "unit": "%",
-    "aggregates": { "min": 98, "max": 134, "std": 62 }
+    "aggregates": { "min": 96, "max": 131, "std": 61 }
   },
   {
     "id": 26,
@@ -200,7 +193,7 @@
     "group": "血常规",
     "label": "单核细胞",
     "unit": "%",
-    "aggregates": { "min": 99, "max": 135, "std": 63 }
+    "aggregates": { "min": 97, "max": 132, "std": 62 }
   },
   {
     "id": 29,
@@ -208,7 +201,7 @@
     "group": "血常规",
     "label": "多形核白细胞",
     "unit": null,
-    "aggregates": { "min": 102, "max": 138, "std": 66 }
+    "aggregates": { "min": 100, "max": 135, "std": 65 }
   },
   {
     "id": 1,
@@ -216,7 +209,7 @@
     "group": "实验数据",
     "label": "高密度脂蛋白",
     "unit": "mg/dL",
-    "aggregates": { "min": 77, "max": 113, "std": 41 },
+    "aggregates": { "min": 75, "max": 110, "std": 40 },
     "header": "实验数据"
   },
   {
@@ -225,7 +218,7 @@
     "group": "实验数据",
     "label": "低密度脂蛋白",
     "unit": "mg/dL",
-    "aggregates": { "min": 80, "max": 116, "std": 44 }
+    "aggregates": { "min": 78, "max": 113, "std": 43 }
   },
   {
     "id": 0,
@@ -233,7 +226,7 @@
     "group": "实验数据",
     "label": "血尿素氮",
     "unit": "mg/dL",
-    "aggregates": { "min": 76, "max": 112, "std": 40 }
+    "aggregates": { "min": 74, "max": 109, "std": 39 }
   },
   {
     "id": 2,
@@ -241,7 +234,7 @@
     "group": "实验数据",
     "label": "国际标准化",
     "unit": null,
-    "aggregates": { "min": 78, "max": 114, "std": 42 }
+    "aggregates": { "min": 76, "max": 111, "std": 41 }
   },
   {
     "id": 6,
@@ -249,7 +242,7 @@
     "group": "实验数据",
     "label": "凝血激活酶时间",
     "unit": "sec",
-    "aggregates": { "min": 82, "max": 118, "std": 46 }
+    "aggregates": { "min": 80, "max": 115, "std": 45 }
   },
   {
     "id": 38,
@@ -257,7 +250,7 @@
     "group": "实验数据",
     "label": "甘油三酸酯",
     "unit": "mg/dL",
-    "aggregates": { "min": 110, "max": 146, "std": 74 }
+    "aggregates": { "min": 108, "max": 143, "std": 73 }
   },
   {
     "id": 16,
@@ -265,7 +258,7 @@
     "group": "实验数据",
     "label": "肌酸酐",
     "unit": "mg/dL",
-    "aggregates": { "min": 91, "max": 127, "std": 55 }
+    "aggregates": { "min": 89, "max": 124, "std": 54 }
   },
   {
     "id": 21,
@@ -273,7 +266,7 @@
     "group": "实验数据",
     "label": "糖分",
     "unit": "mg/dL",
-    "aggregates": { "min": 94, "max": 130, "std": 58 }
+    "aggregates": { "min": 92, "max": 127, "std": 57 }
   },
   {
     "id": 33,
@@ -281,7 +274,7 @@
     "group": "实验数据",
     "label": "钠",
     "unit": "mEq/L",
-    "aggregates": { "min": 106, "max": 142, "std": 70 }
+    "aggregates": { "min": 104, "max": 139, "std": 69 }
   },
   {
     "id": 30,
@@ -297,7 +290,7 @@
     "group": "实验数据",
     "label": "氯化物",
     "unit": "mEq/L",
-    "aggregates": { "min": 90, "max": 126, "std": 54 }
+    "aggregates": { "min": 88, "max": 123, "std": 53 }
   },
   {
     "id": 13,
@@ -313,7 +306,7 @@
     "group": "实验数据",
     "label": "吸入氧气分率",
     "unit": null,
-    "aggregates": { "min": 79, "max": 115, "std": 43 }
+    "aggregates": { "min": 77, "max": 112, "std": 42 }
   },
   {
     "id": 14,
@@ -321,7 +314,7 @@
     "group": "实验数据",
     "label": "中心静脉压",
     "unit": "mmHg",
-    "aggregates": { "min": 89, "max": 125, "std": 53 }
+    "aggregates": { "min": 87, "max": 122, "std": 52 }
   },
   {
     "id": 5,
@@ -329,7 +322,7 @@
     "group": "实验数据",
     "label": "呼气终末正压",
     "unit": "cmH2O",
-    "aggregates": { "min": 81, "max": 117, "std": 45 }
+    "aggregates": { "min": 79, "max": 114, "std": 44 }
   },
   {
     "id": 36,
@@ -337,7 +330,7 @@
     "group": "实验数据",
     "label": "潮气量",
     "unit": "mL",
-    "aggregates": { "min": 109, "max": 145, "std": 73 }
+    "aggregates": { "min": 107, "max": 142, "std": 72 }
   },
   {
     "id": 9,
@@ -345,10 +338,10 @@
     "group": "实验数据",
     "label": "阴离子隙",
     "unit": "mEq/L",
-    "aggregates": { "min": 85, "max": 121, "std": 49 }
+    "aggregates": { "min": 83, "max": 118, "std": 48 }
   },
   {
-    "id": 175,
+    "id": 171,
     "identifier": "epoetin",
     "group": "药物",
     "label": "阿法依泊汀",
@@ -357,7 +350,7 @@
     "header": "药物"
   },
   {
-    "id": 223,
+    "id": 219,
     "identifier": "warfarin",
     "group": "药物",
     "label": "华法林",
@@ -365,7 +358,7 @@
     "aggregates": null
   },
   {
-    "id": 183,
+    "id": 179,
     "identifier": "heparin",
     "group": "药物",
     "label": "肝素",
@@ -373,7 +366,7 @@
     "aggregates": null
   },
   {
-    "id": 174,
+    "id": 170,
     "identifier": "enoxaparin",
     "group": "药物",
     "label": "依诺肝素",
@@ -381,7 +374,7 @@
     "aggregates": null
   },
   {
-    "id": 179,
+    "id": 175,
     "identifier": "fondaparinux",
     "group": "药物",
     "label": "磺达肝癸钠",
@@ -389,7 +382,7 @@
     "aggregates": null
   },
   {
-    "id": 158,
+    "id": 154,
     "identifier": "asprin",
     "group": "药物",
     "label": "阿司匹林",
@@ -397,7 +390,7 @@
     "aggregates": null
   },
   {
-    "id": 153,
+    "id": 149,
     "identifier": "acetominophen",
     "group": "药物",
     "label": "乙酰氨基酚",
@@ -405,7 +398,7 @@
     "aggregates": null
   },
   {
-    "id": 187,
+    "id": 183,
     "identifier": "insulin",
     "group": "药物",
     "label": "胰岛素",
@@ -413,7 +406,7 @@
     "aggregates": null
   },
   {
-    "id": 181,
+    "id": 177,
     "identifier": "glucagon",
     "group": "药物",
     "label": "胰高血糖素",
@@ -421,7 +414,7 @@
     "aggregates": null
   },
   {
-    "id": 214,
+    "id": 210,
     "identifier": "potassium_y",
     "group": "药物",
     "label": "钾",
@@ -429,7 +422,7 @@
     "aggregates": null
   },
   {
-    "id": 161,
+    "id": 157,
     "identifier": "calcium gluconate",
     "group": "药物",
     "label": "葡萄糖酸钙",
@@ -437,7 +430,7 @@
     "aggregates": null
   },
   {
-    "id": 176,
+    "id": 172,
     "identifier": "fentanyl",
     "group": "药物",
     "label": "芬太尼",
@@ -445,7 +438,7 @@
     "aggregates": null
   },
   {
-    "id": 194,
+    "id": 190,
     "identifier": "magensium sulfate",
     "group": "药物",
     "label": "硫酸镁;",
@@ -453,7 +446,7 @@
     "aggregates": null
   },
   {
-    "id": 169,
+    "id": 165,
     "identifier": "dextrose",
     "group": "药物",
     "label": "右旋糖",
@@ -461,7 +454,7 @@
     "aggregates": null
   },
   {
-    "id": 217,
+    "id": 213,
     "identifier": "ranitidine",
     "group": "药物",
     "label": "雷米替丁",
@@ -469,7 +462,7 @@
     "aggregates": null
   },
   {
-    "id": 205,
+    "id": 201,
     "identifier": "ondansetron",
     "group": "药物",
     "label": "昂丹司琼",
@@ -477,7 +470,7 @@
     "aggregates": null
   },
   {
-    "id": 208,
+    "id": 204,
     "identifier": "pantoprazole",
     "group": "药物",
     "label": "泮托拉唑",
@@ -485,7 +478,7 @@
     "aggregates": null
   },
   {
-    "id": 196,
+    "id": 192,
     "identifier": "metoclopramide",
     "group": "药物",
     "label": "甲氧氯普胺",
@@ -493,7 +486,7 @@
     "aggregates": null
   },
   {
-    "id": 193,
+    "id": 189,
     "identifier": "lisinopril",
     "group": "药物",
     "label": "赖诺普利",
@@ -501,7 +494,7 @@
     "aggregates": null
   },
   {
-    "id": 162,
+    "id": 158,
     "identifier": "captopril",
     "group": "药物",
     "label": "卡托普利",
@@ -509,7 +502,7 @@
     "aggregates": null
   },
   {
-    "id": 218,
+    "id": 214,
     "identifier": "statin",
     "group": "药物",
     "label": "抑制素",
@@ -517,7 +510,7 @@
     "aggregates": null
   },
   {
-    "id": 184,
+    "id": 180,
     "identifier": "hydralazine",
     "group": "药物",
     "label": "肼苯哒嗪",
@@ -525,7 +518,7 @@
     "aggregates": null
   },
   {
-    "id": 172,
+    "id": 168,
     "identifier": "diltiazem",
     "group": "药物",
     "label": "地尔硫䓬",
@@ -533,7 +526,7 @@
     "aggregates": null
   },
   {
-    "id": 163,
+    "id": 159,
     "identifier": "carvedilol",
     "group": "药物",
     "label": "卡维地洛",
@@ -541,7 +534,7 @@
     "aggregates": null
   },
   {
-    "id": 197,
+    "id": 193,
     "identifier": "metoprolol",
     "group": "药物",
     "label": "美托洛尔",
@@ -549,7 +542,7 @@
     "aggregates": null
   },
   {
-    "id": 189,
+    "id": 185,
     "identifier": "labetalol",
     "group": "药物",
     "label": "拉贝洛尔",
@@ -557,7 +550,7 @@
     "aggregates": null
   },
   {
-    "id": 159,
+    "id": 155,
     "identifier": "atenolol",
     "group": "药物",
     "label": "阿替洛尔",
@@ -565,7 +558,7 @@
     "aggregates": null
   },
   {
-    "id": 155,
+    "id": 151,
     "identifier": "amiodarone",
     "group": "药物",
     "label": "乙胺碘酰酮",
@@ -573,7 +566,7 @@
     "aggregates": null
   },
   {
-    "id": 171,
+    "id": 167,
     "identifier": "digoxin(?!.*fab)",
     "group": "药物",
     "label": "地高辛",
@@ -581,7 +574,7 @@
     "aggregates": null
   },
   {
-    "id": 168,
+    "id": 164,
     "identifier": "clopidogrel",
     "group": "药物",
     "label": "氯吡格雷",
@@ -589,7 +582,7 @@
     "aggregates": null
   },
   {
-    "id": 203,
+    "id": 199,
     "identifier": "nitroprusside",
     "group": "药物",
     "label": "硝普盐",
@@ -597,7 +590,7 @@
     "aggregates": null
   },
   {
-    "id": 202,
+    "id": 198,
     "identifier": "nitroglycerin",
     "group": "药物",
     "label": "硝化甘油",
@@ -605,7 +598,7 @@
     "aggregates": null
   },
   {
-    "id": 222,
+    "id": 218,
     "identifier": "vasopressin",
     "group": "药物",
     "label": "血管加压素",
@@ -613,7 +606,7 @@
     "aggregates": null
   },
   {
-    "id": 185,
+    "id": 181,
     "identifier": "hydrochlorothiazide",
     "group": "药物",
     "label": "氢氯噻嗪",
@@ -621,7 +614,7 @@
     "aggregates": null
   },
   {
-    "id": 180,
+    "id": 176,
     "identifier": "furosemide",
     "group": "药物",
     "label": "呋塞米",
@@ -629,7 +622,7 @@
     "aggregates": null
   },
   {
-    "id": 160,
+    "id": 156,
     "identifier": "atropine",
     "group": "药物",
     "label": "阿托品",
@@ -637,7 +630,7 @@
     "aggregates": null
   },
   {
-    "id": 201,
+    "id": 197,
     "identifier": "neostigmine",
     "group": "药物",
     "label": "新斯的明",
@@ -645,7 +638,7 @@
     "aggregates": null
   },
   {
-    "id": 192,
+    "id": 188,
     "identifier": "levothyroxine",
     "group": "药物",
     "label": "左旋甲状腺素",
@@ -653,7 +646,7 @@
     "aggregates": null
   },
   {
-    "id": 207,
+    "id": 203,
     "identifier": "oxycodone",
     "group": "药物",
     "label": "氧可酮",
@@ -661,7 +654,7 @@
     "aggregates": null
   },
   {
-    "id": 186,
+    "id": 182,
     "identifier": "hydromorphone",
     "group": "药物",
     "label": "氢吗啡酮",
@@ -669,7 +662,7 @@
     "aggregates": null
   },
   {
-    "id": 177,
+    "id": 173,
     "identifier": "fentanyl citrate",
     "group": "药物",
     "label": "芬太奴柠檬酸",
@@ -677,7 +670,7 @@
     "aggregates": null
   },
   {
-    "id": 219,
+    "id": 215,
     "identifier": "tacrolimus",
     "group": "药物",
     "label": "他克莫司",
@@ -685,7 +678,7 @@
     "aggregates": null
   },
   {
-    "id": 215,
+    "id": 211,
     "identifier": "prednisone",
     "group": "药物",
     "label": "泼尼松",
@@ -693,7 +686,7 @@
     "aggregates": null
   },
   {
-    "id": 210,
+    "id": 206,
     "identifier": "phenylephrine",
     "group": "药物",
     "label": "苯福林",
@@ -701,7 +694,7 @@
     "aggregates": null
   },
   {
-    "id": 204,
+    "id": 200,
     "identifier": "norepinephrine",
     "group": "药物",
     "label": "新肾上腺素",
@@ -709,7 +702,7 @@
     "aggregates": null
   },
   {
-    "id": 182,
+    "id": 178,
     "identifier": "haloperidol",
     "group": "药物",
     "label": "氟哌啶醇",
@@ -717,7 +710,7 @@
     "aggregates": null
   },
   {
-    "id": 211,
+    "id": 207,
     "identifier": "phenytoin",
     "group": "药物",
     "label": "苯妥英",
@@ -725,7 +718,7 @@
     "aggregates": null
   },
   {
-    "id": 220,
+    "id": 216,
     "identifier": "trazodone",
     "group": "药物",
     "label": "曲唑酮",
@@ -733,7 +726,7 @@
     "aggregates": null
   },
   {
-    "id": 190,
+    "id": 186,
     "identifier": "levetiracetam",
     "group": "药物",
     "label": "左乙拉西坦",
@@ -741,7 +734,7 @@
     "aggregates": null
   },
   {
-    "id": 170,
+    "id": 166,
     "identifier": "diazepam",
     "group": "药物",
     "label": "苯甲二氮䓬",
@@ -749,7 +742,7 @@
     "aggregates": null
   },
   {
-    "id": 167,
+    "id": 163,
     "identifier": "clonazepam",
     "group": "药物",
     "label": "氯硝安定",
@@ -757,7 +750,7 @@
     "aggregates": null
   },
   {
-    "id": 216,
+    "id": 212,
     "identifier": "propofol",
     "group": "药物",
     "label": "二异丙酚",
@@ -765,7 +758,7 @@
     "aggregates": null
   },
   {
-    "id": 224,
+    "id": 220,
     "identifier": "zolpidem",
     "group": "药物",
     "label": "唑吡旦",
@@ -773,7 +766,7 @@
     "aggregates": null
   },
   {
-    "id": 199,
+    "id": 195,
     "identifier": "midazolam",
     "group": "药物",
     "label": "咪达唑仑",
@@ -781,7 +774,7 @@
     "aggregates": null
   },
   {
-    "id": 154,
+    "id": 150,
     "identifier": "albuterol",
     "group": "药物",
     "label": "舒喘灵",
@@ -789,7 +782,7 @@
     "aggregates": null
   },
   {
-    "id": 188,
+    "id": 184,
     "identifier": "ipratropium",
     "group": "药物",
     "label": "异丙托溴铵",
@@ -797,7 +790,7 @@
     "aggregates": null
   },
   {
-    "id": 173,
+    "id": 169,
     "identifier": "diphenhydramine",
     "group": "药物",
     "label": "盐酸苯海拉明",
@@ -805,7 +798,7 @@
     "aggregates": null
   },
   {
-    "id": 151,
+    "id": 147,
     "identifier": "0.9% sodium chloride",
     "group": "药物",
     "label": "氯化钠",
@@ -813,7 +806,7 @@
     "aggregates": null
   },
   {
-    "id": 212,
+    "id": 208,
     "identifier": "phytonadione",
     "group": "药物",
     "label": "叶绿醌",
@@ -821,7 +814,7 @@
     "aggregates": null
   },
   {
-    "id": 198,
+    "id": 194,
     "identifier": "metronidazole",
     "group": "药物",
     "label": "甲硝哒",
@@ -829,7 +822,7 @@
     "aggregates": null
   },
   {
-    "id": 164,
+    "id": 160,
     "identifier": "cefazolin",
     "group": "药物",
     "label": "头孢唑啉",
@@ -837,7 +830,7 @@
     "aggregates": null
   },
   {
-    "id": 165,
+    "id": 161,
     "identifier": "cefepime",
     "group": "药物",
     "label": "头孢吡肟",
@@ -845,7 +838,7 @@
     "aggregates": null
   },
   {
-    "id": 221,
+    "id": 217,
     "identifier": "vancomycin",
     "group": "药物",
     "label": "万古霉素",
@@ -853,7 +846,7 @@
     "aggregates": null
   },
   {
-    "id": 191,
+    "id": 187,
     "identifier": "levofloxacin",
     "group": "药物",
     "label": "左氧氟沙星",
@@ -861,7 +854,7 @@
     "aggregates": null
   },
   {
-    "id": 178,
+    "id": 174,
     "identifier": "fluconazole",
     "group": "药物",
     "label": "氟康唑",
@@ -869,7 +862,7 @@
     "aggregates": null
   },
   {
-    "id": 195,
+    "id": 191,
     "identifier": "meropenem",
     "group": "药物",
     "label": "美罗培南",
@@ -877,7 +870,7 @@
     "aggregates": null
   },
   {
-    "id": 166,
+    "id": 162,
     "identifier": "ceftriaxone",
     "group": "药物",
     "label": "头孢曲松",
@@ -885,7 +878,7 @@
     "aggregates": null
   },
   {
-    "id": 213,
+    "id": 209,
     "identifier": "piperacillin",
     "group": "药物",
     "label": "氧哌嗪青霉素",
@@ -893,7 +886,7 @@
     "aggregates": null
   },
   {
-    "id": 157,
+    "id": 153,
     "identifier": "ampicillin-sulbactam",
     "group": "药物",
     "label": "舒巴坦钠",
@@ -901,7 +894,7 @@
     "aggregates": null
   },
   {
-    "id": 200,
+    "id": 196,
     "identifier": "nafcillin",
     "group": "药物",
     "label": "萘夫西林",
@@ -909,7 +902,7 @@
     "aggregates": null
   },
   {
-    "id": 206,
+    "id": 202,
     "identifier": "oxacillin",
     "group": "药物",
     "label": "苯唑西林",
@@ -917,7 +910,7 @@
     "aggregates": null
   },
   {
-    "id": 156,
+    "id": 152,
     "identifier": "amoxicillin",
     "group": "药物",
     "label": "阿莫西林",
@@ -925,7 +918,7 @@
     "aggregates": null
   },
   {
-    "id": 209,
+    "id": 205,
     "identifier": "penicillin",
     "group": "药物",
     "label": "青霉素",
@@ -933,7 +926,7 @@
     "aggregates": null
   },
   {
-    "id": 152,
+    "id": 148,
     "identifier": "smx-tmp",
     "group": "药物",
     "label": "甲氧苄啶",

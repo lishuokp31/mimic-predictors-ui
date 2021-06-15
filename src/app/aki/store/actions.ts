@@ -1,5 +1,5 @@
 import { Feature, FeatureUnaryValue } from '@core/types';
-import {LoadSpecifiedSamplePayload} from '@aki/models';
+import {LoadSpecifiedSamplePayload} from '@shared/models';
 export class LoadSample {
   static readonly type = '[AKI] load';
 }

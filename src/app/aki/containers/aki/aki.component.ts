@@ -8,15 +8,13 @@ import { Feature, FeatureUnaryValue } from '@core/types';
 import { AkiState } from '@aki/store';
 import * as actions from '@aki/store/actions';
 import * as actions_user from '@user/store/actions';
-import * as actions_similarity from '@shared/store/actions'
+import * as actions_similarity from '@shared/store/actions';
 import { FeatureValueChangeEvent } from '@shared/components';
 
-
-import { LoadSpecifiedSamplePayload } from '@aki/models';
+import { LoadSpecifiedSamplePayload } from '@shared/models';
 import { mapping } from './../../mapping-aki';
 import { FavoritePayload, Favorite } from '@user/models';
-import {SimilaritiesState} from '@shared/store';
-
+import { SimilaritiesState } from '@shared/store';
 import { Similarity } from '@shared/models';
 
 import { Userinfo } from '@login/models';
@@ -54,7 +52,7 @@ export class AkiComponent {
   public disableInfer$: Observable<boolean>;
 
   public x: number[][] = [];
-  public id: number = 0;
+  public id: string = '';
   visible = false;
   isVisible_setting = false;
 
@@ -81,31 +79,39 @@ export class AkiComponent {
   public ThresholdResult: Array<Array<number>> = new Array<Array<number>>();
   public result_string: string[] = [];
 
-
   // 收藏信息
-  public isVisible_fav_modal : boolean = false;
-  public favinfo : Favorite = {
-    id : '',
-    fav_type : 'aki',
-    remark : '',
+  public isVisible_fav_modal: boolean = false;
+  public favinfo: Favorite = {
+    id: '',
+    fav_type: 'aki',
+    remark: '',
     value: '',
   };
   public select_label = {
-    importment : "重点观察样例"
-  }
+    importment: '重点观察样例',
+  };
   public value = '';
 
   // 权限信息
-  public isVisible_level_modal : boolean = false;
+  public isVisible_level_modal: boolean = false;
 
   // 相似病例信息
-  public similarity_drawer_visible : boolean = false;
+  public similarity_drawer_visible: boolean = false;
   public similarities$: Observable<Similarity[]>;
   // public isLoading$: Observable<boolean>;
   public similarities: Similarity[] = [];
-  public previous_id : number[] = [];
+  public previous_id: string[] = [];
 
-  constructor(private store: Store, private dialog: MatDialog , public route: ActivatedRoute , private router: Router,) {
+  constructor(
+    private store: Store,
+    public route: ActivatedRoute,
+    private router: Router
+  ) {
+    // var tmp = setInterval(() => {
+    //   if(!this.userinfo.login){
+    //     this.router.navigate(['/login'])
+    //   }
+    // } , 20)
     this.login$ = this.store.select(LoginState.login);
     this.username$ = this.store.select(LoginState.username);
     this.email$ = this.store.select(LoginState.email);
@@ -128,21 +134,24 @@ export class AkiComponent {
     this.isLoading$ = this.store.select(AkiState.isLoading);
     this.disableInfer$ = this.store.select(AkiState.disableInfer);
 
-    this.similarities$ = this.store.select(SimilaritiesState.similarities)
+    this.similarities$ = this.store.select(SimilaritiesState.similarities);
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.value = params["value"];
-    })
-    console.log("this.value:" + this.value)
-    if(this.value){
-      console.log("加载收藏病例")
+      this.value = params['value'];
+    });
+    console.log('this.value:' + this.value);
+    if (this.value) {
+      console.log('加载收藏病例');
       this.onLoadSpecifiedSample(this.value);
     }
     this.login$.subscribe((value) => {
       this.userinfo.login = value;
     });
+    if (!this.userinfo.login) {
+      this.router.navigate(['/login']);
+    }
     this.username$.subscribe((value) => {
       this.userinfo.username = value;
     });
@@ -157,7 +166,7 @@ export class AkiComponent {
     });
 
     this.id$.subscribe((value) => {
-      this.id = value;
+      this.id = value.toString();
     });
     this.x$.subscribe((value) => {
       this.x = value;
@@ -165,9 +174,9 @@ export class AkiComponent {
 
     this.similarities$.subscribe((value) => {
       this.similarities = value;
-    })
+    });
 
-    if(this.userinfo.level > 2){
+    if(this.userinfo.level > 2 || this.userinfo.level == -1){
       console.log("权限不足！" + this.userinfo.level)
       this.isVisible_level_modal = true;
     }
@@ -179,6 +188,7 @@ export class AkiComponent {
   }
 
   public onLoadSpecifiedSample(objectid: string) {
+    this.id = objectid;
     const outData: LoadSpecifiedSamplePayload = {
       objectid: objectid,
     };
@@ -189,7 +199,7 @@ export class AkiComponent {
   public onReset() {
     this.store.dispatch(new actions.Reset());
     this.showThreshold = false;
-    this.id = 0;
+    this.id = '';
   }
 
   public onPredict() {
@@ -213,7 +223,10 @@ export class AkiComponent {
   handleOk(): void {
     this.thresholdIndex = [];
     for (var i = 0; i < this.thresholdOptionArray.length; i++) {
-      if(this.thresholdOptionArray[i] && !(i == 15 || i == 14 || i == 13 || i == 12 || i == 5)){
+      if (
+        this.thresholdOptionArray[i] &&
+        !(i == 15 || i == 14 || i == 13 || i == 12 || i == 5)
+      ) {
         this.thresholdIndex.push(i);
       }
     }
@@ -237,7 +250,7 @@ export class AkiComponent {
     for (var i = 0; i < this.thresholdIndex.length; i++) {
       let tmp = [];
       for (var j = 0; j < this.x.length; j++) {
-        if(this.x[j][this.thresholdIndex[i]] != 0){
+        if (this.x[j][this.thresholdIndex[i]] != 0) {
           tmp.push({
             name: 'day' + (j + 1),
             value: this.x[j][this.thresholdIndex[i]],
@@ -248,15 +261,19 @@ export class AkiComponent {
         name: this.thresholdName[i],
         series: tmp,
       });
-      this.threshold_data_array.push([{
-        name: this.thresholdName[i],
-        series: tmp,
-      }])
-      this.threshold_data_length_array.push(i)
-      this.threshold_title.push("指标 " + this.thresholdName[i] + " 的筛查结果如下：")
+      this.threshold_data_array.push([
+        {
+          name: this.thresholdName[i],
+          series: tmp,
+        },
+      ]);
+      this.threshold_data_length_array.push(i);
+      this.threshold_title.push(
+        '指标 ' + this.thresholdName[i] + ' 的筛查结果如下：'
+      );
     }
 
-    console.log(this.threshold_data_length_array)
+    console.log(this.threshold_data_length_array);
     this.isVisible_setting = false;
     this.showThreshold = true;
   }
@@ -266,14 +283,26 @@ export class AkiComponent {
   }
 
   handleAll(): void {
-    for(var i = 0; i < this.thresholdOptionArray.length; i++) {
+    for (var i = 0; i < this.thresholdOptionArray.length; i++) {
       this.thresholdOptionArray[i] = true;
     }
-    this.onChangeThreshold(["0", "2", "3", "4", "7", "9", "10", "1", "6", "8", "11"])
+    this.onChangeThreshold([
+      '0',
+      '2',
+      '3',
+      '4',
+      '7',
+      '9',
+      '10',
+      '1',
+      '6',
+      '8',
+      '11',
+    ]);
   }
 
-  handleAllNot() : void {
-    for(var i = 0; i < this.thresholdOptionArray.length; i++) {
+  handleAllNot(): void {
+    for (var i = 0; i < this.thresholdOptionArray.length; i++) {
       this.thresholdOptionArray[i] = false;
     }
     this.onChangeThreshold([]);
@@ -281,6 +310,7 @@ export class AkiComponent {
 
   onChangeThreshold(thresholdOption: string[]): void {
     this.thresholdOptionMessage = thresholdOption;
+    console.log(this.thresholdOptionMessage)
     // 修改选定的指标组
     for (var i = 0; i < this.features_num; i++) {
       this.thresholdOptionArray[i] = false;
@@ -290,8 +320,9 @@ export class AkiComponent {
     }
 
     this.enableThreshold = false;
-    for(var i = 0; i < this.thresholdOptionArray.length; i++){
-      this.enableThreshold = this.enableThreshold || this.thresholdOptionArray[i];
+    for (var i = 0; i < this.thresholdOptionArray.length; i++) {
+      this.enableThreshold =
+        this.enableThreshold || this.thresholdOptionArray[i];
     }
   }
 
@@ -303,60 +334,62 @@ export class AkiComponent {
     this.visible = false;
   }
 
-  onAddFavorite(){
+  onAddFavorite() {
     this.isVisible_fav_modal = true;
   }
 
-  handleCancel_fav_modal(){
+  handleCancel_fav_modal() {
     this.isVisible_fav_modal = false;
   }
-  handleOk_fav_modal(){
+  handleOk_fav_modal() {
     const outData: FavoritePayload = {
-      username : this.userinfo.username,
-      id : this.favinfo.id,
-      fav_type : 'aki',
-      remark : this.favinfo.remark,
+      username: this.userinfo.username,
+      id: this.favinfo.id,
+      fav_type: 'aki',
+      remark: this.favinfo.remark,
       value: this.id.toString(),
     };
 
-    console.log(this.favinfo)
-    console.log(outData)
+    console.log(this.favinfo);
+    console.log(outData);
     this.store.dispatch(new actions_user.AddFavoriteAction(outData));
     this.isVisible_fav_modal = false;
     this.favinfo.id = '';
     this.favinfo.remark = '';
   }
 
-  handleCancel_level_modal(){
+  handleCancel_level_modal() {
     this.isVisible_level_modal = false;
     this.router.navigate(['/user']);
   }
 
-  handleOk_level_modal(){
+  handleOk_level_modal() {
     this.isVisible_level_modal = false;
     this.router.navigate(['/user']);
   }
 
-  similarity_drawer_open(){
-    this.store.dispatch(new actions_similarity.LoadAll(this.id.toString()))
+  similarity_drawer_open() {
+    this.store.dispatch(new actions_similarity.LoadAll(this.id.toString()));
     this.similarity_drawer_visible = true;
   }
 
-  similarity_drawer_close(){
+  similarity_drawer_close() {
     this.similarity_drawer_visible = false;
   }
 
-  onBackCurrent(){
-    this.onLoadSpecifiedSample(this.previous_id[this.previous_id.length - 1].toString());
+  onBackCurrent() {
+    this.onLoadSpecifiedSample(
+      this.previous_id[this.previous_id.length - 1].toString()
+    );
   }
 
-  onSimilarityClicked(event : Similarity){
+  onSimilarityClicked(event: Similarity) {
     const { id } = event;
-    for (var i = 0; i < this.similarities.length; ++ i) {
-      if(this.similarities[i].id == id) {
-        this.previous_id.push(this.id)
-        this.onLoadSpecifiedSample(this.similarities[i].value)
-        this.select_label
+    for (var i = 0; i < this.similarities.length; ++i) {
+      if (this.similarities[i].id == id) {
+        this.previous_id.push(this.id);
+        this.onLoadSpecifiedSample(this.similarities[i].value);
+        this.select_label;
         break;
       }
     }

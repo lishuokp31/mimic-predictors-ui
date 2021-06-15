@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output ,ChangeDetectorRef } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
@@ -52,11 +52,12 @@ export class NerComponent implements OnInit {
   fileList: NzUploadFile[] = [];
   string: string = '';
 
-  constructor(private msg: NzMessageService, private store: Store,private router: Router) {
+  constructor(private msg: NzMessageService, private store: Store,private router: Router,private ref: ChangeDetectorRef) {
     var tmp = setInterval(() => {
-      if(!this.userinfo.login){
-        this.router.navigate(['/login'])
-      }
+      // if(!this.userinfo.login){
+      //   this.router.navigate(['/login'])
+      // }
+      this.ref.markForCheck();
     } , 20)
     this.login$ = this.store.select(LoginState.login);
     this.username$ = this.store.select(LoginState.username);
@@ -75,6 +76,9 @@ export class NerComponent implements OnInit {
     this.login$.subscribe((value) => {
       this.userinfo.login = value;
     });
+    if (!this.userinfo.login) {
+      this.router.navigate(['/login']);
+    }
     this.username$.subscribe((value) => {
       this.userinfo.username = value;
     });
@@ -88,7 +92,7 @@ export class NerComponent implements OnInit {
       this.userinfo.level = value;
     });
 
-    if(this.userinfo.level > 2){
+    if(this.userinfo.level > 2  || this.userinfo.level == -1){
       console.log("权限不足！" + this.userinfo.level)
       this.isVisible_level_modal = true;
     }
@@ -144,6 +148,18 @@ export class NerComponent implements OnInit {
       // this.file_inputValue.push(reader.result as string);
     };
     reader.readAsText(file);
+  }
+
+  openFile(event: any): void {
+    const input = event.target;
+    const reader = new FileReader();
+    reader.onload = (() => {
+      if (reader.result) {
+        console.log(reader.result);
+        this.file_inputValue[0] = reader.result as string
+      }
+    });
+    reader.readAsText(input.files[0], 'utf-8');
   }
 
   public showfile_inputValue() {

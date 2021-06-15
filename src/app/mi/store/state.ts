@@ -38,6 +38,11 @@ const initialState: StateModel = {
 @Injectable()
 export class MiState {
   @Selector([MiState])
+  static id(state: StateModel): number {
+    return state.id;
+  }
+
+  @Selector([MiState])
   static features(state: StateModel): Feature[] {
     return state.features;
   }
@@ -139,6 +144,23 @@ export class MiState {
     patchState({
       id: response.id,
       x: response.x,
+      predictions: zeros1d(nDays),
+      weights: zeros2d(nDays, nFeatures),
+      isLoading: false,
+    });
+  }
+
+  @Action(actions.LoadSpecifiedSample)
+  public async loadSpecifiedSample(
+    { patchState }: StateContext<StateModel>,
+    { payload }: actions.LoadSpecifiedSample
+  ) {
+    patchState({ isLoading: true });
+    const response = await this.api.loadSpecifiedSample('mi' , payload);
+
+    patchState({
+      x: response.x,
+      id:response.id,
       predictions: zeros1d(nDays),
       weights: zeros2d(nDays, nFeatures),
       isLoading: false,

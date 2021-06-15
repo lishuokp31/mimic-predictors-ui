@@ -26,6 +26,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { AgGridModule } from 'ag-grid-angular';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 /* @NgModule装饰器,@NgModule接受一个元数据对象,告诉Angular如何编译和启动应用 */
 @NgModule({
@@ -47,6 +48,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NzCheckboxModule,
     NzSelectModule,
     NzModalModule,
+    NzAlertModule,
     NgxsModule.forFeature([NerState]),
   ],
   providers: [...services,{provide:NzMessageService}], /* 配置项目所需要的服务 */

@@ -8,21 +8,7 @@ import { NzContentComponent } from 'ng-zorro-antd/layout';
   templateUrl: './threshold.component.html',
 })
 export class ThresholdComponent {
-  public readonly yAxisTicks = [
-    0,
-    25,
-    50,
-    75,
-    100,
-    125,
-    150,
-    175,
-    200,
-    225,
-    250,
-    275,
-    300,
-  ];
+  public readonly yAxisTicks = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400, 1450, 1500];
   public readonly colorScheme_list = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
   };
@@ -48,7 +34,9 @@ export class ThresholdComponent {
   @Input()
   public index: number = 0;
 
-  public colorScheme = this.singal ? {domain: [this.colorScheme_list.domain[this.index % 6]]} : this.colorScheme_list;
+  public colorScheme = this.singal
+    ? { domain: [this.colorScheme_list.domain[this.index % 6]] }
+    : this.colorScheme_list;
 
   public data2: any[] = [
     {
@@ -71,7 +59,9 @@ export class ThresholdComponent {
   ];
 
   ngOnInit(): void {
-    this.colorScheme = this.singal ? {domain: [this.colorScheme_list.domain[this.index % 6]]} : this.colorScheme_list;
+    this.colorScheme = this.singal
+      ? { domain: [this.colorScheme_list.domain[this.index % 6]] }
+      : this.colorScheme_list;
   }
 
   // @Input() set probabilities(value: number[] | null) {
